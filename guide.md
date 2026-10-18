@@ -39,7 +39,7 @@
 
 The **DDoS-AI** platform is a production-grade, modular cyberdefense system designed for real-time traffic classification, line-rate zero-day attack identification, and deep learning flow anomaly detection.
 
-```
+```text
 Kidney/ (DDoS-AI Root)
 │
 ├── .github/
@@ -292,7 +292,7 @@ Under nominal network conditions, destination ports and IP addresses exhibit hig
 - **Shannon Entropy:**
   $$H(X) = -\sum_{i=1}^{n} P(x_i) \log_2 P(x_i), \quad P(x_i) = \frac{n_i}{N}$$
   $$H_{\text{norm}}(X) = \frac{H(X)}{\log_2(n)}$$
-  _(Nominal benign traffic: $H_{\text{norm}} \to 1.0$; Under volumetric attack: $H_{\text{norm}} \to 0.0$)_
+  _(Nominal benign traffic: $H_{\text{norm}} \to 1.0$; Under volumetric attack: $H_{\text{norm}} \to 0.0$)\_
 
 - **Renyi Generalized Entropy (Order $\alpha$):**
   $$H_\alpha(X) = \frac{1}{1 - \alpha} \log_2 \left( \sum_{i=1}^{n} P(x_i)^\alpha \right), \quad \alpha \neq 1$$
@@ -405,7 +405,7 @@ Detect CPU cores, available physical RAM, and check for Apple Silicon MPS or CUD
 
 **Expected Output:**
 
-```
+```text
 ======================================================================
 DDoS-AI Hardware Detection & Capability Audit
 ======================================================================
@@ -574,6 +574,7 @@ If your available system RAM drops below 1.5 GB during external background tasks
 
 3. **Enable Aggressive Garbage Collection:**
    The `src/ddos_ai/training/trainer.py` module automatically invokes:
+
    ```python
    import gc
    import torch
@@ -615,4 +616,4 @@ export DDOS_DEVICE=cpu
 
 ---
 
-_DDoS-AI Framework • Developed for Enterprise-Grade Real-Time Cyberdefense & Rigorous Academic Research • 2026_
+DDoS-AI Framework • Developed for Enterprise-Grade Real-Time Cyberdefense & Rigorous Academic Research • 2026
