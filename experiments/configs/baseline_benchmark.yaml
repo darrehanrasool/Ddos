@@ -1,0 +1,21 @@
+experiment:
+  id: "EXP-BASELINE-2026"
+  name: "Canonical DDoS Benchmark Evaluation"
+  dataset: "CIC-DDoS2019"
+  models:
+    - "logistic_regression"
+    - "random_forest"
+    - "gradient_boosting"
+    - "tabular_mlp"
+    - "transformer_ddos"
+    - "autoencoder"
+    - "voting_ensemble"
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1_macro"
+    - "fpr"
+    - "roc_auc"
+    - "latency_ms"
+  cross_validation_folds: 5

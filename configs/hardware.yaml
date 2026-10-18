@@ -1,0 +1,24 @@
+hardware:
+  preferred_device: "auto" # auto, mps, cuda, cpu
+  fallback_device: "cpu"
+  allow_tf32: true
+  benchmark_cudnn: true
+
+memory:
+  max_ram_fraction: 0.80
+  max_gpu_fraction: 0.85
+  enable_garbage_collection: true
+  empty_cache_frequency: 10 # steps
+
+concurrency:
+  num_threads: 8
+  torch_num_threads: 4
+  dataloader_workers: 4
+  prefetch_factor: 2
+
+monitoring:
+  sample_interval_seconds: 5
+  track_temperatures: true
+  track_ram: true
+  track_vram: true
+  log_device_info: true

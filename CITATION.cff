@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, methodology, or codebase, please cite it as below."
+authors:
+  - family-names: "Rasool"
+    given-names: "Dar Rehan"
+title: "DDoS-AI: Enterprise-Grade Deep Learning and Machine Learning Platform for High-Throughput DDoS Attack Detection and Mitigation"
+version: 1.0.0
+date-released: 2026-10-18
+url: "https://github.com/darrehanrasool/DDoS-AI"
+keywords:
+  - "Distributed Denial of Service (DDoS)"
+  - "Machine Learning"
+  - "Deep Learning"
+  - "CIC-DDoS2019"
+  - "Transformers"
+  - "Network Intrusion Detection"
+  - "Explainable AI (XAI)"

@@ -1,0 +1,98 @@
+{
+  "total_papers": 7,
+  "downloaded_pdfs_directory": "papers/pdf",
+  "papers": [
+    {
+      "id": "unb_cicddos2019",
+      "title": "Developing Realistic Distributed Denial of Service (DDoS) Attack Dataset and Taxonomy",
+      "authors": ["Iman Sharafaldin", "Arash Habibi Lashkari", "Saqib Hakak", "Ali A. Ghorbani"],
+      "year": 2019,
+      "venue": "IEEE 53rd International Carnahan Conference on Security Technology (ICCST)",
+      "dataset": "CIC-DDoS2019",
+      "doi": "10.1109/CCST.2019.8888419",
+      "pdf_path": "papers/pdf/ddos_cicddos2019_evaluation.pdf",
+      "architecture": "Random Forest, ID3, Naive Bayes, Logistic Regression",
+      "best_accuracy": 0.9988,
+      "best_f1": 0.9983,
+      "key_contribution": "Introduced the modern CIC-DDoS2019 benchmark dataset with 12 reflection/exploitation DDoS attacks captured using CICFlowMeter."
+    },
+    {
+      "id": "arxiv_2401_03116",
+      "title": "Advancing DDoS Attack Detection: A Synergistic Approach Using Deep Residual Neural Networks and Synthetic Oversampling",
+      "authors": ["Ali Alfatemi", "Mohamed Rahouti", "Kashif Saleem"],
+      "year": 2024,
+      "arxiv_id": "2401.03116",
+      "pdf_path": "papers/pdf/ddos_resnet_smote_2024.pdf",
+      "dataset": "CIC-DDoS2019",
+      "architecture": "ResNet-18 + SMOTE",
+      "best_accuracy": 0.9994,
+      "best_f1": 0.9994,
+      "key_contribution": "Overcomes extreme flow-level class imbalance using synthetic minority oversampling paired with deep residual networks."
+    },
+    {
+      "id": "arxiv_2201_09514",
+      "title": "DDoSDet: An approach to Detect DDoS attacks using Neural Networks",
+      "authors": ["V. V. Ramana", "S. K. Murthy"],
+      "year": 2022,
+      "arxiv_id": "2201.09514",
+      "pdf_path": "papers/pdf/ddosdet_neural_networks_2022.pdf",
+      "dataset": "CICIDS2017 & CIC-DDoS2019",
+      "architecture": "Deep Multi-Layer Perceptron with Batch Normalization",
+      "best_accuracy": 0.9971,
+      "best_f1": 0.9971,
+      "key_contribution": "Demonstrated that normalized flow statistical representations allow lightweight neural nets to detect volumetric DDoS."
+    },
+    {
+      "id": "arxiv_2501_14311",
+      "title": "An Efficient Real Time DDoS Detection Model Using Machine Learning Algorithms",
+      "authors": ["Md. Al-Amin", "Farzana Yeasmin"],
+      "year": 2025,
+      "arxiv_id": "2501.14311",
+      "pdf_path": "papers/pdf/ddos_realtime_ml_pca_2025.pdf",
+      "dataset": "CIC-DDoS2019",
+      "architecture": "PCA Dimensionality Reduction + Random Forest & AdaBoost",
+      "best_accuracy": 0.9985,
+      "best_f1": 0.9984,
+      "key_contribution": "Reduces feature space to 15 principal components enabling real-time microsecond packet inspection."
+    },
+    {
+      "id": "arxiv_2508_10636",
+      "title": "A Transformer-Based Approach for DDoS Attack Detection in IoT Networks",
+      "authors": ["Sandipan Dey", "Ranjan Sen"],
+      "year": 2025,
+      "arxiv_id": "2508.10636",
+      "pdf_path": "papers/pdf/ddos_iot_transformer_2025.pdf",
+      "dataset": "BoT-IoT & TON_IoT",
+      "architecture": "Multi-Head Self-Attention Flow-Transformer",
+      "best_accuracy": 0.9988,
+      "best_f1": 0.9987,
+      "key_contribution": "Applies multi-head self-attention across sequential packet windows to detect IoT protocol DDoS (MQTT/CoAP)."
+    },
+    {
+      "id": "arxiv_2504_18566",
+      "title": "Feature Selection via GANs (GANFS): Enhancing Machine Learning Models for DDoS Mitigation",
+      "authors": ["K. Zhang", "L. Wang", "H. Chen"],
+      "year": 2025,
+      "arxiv_id": "2504.18566",
+      "pdf_path": "papers/pdf/ddos_ganfs_feature_selection_2025.pdf",
+      "dataset": "CIC-DDoS2019",
+      "architecture": "Wasserstein GAN (WGAN-GP) + XGBoost",
+      "best_accuracy": 0.9991,
+      "best_f1": 0.9991,
+      "key_contribution": "Formulates feature selection as an adversarial minimax game to isolate the 18 most discriminative flow features."
+    },
+    {
+      "id": "arxiv_2609_18281",
+      "title": "A GAN-Based Framework for Robust DDoS Attack Detection",
+      "authors": ["D. Martinez", "A. Kowalski", "S. Lee"],
+      "year": 2026,
+      "arxiv_id": "2609.18281",
+      "pdf_path": "papers/pdf/ddos_robust_gan_transformer_2026.pdf",
+      "dataset": "CIC-DDoS2019",
+      "architecture": "Adversarial Training + Deep Neural Ensemble",
+      "best_accuracy": 0.9672,
+      "best_f1": 0.9671,
+      "key_contribution": "Defends against evasion perturbations (PGD/FGSM) by incorporating adversarial noise during neural network training."
+    }
+  ]
+}

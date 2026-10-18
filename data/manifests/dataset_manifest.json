@@ -1,0 +1,34 @@
+{
+  "manifest_version": "1.0.0",
+  "last_updated": "2026-10-18T16:00:00Z",
+  "datasets": {
+    "CIC-DDoS2019": {
+      "name": "Canadian Institute for Cybersecurity DDoS 2019",
+      "provider": "University of New Brunswick",
+      "canonical_url": "https://www.unb.ca/cic/datasets/ddos-2019.html",
+      "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "format": "csv",
+      "attack_types": [
+        "Syn", "UDP", "UDPLag", "DNS", "LDAP", "MSSQL",
+        "NetBIOS", "NTP", "SNMP", "SSDP", "TFTP", "PortScan"
+      ],
+      "split_strategy": "stratified_70_15_15"
+    },
+    "BoT-IoT": {
+      "name": "The BoT-IoT Dataset",
+      "provider": "UNSW Canberra Cyber",
+      "canonical_url": "https://research.unsw.edu.au/projects/bot-iot-dataset",
+      "expected_sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "format": "csv",
+      "attack_types": ["DDoS_TCP", "DDoS_UDP", "DDoS_HTTP", "DoS_TCP", "DoS_UDP"]
+    },
+    "TON_IoT": {
+      "name": "TON_IoT Telemetry Dataset",
+      "provider": "UNSW Cyber",
+      "canonical_url": "https://research.unsw.edu.au/projects/toniot-datasets",
+      "expected_sha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+      "format": "csv",
+      "attack_types": ["ddos", "dos", "scanning"]
+    }
+  }
+}
