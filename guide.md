@@ -35,12 +35,124 @@
 
 ---
 
+## 0. Quick Command Reference & Connected Defense Pipeline
+
+Execute all core platform capabilities via the unified CLI:
+
+```bash
+# 1. Verify compute accelerator (Apple Silicon MPS, CUDA, CPU)
+.venv/bin/python src/ddos_ai/main.py verify-hardware
+
+# 2. Audit dataset files and schema integrity
+.venv/bin/python src/ddos_ai/main.py verify-datasets
+
+# 3. Train all dataset models with MPS / CUDA acceleration
+.venv/bin/python src/ddos_ai/main.py train-datasets --dataset all --epochs 5
+
+# 4. Run the connected multi-dataset unified defense pipeline (with acoustic alerts)
+.venv/bin/python src/ddos_ai/main.py pipeline --input demo
+
+# 5. Launch the Interactive Real-Time Cyber SOC Dashboard
+.venv/bin/python src/ddos_ai/main.py dashboard --port 8080 --open-browser
+# or:
+.venv/bin/python scripts/run_dashboard.py --open-browser
+
+# 6. Run all 21 unit and integration tests
+PYTHONPATH=src .venv/bin/pytest tests/
+```
+
+### Complete End-to-End Project Architecture Diagram
+
+This diagram illustrates how all datasets, training algorithms, models, and real-time defense components connect together to solve multi-environment DDoS attacks:
+
+```mermaid
+flowchart TD
+    subgraph ProblemSpace["1. The Problem: Multi-Environment Network Floods"]
+        E1["Enterprise & Cloud Traffic\n(Volumetric & Reflection)"]
+        E2["Web & Application Services\n(HTTP Slowloris, LOIC, Hulk)"]
+        E3["Legacy & Protocol Infrastructure\n(SYN, Neptune, Smurf, Pod)"]
+        E4["Software-Defined Networks\n(SDN OpenFlow Switch Floods)"]
+        E5["IoT & Smart Home Devices\n(Botnet TCP/UDP Flooding)"]
+        E6["Industrial IoT / Smart City\n(Modbus, MQTT, Telemetry DoS)"]
+    end
+
+    subgraph Datasets["2. Downloaded Datasets (data/raw/network_traffic/)"]
+        D1[("CIC-DDoS2019\n71 Features")]
+        D2[("CIC-IDS2017\n79 Features")]
+        D3[("NSL-KDD\n44 Features")]
+        D4[("SDN-DDoS\n24 Features")]
+        D5[("BoT-IoT\n14 Features")]
+        D6[("TON_IoT\n12 Features")]
+    end
+
+    E1 --> D1
+    E2 --> D2
+    E3 --> D3
+    E4 --> D4
+    E5 --> D5
+    E6 --> D6
+
+    subgraph Training["3. Training Algorithm (DatasetTrainer: MPS/CUDA/CPU)"]
+        direction TB
+        Adapter["DatasetAdapter\n16-D Canonical Flow Vector Normalization"]
+        T1["Tier 1 Training:\nHistGradientBoostingClassifier (Fast Tree)"]
+        T2["Tier 2 Training:\nDeepResidualMLP (PyTorch Neural Net)"]
+        Adapter --> T1
+        Adapter --> T2
+    end
+
+    D1 & D2 & D3 & D4 & D5 & D6 --> Adapter
+
+    subgraph Models["4. Trained Models (models/dataset_specialized/)"]
+        M1["cic_ddos2019/\nTree + Deep MLP"]
+        M2["cic_ids2017/\nTree + Deep MLP"]
+        M3["nsl_kdd/\nTree + Deep MLP"]
+        M4["sdn_ddos/\nTree + Deep MLP"]
+        M5["bot_iot/\nTree + Deep MLP"]
+        M6["ton_iot/\nTree + Deep MLP"]
+    end
+
+    T1 & T2 --> M1 & M2 & M3 & M4 & M5 & M6
+
+    subgraph Ingress["5. Connected Unified Pipeline (UnifiedDDoSPipeline)"]
+        LiveFlow["Ingress Network Traffic Flow"] --> SchemaDetect{"Auto-Detect Schema\n& Topology"}
+        SchemaDetect -->|CIC Schema| M1
+        SchemaDetect -->|IDS Schema| M2
+        SchemaDetect -->|Protocol Schema| M3
+        SchemaDetect -->|SDN Schema| M4
+        SchemaDetect -->|IoT Schema| M5
+        SchemaDetect -->|IIoT Schema| M6
+
+        M1 & M2 & M3 & M4 & M5 & M6 --> FastScreen{"Fast Tier 1 Screen\n(Confidence >= 95%)"}
+        FastScreen -->|Benign Confident| PassAction["PASS (Latency < 2ms)"]
+        FastScreen -->|Ambiguous or Anomaly| DeepScreen["Tier 2 Deep Representation\n(DeepResidualMLP Inference)"]
+        DeepScreen --> Ensemble["Meta-Ensemble Consensus\n& Anomaly Severity Scoring"]
+        Ensemble --> MitigationEngine{"Defense Mitigation Engine"}
+    end
+
+    subgraph Mitigation["6. Real-Time Mitigation Actions"]
+        MitigationEngine -->|Benign| ActPass["PASS Flow"]
+        MitigationEngine -->|Medium Anomaly| ActRate["RATE_LIMIT_50PCT"]
+        MitigationEngine -->|Severe Volumetric| ActQuarantine["QUARANTINE_FLOW"]
+        MitigationEngine -->|Critical Attack| ActBlock["BLOCK_SOURCE_IP"]
+    end
+
+    style ProblemSpace fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style Datasets fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style Training fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    style Models fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    style Ingress fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    style Mitigation fill:#ffebee,stroke:#b71c1c,stroke-width:2px
+```
+
+---
+
 ## 1. Project Overview & Complete Repository Architecture
 
 The **DDoS-AI** platform is a production-grade, modular cyberdefense system designed for real-time traffic classification, line-rate zero-day attack identification, and deep learning flow anomaly detection.
 
 ```text
-Kidney/ (DDoS-AI Root)
+Ddos/ (DDoS-AI Root)
 │
 ├── .github/
 │   ├── ISSUE_TEMPLATE/
@@ -152,9 +264,6 @@ Kidney/ (DDoS-AI Root)
 │   │   ├── research/           # Paper metadata extraction and benchmark comparison tools
 │   │   ├── monitoring/         # Real-time flow monitor and drift detector
 │   │   └── utils/              # Logging, I/O serialization, timers
-│   │
-│   └── kidneycare/             # Full backward-compatibility proxy layer
-│       └── ...
 │
 ├── tests/                      # 13 unit and integration tests (100% passing)
 ├── guide.md                    # This complete operational guide

@@ -36,8 +36,15 @@ class DataQualityAuditor:
         zero_var = [col for col in numeric_df.columns if numeric_df[col].std() == 0]
 
         class_dist = {}
-        if target_col in df.columns:
-            class_dist = df[target_col].value_counts().to_dict()
+        detected_target = target_col
+        if detected_target not in df.columns:
+            for cand in ["Label", "label", "attack_type", "type", "category", "attack_class", "class"]:
+                if cand in df.columns:
+                    detected_target = cand
+                    break
+
+        if detected_target in df.columns:
+            class_dist = df[detected_target].value_counts().to_dict()
 
         mem_mb = round(df.memory_usage(deep=True).sum() / (1024**2), 2)
 

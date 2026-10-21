@@ -1,0 +1,299 @@
+{
+  "CIC-IDS2017": {
+    "dataset_id": "CIC-IDS2017",
+    "samples_total": 10000,
+    "features_count": 78,
+    "classes_count": 2,
+    "classes": {
+      "0": "0",
+      "1": "1"
+    },
+    "literature_benchmark": {
+      "citation": "Sharafaldin et al. (2018), ICISSP",
+      "paper_title": "Toward Generating a New Intrusion Detection Dataset and Intrusion Traffic Characterization",
+      "model_name": "Random Forest Baseline",
+      "accuracy": 0.9802,
+      "precision": 0.979,
+      "recall": 0.9802,
+      "f1_score": 0.978
+    },
+    "classical": {
+      "model_type": "RandomForestClassifier",
+      "accuracy": 1.0,
+      "f1_macro": 1.0,
+      "f1_weighted": 1.0,
+      "precision_macro": 1.0,
+      "recall_macro": 1.0,
+      "roc_auc": 1.0,
+      "train_time_sec": 0.221,
+      "latency_per_sample_ms": 0.0216,
+      "delta_vs_literature_acc": 0.0198
+    },
+    "deep_learning": {
+      "model_type": "TabularResidualMLP",
+      "device": "mps",
+      "accuracy": 0.54067,
+      "f1_macro": 0.41784,
+      "f1_weighted": 0.41784,
+      "precision_macro": 0.7606,
+      "recall_macro": 0.54067,
+      "roc_auc": 0.90844,
+      "train_time_sec": 8.079,
+      "latency_per_sample_ms": 0.1109,
+      "delta_vs_literature_acc": -0.43953
+    }
+  },
+  "NSL-KDD": {
+    "dataset_id": "NSL-KDD",
+    "samples_total": 25192,
+    "features_count": 40,
+    "classes_count": 22,
+    "classes": {
+      "0": "back",
+      "1": "buffer_overflow",
+      "2": "ftp_write",
+      "3": "guess_passwd",
+      "4": "imap",
+      "5": "ipsweep",
+      "6": "land",
+      "7": "loadmodule",
+      "8": "multihop",
+      "9": "neptune",
+      "10": "nmap",
+      "11": "normal",
+      "12": "phf",
+      "13": "pod",
+      "14": "portsweep",
+      "15": "rootkit",
+      "16": "satan",
+      "17": "smurf",
+      "18": "spy",
+      "19": "teardrop",
+      "20": "warezclient",
+      "21": "warezmaster"
+    },
+    "literature_benchmark": {
+      "citation": "Tavallaee et al. (2009), IEEE CISDA",
+      "paper_title": "A Detailed Analysis of the KDD CUP 99 Data Set",
+      "model_name": "SVM / J48 Baseline",
+      "accuracy": 0.982,
+      "precision": 0.981,
+      "recall": 0.982,
+      "f1_score": 0.975
+    },
+    "classical": {
+      "model_type": "HistGradientBoostingClassifier",
+      "accuracy": 0.86399,
+      "f1_macro": 0.2822,
+      "f1_weighted": 0.84462,
+      "precision_macro": 0.29233,
+      "recall_macro": 0.30488,
+      "roc_auc": 0.99,
+      "train_time_sec": 9.245,
+      "latency_per_sample_ms": 0.0585,
+      "delta_vs_literature_acc": -0.11801
+    },
+    "deep_learning": {
+      "model_type": "TabularResidualMLP",
+      "device": "mps",
+      "accuracy": 0.87536,
+      "f1_macro": 0.18087,
+      "f1_weighted": 0.83334,
+      "precision_macro": 0.27792,
+      "recall_macro": 0.16687,
+      "roc_auc": 0.99,
+      "train_time_sec": 8.157,
+      "latency_per_sample_ms": 0.0674,
+      "delta_vs_literature_acc": -0.10664
+    }
+  },
+  "SDN-DDoS": {
+    "dataset_id": "SDN-DDoS",
+    "samples_total": 50000,
+    "features_count": 17,
+    "classes_count": 2,
+    "classes": {
+      "0": "0",
+      "1": "1"
+    },
+    "literature_benchmark": {
+      "citation": "Elsayed et al. (2020), Mendeley Data",
+      "paper_title": "DDoS Attacks in Software-Defined Networks: Detection and Mitigation Using ML",
+      "model_name": "XGBoost Classifier",
+      "accuracy": 0.978,
+      "precision": 0.975,
+      "recall": 0.978,
+      "f1_score": 0.971
+    },
+    "classical": {
+      "model_type": "HistGradientBoostingClassifier",
+      "accuracy": 1.0,
+      "f1_macro": 1.0,
+      "f1_weighted": 1.0,
+      "precision_macro": 1.0,
+      "recall_macro": 1.0,
+      "roc_auc": 1.0,
+      "train_time_sec": 3.267,
+      "latency_per_sample_ms": 0.003,
+      "delta_vs_literature_acc": 0.022
+    },
+    "deep_learning": {
+      "model_type": "TabularResidualMLP",
+      "device": "mps",
+      "accuracy": 0.95347,
+      "f1_macro": 0.9511,
+      "f1_weighted": 0.95347,
+      "precision_macro": 0.95112,
+      "recall_macro": 0.95107,
+      "roc_auc": 0.99341,
+      "train_time_sec": 16.95,
+      "latency_per_sample_ms": 0.0051,
+      "delta_vs_literature_acc": -0.02453
+    }
+  },
+  "CIC-DDoS2019": {
+    "dataset_id": "CIC-DDoS2019",
+    "samples_total": 10000,
+    "features_count": 70,
+    "classes_count": 13,
+    "classes": {
+      "0": "BENIGN",
+      "1": "DNS",
+      "2": "LDAP",
+      "3": "MSSQL",
+      "4": "NTP",
+      "5": "NetBIOS",
+      "6": "PortScan",
+      "7": "SNMP",
+      "8": "SSDP",
+      "9": "Syn",
+      "10": "TFTP",
+      "11": "UDP",
+      "12": "UDPLag"
+    },
+    "literature_benchmark": {
+      "citation": "Sharafaldin et al. (2019), IEEE CCGrid",
+      "paper_title": "Developing Realistic Distributed Denial of Service (DDoS) Attack Dataset and Taxonomy",
+      "model_name": "ID3 / Random Forest Baseline",
+      "accuracy": 0.821,
+      "precision": 0.813,
+      "recall": 0.821,
+      "f1_score": 0.815
+    },
+    "classical": {
+      "model_type": "RandomForestClassifier",
+      "accuracy": 0.564,
+      "f1_macro": 0.1619,
+      "f1_weighted": 0.54608,
+      "precision_macro": 0.16246,
+      "recall_macro": 0.19463,
+      "roc_auc": 0.79509,
+      "train_time_sec": 0.339,
+      "latency_per_sample_ms": 0.0118,
+      "delta_vs_literature_acc": -0.257
+    },
+    "deep_learning": {
+      "model_type": "TabularResidualMLP",
+      "device": "mps",
+      "accuracy": 0.56933,
+      "f1_macro": 0.13911,
+      "f1_weighted": 0.53447,
+      "precision_macro": 0.13637,
+      "recall_macro": 0.20293,
+      "roc_auc": 0.79954,
+      "train_time_sec": 5.266,
+      "latency_per_sample_ms": 0.0405,
+      "delta_vs_literature_acc": -0.25167
+    }
+  },
+  "BoT-IoT": {
+    "dataset_id": "BoT-IoT",
+    "samples_total": 10000,
+    "features_count": 10,
+    "classes_count": 4,
+    "classes": {
+      "0": "DDoS",
+      "1": "DoS",
+      "2": "Normal",
+      "3": "Reconnaissance"
+    },
+    "literature_benchmark": {
+      "citation": "Koroniotis et al. (2019), FGCS Elsevier",
+      "paper_title": "Towards the Development of Realistic Botnet Dataset in the Internet of Things",
+      "model_name": "SVM / RNN Baseline",
+      "accuracy": 0.965,
+      "precision": 0.96,
+      "recall": 0.965,
+      "f1_score": 0.962
+    },
+    "classical": {
+      "model_type": "RandomForestClassifier",
+      "accuracy": 0.67467,
+      "f1_macro": 0.5123,
+      "f1_weighted": 0.6748,
+      "precision_macro": 0.51316,
+      "recall_macro": 0.51197,
+      "roc_auc": 0.85474,
+      "train_time_sec": 0.252,
+      "latency_per_sample_ms": 0.0142,
+      "delta_vs_literature_acc": -0.29033
+    },
+    "deep_learning": {
+      "model_type": "TabularResidualMLP",
+      "device": "mps",
+      "accuracy": 0.67,
+      "f1_macro": 0.42054,
+      "f1_weighted": 0.61394,
+      "precision_macro": 0.45482,
+      "recall_macro": 0.5053,
+      "roc_auc": 0.85576,
+      "train_time_sec": 6.078,
+      "latency_per_sample_ms": 0.011,
+      "delta_vs_literature_acc": -0.295
+    }
+  },
+  "TON_IoT": {
+    "dataset_id": "TON_IoT",
+    "samples_total": 10000,
+    "features_count": 8,
+    "classes_count": 2,
+    "classes": {
+      "0": "0",
+      "1": "1"
+    },
+    "literature_benchmark": {
+      "citation": "Kumar et al. (2020), IEEE Access",
+      "paper_title": "A New Cyber-Security Telemetry Dataset for the Internet of Things: TON_IoT",
+      "model_name": "Random Forest / LSTM",
+      "accuracy": 0.991,
+      "precision": 0.988,
+      "recall": 0.991,
+      "f1_score": 0.989
+    },
+    "classical": {
+      "model_type": "RandomForestClassifier",
+      "accuracy": 0.74267,
+      "f1_macro": 0.72749,
+      "f1_weighted": 0.72749,
+      "precision_macro": 0.81223,
+      "recall_macro": 0.74267,
+      "roc_auc": 0.76183,
+      "train_time_sec": 0.266,
+      "latency_per_sample_ms": 0.0112,
+      "delta_vs_literature_acc": -0.24833
+    },
+    "deep_learning": {
+      "model_type": "TabularResidualMLP",
+      "device": "mps",
+      "accuracy": 0.75067,
+      "f1_macro": 0.73414,
+      "f1_weighted": 0.73414,
+      "precision_macro": 0.83363,
+      "recall_macro": 0.75067,
+      "roc_auc": 0.75669,
+      "train_time_sec": 6.131,
+      "latency_per_sample_ms": 0.0133,
+      "delta_vs_literature_acc": -0.24033
+    }
+  }
+}

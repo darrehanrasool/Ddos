@@ -1,0 +1,2582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDoS-AI Cyber Threat Defense Center | Real-Time SOC Dashboard</title>
+    <style>
+        :root {
+            --bg-base: #060911;
+            --bg-card: rgba(13, 20, 36, 0.85);
+            --bg-card-hover: rgba(18, 28, 50, 0.96);
+            --border-dim: rgba(56, 189, 248, 0.16);
+            --border-bright: rgba(56, 189, 248, 0.45);
+            --cyan-glow: #00f0ff;
+            --safe-green: #00ff88;
+            --warning-yellow: #ffd000;
+            --danger-red: #ff2a5f;
+            --critical-purple: #c084fc;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "SF Pro Display", sans-serif;
+            --font-mono: "SF Mono", Menlo, Consolas, Monaco, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(0, 240, 255, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 90% 90%, rgba(255, 42, 95, 0.05) 0%, transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 18px 24px;
+        }
+
+        /* Top Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-dim);
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .shield-logo {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 255, 136, 0.2));
+            border: 1px solid var(--cyan-glow);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
+        }
+
+        .shield-logo svg {
+            width: 26px;
+            height: 26px;
+            fill: var(--cyan-glow);
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-subtitle {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Mode Toggle */
+        .sniffer-toggle-box {
+            display: flex;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border-dim);
+            border-radius: 20px;
+            padding: 2px 4px;
+            gap: 4px;
+        }
+
+        .btn-mode {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mode.active {
+            background: var(--cyan-glow);
+            color: #000000;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn-fw-export {
+            background: rgba(192, 132, 252, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            color: #e9d5ff;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-fw-export:hover {
+            background: rgba(192, 132, 252, 0.3);
+            box-shadow: 0 0 14px rgba(192, 132, 252, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-privacy-cloak {
+            background: rgba(0, 255, 136, 0.12);
+            border: 1px solid var(--safe-green);
+            color: var(--safe-green);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+        }
+
+        .btn-privacy-cloak:hover {
+            background: rgba(0, 255, 136, 0.22);
+            box-shadow: 0 0 16px rgba(0, 255, 136, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-privacy-cloak.unmasked {
+            background: rgba(255, 42, 95, 0.15);
+            border-color: var(--danger-red);
+            color: var(--danger-red);
+            box-shadow: 0 0 10px rgba(255, 42, 95, 0.25);
+        }
+
+        /* Primary Security Status Banner */
+        .status-banner {
+            border-radius: 12px;
+            padding: 16px 22px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.35s ease-in-out;
+            border: 2px solid var(--safe-green);
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.15), rgba(16, 24, 39, 0.9));
+            box-shadow: 0 0 28px rgba(0, 255, 136, 0.2);
+        }
+
+        .status-banner.safe {
+            border-color: var(--safe-green);
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.16), rgba(16, 24, 39, 0.92));
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.25);
+        }
+
+        .status-banner.caution {
+            border-color: var(--warning-yellow);
+            background: linear-gradient(90deg, rgba(255, 208, 0, 0.18), rgba(16, 24, 39, 0.92));
+            box-shadow: 0 0 30px rgba(255, 208, 0, 0.25);
+        }
+
+        .status-banner.danger {
+            border-color: var(--danger-red);
+            background: linear-gradient(90deg, rgba(255, 42, 95, 0.22), rgba(16, 24, 39, 0.95));
+            box-shadow: 0 0 35px rgba(255, 42, 95, 0.35);
+        }
+
+        .status-banner-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .status-indicator-ring {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid currentColor;
+        }
+
+        .status-headline {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        .status-title-badge {
+            font-size: 0.70rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .status-badge-pill {
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid currentColor;
+        }
+
+        /* Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 12px;
+            padding: 16px;
+            backdrop-filter: blur(12px);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--border-bright);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 0.80rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #7dd3fc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Top 4 Stats */
+        .stat-card {
+            grid-column: span 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stat-value {
+            font-size: 2.1rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            line-height: 1.1;
+            margin: 4px 0;
+        }
+
+        .stat-subtext {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        /* PORT ATTACK SURFACE HEATMAP (Span 6) */
+        .heatmap-card {
+            grid-column: span 6;
+        }
+
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .port-heat-box {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 8px 10px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .port-heat-box.hot {
+            border-color: var(--danger-red);
+            background: rgba(255, 42, 95, 0.12);
+            box-shadow: 0 0 10px rgba(255, 42, 95, 0.25);
+        }
+
+        .port-heat-box.warm {
+            border-color: var(--warning-yellow);
+            background: rgba(255, 208, 0, 0.10);
+        }
+
+        .port-heat-box.cool {
+            border-color: rgba(56, 189, 248, 0.3);
+            background: rgba(56, 189, 248, 0.06);
+        }
+
+        .port-number {
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 0.88rem;
+        }
+
+        .port-name {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .port-hits {
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            margin-top: 2px;
+        }
+
+        /* MITRE ATT&CK MATRIX CARD (Span 6) */
+        .mitre-card {
+            grid-column: span 6;
+        }
+
+        .mitre-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .mitre-item {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-left: 3px solid var(--cyan-glow);
+            border-radius: 6px;
+            padding: 8px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mitre-item.active-threat {
+            border-left-color: var(--danger-red);
+            background: rgba(255, 42, 95, 0.08);
+        }
+
+        .mitre-id {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        .mitre-name {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+        }
+
+        .mitre-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Threat Simulator (Span 6) */
+        .sim-card {
+            grid-column: span 6;
+        }
+
+        .sim-button-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .btn-sim {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            padding: 9px 10px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .btn-sim:hover {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--cyan-glow);
+            transform: translateY(-1px);
+        }
+
+        .btn-sim.attack-btn:hover {
+            background: rgba(255, 42, 95, 0.15);
+            border-color: var(--danger-red);
+            box-shadow: 0 0 12px rgba(255, 42, 95, 0.3);
+        }
+
+        .btn-stream-toggle {
+            grid-column: span 3;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(0, 255, 136, 0.15));
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .btn-stream-toggle.active {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 240, 255, 0.3));
+            color: #ffffff;
+            box-shadow: 0 0 16px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Audio Card (Span 6) */
+        .audio-card {
+            grid-column: span 6;
+        }
+
+        .audio-button-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-sound {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-dim);
+            color: var(--text-main);
+            padding: 9px 6px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-sound:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-sound.green:hover {
+            border-color: var(--safe-green);
+            color: var(--safe-green);
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-sound.yellow:hover {
+            border-color: var(--warning-yellow);
+            color: var(--warning-yellow);
+            box-shadow: 0 0 12px rgba(255, 208, 0, 0.3);
+        }
+
+        .btn-sound.red:hover {
+            border-color: var(--danger-red);
+            color: var(--danger-red);
+            box-shadow: 0 0 14px rgba(255, 42, 95, 0.35);
+        }
+
+        .btn-sound.purple:hover {
+            border-color: var(--critical-purple);
+            color: var(--critical-purple);
+            box-shadow: 0 0 14px rgba(192, 132, 252, 0.35);
+        }
+
+        /* Real-Time Timeline (Span 8) */
+        .chart-card {
+            grid-column: span 8;
+        }
+
+        #timelineCanvas {
+            width: 100%;
+            height: 125px;
+            background: rgba(10, 15, 26, 0.7);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* Engine Card (Span 4) */
+        .engine-card {
+            grid-column: span 4;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.76rem;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+        }
+
+        .metric-val {
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        /* QUICK SAFETY LOCKDOWN CARD (Span 4) */
+        .quick-safety-card {
+            grid-column: span 4;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .btn-quick-safety {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(0, 240, 255, 0.05));
+            border: 2px solid var(--cyan-glow);
+            border-radius: 10px;
+            color: #ffffff;
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.25s ease-in-out;
+            text-align: left;
+            box-shadow: 0 0 14px rgba(0, 240, 255, 0.15);
+        }
+
+        .btn-quick-safety:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 22px rgba(0, 240, 255, 0.35);
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(0, 240, 255, 0.15));
+        }
+
+        .btn-quick-safety.active {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 240, 255, 0.25));
+            border-color: var(--safe-green);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.45);
+            animation: shield-pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes shield-pulse {
+            0% { box-shadow: 0 0 16px rgba(0, 255, 136, 0.3); }
+            50% { box-shadow: 0 0 28px rgba(0, 255, 136, 0.6); }
+            100% { box-shadow: 0 0 16px rgba(0, 255, 136, 0.3); }
+        }
+
+        .shield-icon-wrapper {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        /* AI SECURITY SUGGESTIONS (Span 8) */
+        .suggestions-card {
+            grid-column: span 8;
+        }
+
+        .suggestions-container {
+            max-height: 230px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-right: 4px;
+        }
+
+        .suggestion-box {
+            background: rgba(10, 15, 26, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-left: 4px solid var(--cyan-glow);
+            border-radius: 8px;
+            padding: 9px 12px;
+            transition: all 0.2s ease;
+        }
+
+        .suggestion-box.critical {
+            border-left-color: var(--danger-red);
+            background: rgba(255, 42, 95, 0.06);
+        }
+
+        .suggestion-box.high {
+            border-left-color: var(--warning-yellow);
+            background: rgba(255, 208, 0, 0.05);
+        }
+
+        .suggestion-box.safe {
+            border-left-color: var(--safe-green);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .suggestion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+        }
+
+        .suggestion-title {
+            font-size: 0.80rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .suggestion-desc {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            line-height: 1.35;
+        }
+
+        .suggestion-code-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 3px 8px;
+        }
+
+        .suggestion-code {
+            font-family: var(--font-mono);
+            font-size: 0.70rem;
+            color: #38bdf8;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .btn-copy {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #7dd3fc;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 7px;
+            cursor: pointer;
+            margin-left: 8px;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+        }
+
+        .btn-copy:hover {
+            background: var(--cyan-glow);
+            color: #000000;
+        }
+
+        /* LIVE FLOW TABLE (Span 12) */
+        .table-card {
+            grid-column: span 12;
+        }
+
+        .flow-table-container {
+            max-height: 380px;
+            overflow-y: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.76rem;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 9px 12px;
+            font-size: 0.70rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #7dd3fc;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid var(--border-dim);
+        }
+
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-family: var(--font-mono);
+        }
+
+        tbody tr {
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(56, 189, 248, 0.10);
+        }
+
+        .badge-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .badge-safe {
+            background: rgba(0, 255, 136, 0.12);
+            color: var(--safe-green);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .badge-warning {
+            background: rgba(255, 208, 0, 0.14);
+            color: var(--warning-yellow);
+            border: 1px solid rgba(255, 208, 0, 0.35);
+        }
+
+        .badge-danger {
+            background: rgba(255, 42, 95, 0.16);
+            color: var(--danger-red);
+            border: 1px solid rgba(255, 42, 95, 0.4);
+            box-shadow: 0 0 8px rgba(255, 42, 95, 0.2);
+        }
+
+        .badge-block {
+            background: rgba(192, 132, 252, 0.18);
+            color: var(--critical-purple);
+            border: 1px solid rgba(192, 132, 252, 0.45);
+        }
+
+        /* DUAL-PLANE HYBRID MONITOR STYLES */
+        .dualplane-card {
+            grid-column: span 12;
+        }
+
+        .dualplane-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .plane-box {
+            background: rgba(10, 16, 30, 0.75);
+            border: 1px solid var(--border-dim);
+            border-radius: 10px;
+            padding: 14px 16px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .plane-box:hover {
+            border-color: var(--border-bright);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .plane-box.physical {
+            border-left: 4px solid var(--cyan-glow);
+        }
+
+        .plane-box.virtual {
+            border-left: 4px solid var(--critical-purple);
+        }
+
+        .plane-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 8px;
+        }
+
+        .plane-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .plane-title.physical { color: #38bdf8; }
+        .plane-title.virtual { color: #c084fc; }
+
+        .plane-stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .plane-stat-tile {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 8px 10px;
+        }
+
+        .plane-stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+
+        .plane-stat-val {
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 2px;
+        }
+
+        .plane-iface-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 155px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .plane-iface-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 6px;
+            padding: 6px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: background 0.15s ease;
+        }
+
+        .plane-iface-item:hover {
+            background: rgba(56, 189, 248, 0.08);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot-anim 1.8s infinite ease-in-out;
+        }
+
+        .pulse-dot.green { background: var(--safe-green); box-shadow: 0 0 8px var(--safe-green); }
+        .pulse-dot.cyan { background: var(--cyan-glow); box-shadow: 0 0 8px var(--cyan-glow); }
+        .pulse-dot.purple { background: var(--critical-purple); box-shadow: 0 0 8px var(--critical-purple); }
+
+        @keyframes pulse-dot-anim {
+            0% { opacity: 0.4; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.4; transform: scale(0.9); }
+        }
+
+        .table-tab-filter {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .btn-table-tab {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-table-tab.active {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: var(--cyan-glow);
+            color: var(--cyan-glow);
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.25);
+        }
+
+        .badge-plane-phy {
+            background: rgba(0, 240, 255, 0.12);
+            color: #38bdf8;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            font-size: 0.64rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .badge-plane-vir {
+            background: rgba(192, 132, 252, 0.14);
+            color: #c084fc;
+            border: 1px solid rgba(192, 132, 252, 0.35);
+            font-size: 0.64rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* MODAL / DRAWER STYLES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(4, 7, 13, 0.75);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #0d1424;
+            border: 1px solid var(--border-bright);
+            border-radius: 14px;
+            width: 90%;
+            max-width: 720px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 12px;
+        }
+
+        .modal-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .btn-close:hover {
+            color: #ffffff;
+        }
+
+        /* Slide-over forensic drawer */
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: -520px;
+            width: 500px;
+            height: 100vh;
+            background: #090e1a;
+            border-left: 1px solid var(--border-bright);
+            box-shadow: -10px 0 35px rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            padding: 24px;
+            overflow-y: auto;
+            transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .drawer.open {
+            right: 0;
+        }
+
+        .drawer-section {
+            background: rgba(16, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+        }
+
+        .drawer-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #7dd3fc;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* XAI Waterfall Bar */
+        .xai-bar-item {
+            margin-bottom: 8px;
+        }
+        .xai-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.70rem;
+            margin-bottom: 3px;
+        }
+        .xai-track {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .xai-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+        .xai-fill.danger { background: var(--danger-red); }
+        .xai-fill.safe { background: var(--safe-green); }
+
+        /* TCP Flag badges */
+        .flag-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+        .flag-box {
+            padding: 6px 4px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-muted);
+        }
+        .flag-box.active {
+            border-color: var(--cyan-glow);
+            background: rgba(0, 240, 255, 0.15);
+            color: var(--cyan-glow);
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Tabs inside Firewall Export Modal */
+        .tab-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 8px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background: rgba(56, 189, 248, 0.2);
+            color: var(--cyan-glow);
+            border: 1px solid var(--border-bright);
+        }
+        .code-textarea {
+            width: 100%;
+            height: 220px;
+            background: rgba(5, 8, 15, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            color: #38bdf8;
+            resize: none;
+        }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(10, 15, 26, 0.8); }
+        ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.25); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--cyan-glow); }
+    </style>
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header>
+        <div class="header-left">
+            <div class="shield-logo">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                </svg>
+            </div>
+            <div>
+                <h1>DDoS-AI Defense SOC Center</h1>
+                <div class="header-subtitle">Real-Time Autonomous Cyber Intrusion Detection &amp; Mitigation Engine</div>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <!-- OPSEC Privacy Cloak Toggle -->
+            <button id="privacyCloakBtn" class="btn-privacy-cloak" onclick="togglePrivacyCloak()">
+                <span id="privacyIcon">🔒</span>
+                <span id="privacyText">OPSEC CLOAK: ACTIVE</span>
+            </button>
+
+            <!-- Mode Toggle -->
+            <div class="sniffer-toggle-box">
+                <button id="modeSimBtn" class="btn-mode active" onclick="setSnifferMode('simulation')">🔬 Simulation Mode</button>
+                <button id="modeLiveBtn" class="btn-mode" onclick="setSnifferMode('live_capture')">📡 Live Host Sniffer</button>
+            </div>
+
+            <!-- 1-Click Firewall Exporter -->
+            <button class="btn-fw-export" onclick="openFirewallModal()">
+                <span>🛡️ Export Ruleset</span>
+            </button>
+
+            <!-- Live Clock -->
+            <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-muted); margin-left: 6px;" id="clockDisplay">
+                --:--:--
+            </div>
+        </div>
+    </header>
+
+    <!-- PROMINENT SECURITY STATUS BANNER (RED = DANGER, GREEN = SAFE) -->
+    <div id="statusBanner" class="status-banner safe">
+        <div class="status-banner-left">
+            <div class="status-indicator-ring" id="statusRing">
+                <svg id="statusIcon" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+            <div>
+                <div class="status-title-badge">Local System &amp; Network Security Posture</div>
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <div class="status-headline" id="statusHeadline">SYSTEM &amp; NETWORK SAFE — NO THREATS DETECTED</div>
+                    <span class="badge-pill" style="background: rgba(0, 255, 136, 0.15); color: var(--safe-green); border: 1px solid var(--safe-green); font-size: 0.68rem;" id="privacyPillBadge">🔒 HIGH ALERT: ZERO-LEAK OPSEC ACTIVE</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <span class="status-badge-pill" id="statusPillBadge">STATUS: SAFE</span>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD METRICS -->
+    <div class="dashboard-grid">
+
+        <!-- Stat 1: Threat Meter -->
+        <div class="card stat-card">
+            <div class="card-header">
+                <span class="card-title">Threat Index</span>
+                <span style="font-size: 0.70rem; color: var(--text-muted);">Rolling Window</span>
+            </div>
+            <div class="stat-value" id="threatIndexVal" style="color: var(--safe-green);">0.0%</div>
+            <div class="stat-subtext" id="threatIndexDesc">Network ingress traffic is purely benign.</div>
+        </div>
+
+        <!-- Stat 2: Flows Inspected -->
+        <div class="card stat-card">
+            <div class="card-header">
+                <span class="card-title">Flows Inspected</span>
+                <span style="font-size: 0.70rem; color: var(--text-muted);">Real-Time Counter</span>
+            </div>
+            <div class="stat-value" id="totalFlowsVal" style="color: #38bdf8;">0</div>
+            <div class="stat-subtext">Processed via 16-D Canonical Invariant Vectors</div>
+        </div>
+
+        <!-- Stat 3: Mitigations -->
+        <div class="card stat-card">
+            <div class="card-header">
+                <span class="card-title">Attacks Mitigated</span>
+                <span style="font-size: 0.70rem; color: var(--text-muted);">Defensive Filter</span>
+            </div>
+            <div class="stat-value" id="mitigationsVal" style="color: var(--danger-red);">0</div>
+            <div class="stat-subtext" id="mitigationsSubtext">0 Blocked • 0 Rate-Limited</div>
+        </div>
+
+        <!-- Stat 4: AI Latency -->
+        <div class="card stat-card">
+            <div class="card-header">
+                <span class="card-title">Inference Speed</span>
+                <span style="font-size: 0.70rem; color: var(--text-muted);">Cascading Latency</span>
+            </div>
+            <div class="stat-value" id="latencyVal" style="color: #c084fc;">0.02 ms</div>
+            <div class="stat-subtext">Tier-1 Tree Screen (50,000 pkts/sec capable)</div>
+        </div>
+
+        <!-- PORT ATTACK SURFACE HEATMAP (Span 6) -->
+        <div class="card heatmap-card">
+            <div class="card-header">
+                <span class="card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    Target Port Attack Surface Heatmap
+                </span>
+                <span style="font-size: 0.70rem; color: var(--text-muted);">Real-Time Ingress Matrix</span>
+            </div>
+            <div class="heatmap-grid" id="heatmapGrid">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- MITRE ATT&CK THREAT MATRIX (Span 6) -->
+        <div class="card mitre-card">
+            <div class="card-header">
+                <span class="card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H7v-2h5v2zm5-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    MITRE ATT&amp;CK Threat Intelligence Matrix
+                </span>
+                <span style="font-size: 0.70rem; color: #a855f7;">Enterprise Framework</span>
+            </div>
+            <div class="mitre-grid" id="mitreGrid">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- THREAT SIMULATION CONTROLS CARD (Span 6) -->
+        <div class="card sim-card">
+            <div class="card-header">
+                <span class="card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    Live Traffic Generator &amp; Vector Simulation
+                </span>
+                <span style="font-size: 0.70rem; color: var(--text-muted);">Inject Heterogeneous Flows</span>
+            </div>
+
+            <div class="sim-button-row">
+                <button class="btn-sim" onclick="simulateFlow('normal_web')">
+                    🟢 Normal Web (HTTPS)
+                </button>
+                <button class="btn-sim attack-btn" onclick="simulateFlow('syn_flood')">
+                    🔴 TCP SYN Flood (Neptune)
+                </button>
+                <button class="btn-sim attack-btn" onclick="simulateFlow('dns_reflection')">
+                    🔴 Reflection Flood (DDoS2019)
+                </button>
+                <button class="btn-sim attack-btn" onclick="simulateFlow('botnet_iot')">
+                    🔴 IoT Mirai Flood (BoT-IoT)
+                </button>
+                <button class="btn-sim attack-btn" onclick="simulateFlow('sdn_exhaustion')">
+                    🔴 SDN OpenFlow (SDN-DDoS)
+                </button>
+                <button class="btn-sim attack-btn" onclick="simulateFlow('scada_anomaly')">
+                    🔴 SCADA Telemetry (ToN-IoT)
+                </button>
+
+                <button class="btn-sim btn-stream-toggle" id="streamToggleBtn" onclick="toggleAutoStream()">
+                    ⚡ START LIVE STREAM (Continuous Feed)
+                </button>
+            </div>
+        </div>
+
+        <!-- AUDIO ALERT SYSTEM CARD (Span 6) -->
+        <div class="card audio-card">
+            <div class="card-header">
+                <span class="card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                    Audio Alert &amp; Detection Sounds
+                </span>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label style="font-size: 0.72rem; cursor: pointer;">
+                        <input type="checkbox" id="audioToggle" checked style="accent-color: var(--cyan-glow);"> Sound Active
+                    </label>
+                </div>
+            </div>
+
+            <div style="font-size: 0.73rem; color: var(--text-muted); margin-bottom: 6px;">
+                Plays acoustic alert tones for each threat severity (Web Audio API &amp; local .wav fallback):
+            </div>
+
+            <div class="audio-button-row">
+                <button class="btn-sound green" onclick="playAudioTone('safe')">
+                    <span>🟢 Safe Chime</span>
+                    <span style="font-size: 0.62rem; color: var(--text-muted);">Normal Flow</span>
+                </button>
+                <button class="btn-sound yellow" onclick="playAudioTone('warning')">
+                    <span>🟡 Caution Beep</span>
+                    <span style="font-size: 0.62rem; color: var(--text-muted);">Rate-Limit 50%</span>
+                </button>
+                <button class="btn-sound red" onclick="playAudioTone('danger')">
+                    <span>🔴 Danger Alarm</span>
+                    <span style="font-size: 0.62rem; color: var(--text-muted);">Active DDoS</span>
+                </button>
+                <button class="btn-sound purple" onclick="playAudioTone('critical')">
+                    <span>🛑 Block Siren</span>
+                    <span style="font-size: 0.62rem; color: var(--text-muted);">IP Quarantined</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- REAL-TIME TIMELINE CHART CARD (Span 8) -->
+        <div class="card chart-card">
+            <div class="card-header">
+                <span class="card-title">Rolling Traffic Inspection Activity</span>
+                <div style="font-size: 0.70rem; display: flex; gap: 14px;">
+                    <span style="color: var(--safe-green);">■ Normal Traffic</span>
+                    <span style="color: var(--danger-red);">■ Mitigated Attack</span>
+                </div>
+            </div>
+            <canvas id="timelineCanvas"></canvas>
+        </div>
+
+        <!-- ENGINE TELEMETRY CARD (Span 4) -->
+        <div class="card engine-card">
+            <div class="card-header">
+                <span class="card-title">Platform Hardware Specs</span>
+                <span style="font-size: 0.7rem; color: var(--safe-green);" id="deviceIndicator">MPS Active</span>
+            </div>
+
+            <div class="metric-row">
+                <span class="metric-label">Compute Device:</span>
+                <span class="metric-val" id="specDevice">Apple Silicon MPS</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Mac Host CPU:</span>
+                <span class="metric-val" id="specCpu">--%</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Unified RAM Used:</span>
+                <span class="metric-val" id="specRam">-- / -- GB</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Architecture:</span>
+                <span class="metric-val">Dual-Tier (Classical + ResMLP)</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Defense Uptime:</span>
+                <span class="metric-val" id="specUptime">00:00:00</span>
+            </div>
+        </div>
+
+        <!-- QUICK SAFETY LOCKDOWN CARD (Span 4) -->
+        <div class="card quick-safety-card">
+            <div class="card-header">
+                <span class="card-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                    </svg>
+                    Quick Safety Lockdown
+                </span>
+                <span id="quickSafetyBadge" class="badge-pill badge-safe">SHIELD: READY</span>
+            </div>
+
+            <div style="font-size: 0.73rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.4;">
+                1-Click emergency defense lockdown. Instantly tightens anomaly tolerance threshold (&lt;40%), isolates attacker IPs into a quarantine blacklist, and enforces line-rate kernel drops.
+            </div>
+
+            <button id="quickSafetyBtn" class="btn-quick-safety" onclick="toggleQuickSafety()">
+                <div class="shield-icon-wrapper" id="shieldIconWrapper">🛡️</div>
+                <div>
+                    <div style="font-weight: 800; font-size: 0.88rem;" id="quickSafetyBtnText">ACTIVATE QUICK SAFETY</div>
+                    <div style="font-size: 0.68rem; opacity: 0.85;" id="quickSafetyBtnSubtext">Enforce strict zero-tolerance defense shield</div>
+                </div>
+            </button>
+
+            <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.72rem;">
+                <div class="metric-row">
+                    <span class="metric-label">Quarantined IPs:</span>
+                    <span class="metric-val" id="quarantinedCountVal" style="color: var(--danger-red);">0 Host(s)</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Threat Filtering:</span>
+                    <span class="metric-val" id="shieldPolicyVal" style="color: #38bdf8;">Standard Adaptive</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI SECURITY SUGGESTIONS & NETWORK HARDENING ADVISOR (Span 8) -->
+        <div class="card suggestions-card">
+            <div class="card-header">
+                <span class="card-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                    </svg>
+                    Live AI Network Hardening &amp; Security Suggestions
+                </span>
+                <span style="font-size: 0.70rem; color: #7dd3fc;" id="suggestionsHeaderBadge">Real-time Defense Advisory</span>
+            </div>
+
+            <div style="font-size: 0.73rem; color: var(--text-muted); margin-bottom: 8px;">
+                Tailored security hardening commands generated in real-time as traffic is scanned:
+            </div>
+
+            <div class="suggestions-container" id="suggestionsContainer">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- HYBRID DUAL-PLANE NETWORK MONITOR (PHYSICAL + VIRTUAL) (Span 12) -->
+        <div class="card dualplane-card">
+            <div class="card-header">
+                <span class="card-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    Hybrid Dual-Plane Network Surveillance: Physical + Virtual
+                </span>
+                <div style="font-size: 0.70rem; display: flex; align-items: center; gap: 14px;">
+                    <span style="color: #38bdf8; display: flex; align-items: center; gap: 5px;">
+                        <span class="pulse-dot cyan"></span> Physical Plane: <strong id="physTotalMbHeader">-- MB</strong>
+                    </span>
+                    <span style="color: #c084fc; display: flex; align-items: center; gap: 5px;">
+                        <span class="pulse-dot purple"></span> Virtual Plane: <strong id="virtTotalMbHeader">-- MB</strong>
+                    </span>
+                    <span style="color: var(--safe-green); font-size: 0.66rem; font-weight: 700; border: 1px solid var(--safe-green); padding: 2px 6px; border-radius: 4px;">
+                        🔒 PRIVACY CLOAK ACTIVE
+                    </span>
+                </div>
+            </div>
+
+            <div style="font-size: 0.73rem; color: var(--text-muted); margin-bottom: 8px;">
+                Simultaneous multi-interface monitoring across physical network hardware (Wi-Fi, Ethernet) and virtual software interfaces (Loopback, VPN/utun tunnels, VM/Docker bridges, and synthetic attack vectors) with zero confidential data leaks:
+            </div>
+
+            <div class="dualplane-grid">
+                <!-- Physical Network Plane -->
+                <div class="plane-box physical">
+                    <div class="plane-box-header">
+                        <div class="plane-title physical">
+                            <span class="pulse-dot cyan"></span>
+                            🌐 Physical Network Plane (Live Wire &amp; Wi-Fi)
+                        </div>
+                        <span class="badge-pill badge-safe" id="physPlaneStatusBadge">ONLINE: en0</span>
+                    </div>
+
+                    <div class="plane-stats-row">
+                        <div class="plane-stat-tile">
+                            <div class="plane-stat-label">Primary Interface</div>
+                            <div class="plane-stat-val" id="physPrimaryIface">en0</div>
+                            <div style="font-size: 0.65rem; color: var(--text-muted);" id="physPrimaryIp">--</div>
+                        </div>
+                        <div class="plane-stat-tile">
+                            <div class="plane-stat-label">Physical Ingress</div>
+                            <div class="plane-stat-val" id="physRecvMb" style="color: var(--safe-green);">-- MB</div>
+                            <div style="font-size: 0.65rem; color: var(--text-muted);" id="physRecvPkts">-- pkts</div>
+                        </div>
+                        <div class="plane-stat-tile">
+                            <div class="plane-stat-label">Physical Egress</div>
+                            <div class="plane-stat-val" id="physSentMb" style="color: #38bdf8;">-- MB</div>
+                            <div style="font-size: 0.65rem; color: var(--text-muted);" id="physSentPkts">-- pkts</div>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 0.68rem; font-weight: 700; color: #7dd3fc; text-transform: uppercase; margin-bottom: 4px;">
+                        Active Hardware Interfaces:
+                    </div>
+                    <div class="plane-iface-list" id="physIfaceList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Virtual Network Plane -->
+                <div class="plane-box virtual">
+                    <div class="plane-box-header">
+                        <div class="plane-title virtual">
+                            <span class="pulse-dot purple"></span>
+                            🔒 Virtual Network Plane (VPNs, Tunnels, Loopback &amp; Sim)
+                        </div>
+                        <span class="badge-pill" style="background: rgba(192, 132, 252, 0.15); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.4);" id="virtPlaneStatusBadge">ACTIVE: lo0 + utun</span>
+                    </div>
+
+                    <div class="plane-stats-row">
+                        <div class="plane-stat-tile">
+                            <div class="plane-stat-label">Virtual Loopback</div>
+                            <div class="plane-stat-val" id="virtLoopbackIface">lo0</div>
+                            <div style="font-size: 0.65rem; color: var(--text-muted);">127.0.0.1 [IPC / Sockets]</div>
+                        </div>
+                        <div class="plane-stat-tile">
+                            <div class="plane-stat-label">Virtual Traffic</div>
+                            <div class="plane-stat-val" id="virtRecvMb" style="color: #c084fc;">-- MB</div>
+                            <div style="font-size: 0.65rem; color: var(--text-muted);">Tunnels + Loopback</div>
+                        </div>
+                        <div class="plane-stat-tile">
+                            <div class="plane-stat-label">Attack Generator</div>
+                            <div class="plane-stat-val" style="color: var(--danger-red);">ACTIVE</div>
+                            <div style="font-size: 0.65rem; color: var(--text-muted);">Multi-Dataset Plane</div>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 0.68rem; font-weight: 700; color: #c084fc; text-transform: uppercase; margin-bottom: 4px;">
+                        Virtual Interfaces &amp; Encrypted Tunnels:
+                    </div>
+                    <div class="plane-iface-list" id="virtIfaceList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LIVE FLOW INSPECTION TABLE (Span 12) -->
+        <div class="card table-card">
+            <div class="card-header">
+                <span class="card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z"/>
+                    </svg>
+                    Live Flow Telemetry Stream
+                </span>
+
+                <!-- Dual-Plane Filter Tabs -->
+                <div class="table-tab-filter">
+                    <span style="font-size: 0.68rem; color: var(--text-muted); margin-right: 4px;">Plane Filter:</span>
+                    <button class="btn-table-tab active" id="tabFilterAll" onclick="setTablePlaneFilter('all')">All Planes (Hybrid)</button>
+                    <button class="btn-table-tab" id="tabFilterPhy" onclick="setTablePlaneFilter('physical')">🌐 Physical (<span id="tabCountPhy">0</span>)</button>
+                    <button class="btn-table-tab" id="tabFilterVir" onclick="setTablePlaneFilter('virtual')">🔒 Virtual (<span id="tabCountVir">0</span>)</button>
+                </div>
+
+                <div style="font-size: 0.70rem; color: #38bdf8;">
+                    💡 Click any flow row for <strong>DPI &amp; Interface Plane Forensics</strong>
+                </div>
+            </div>
+
+            <div class="flow-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Flow ID</th>
+                            <th>Plane / Interface</th>
+                            <th>Source Endpoint (Protected)</th>
+                            <th>Port</th>
+                            <th>Protocol</th>
+                            <th>Threat Category</th>
+                            <th>Attack Signature</th>
+                            <th>Confidence</th>
+                            <th>Mitigation Action</th>
+                            <th>Verdict</th>
+                        </tr>
+                    </thead>
+                    <tbody id="flowTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FORENSIC DEEP PACKET INSPECTION & XAI DRAWER -->
+    <div class="drawer" id="forensicDrawer">
+        <div class="modal-header">
+            <div class="modal-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--cyan-glow)">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <span id="drawerFlowId">Flow Forensics</span>
+            </div>
+            <button class="btn-close" onclick="closeForensicDrawer()">&times;</button>
+        </div>
+
+        <!-- Status Summary -->
+        <div class="drawer-section">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-size:0.72rem; color:var(--text-muted);">Source Endpoint (Protected)</div>
+                    <div style="font-family:var(--font-mono); font-weight:800; font-size:1.05rem;" id="drawerSrcIp">--</div>
+                </div>
+                <div>
+                    <div style="font-size:0.72rem; color:var(--text-muted);">Target Port</div>
+                    <div style="font-family:var(--font-mono); font-weight:800; font-size:1.05rem;" id="drawerDstPort">--</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:0.72rem; color:var(--text-muted);">Decision</div>
+                    <span id="drawerVerdictBadge" class="badge-pill badge-safe">SAFE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ingress Network Plane & OPSEC Privacy Status -->
+        <div class="drawer-section">
+            <div class="drawer-section-title">🌐 Ingress Network Plane &amp; OPSEC Privacy Status</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <span style="font-size:0.75rem; color:var(--text-muted);">Network Plane:</span>
+                <span id="drawerNetPlaneBadge" class="badge-plane-phy">🌐 PHYSICAL WIRE</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <span style="font-size:0.75rem; color:var(--text-muted);">Adapter / Tunnel:</span>
+                <span style="font-family:var(--font-mono); font-weight:700; color:#ffffff;" id="drawerIfaceName">en0 (Wi-Fi)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <span style="font-size:0.75rem; color:var(--text-muted);">Encapsulation:</span>
+                <span style="font-family:var(--font-mono); font-size:0.68rem; color:#7dd3fc;" id="drawerEncapsulation">IEEE 802.11 / Wi-Fi Framing</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.75rem; color:var(--text-muted);">Privacy Guard:</span>
+                <span style="font-size:0.68rem; color:var(--safe-green); font-weight:700;" id="drawerPrivacyStatus">🔒 ZERO-LEAK MASKING ENGAGED</span>
+            </div>
+        </div>
+
+        <!-- Shannon Entropy Section -->
+        <div class="drawer-section">
+            <div class="drawer-section-title">📊 Shannon &amp; Rényi Entropy Diagnostics</div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
+                <span style="font-size:0.75rem; color:var(--text-muted);">Calculated Byte Randomness:</span>
+                <span style="font-family:var(--font-mono); font-weight:800; color:var(--cyan-glow);" id="drawerShannonVal">-- bits/byte</span>
+            </div>
+            <div style="font-size:0.70rem; color:#cbd5e1; margin-bottom:6px; line-height:1.35;" id="drawerEntropyDesc">--</div>
+            <div style="font-size:0.68rem; color:var(--text-muted); font-family:var(--font-mono);" id="drawerRenyiVal">Rényi Entropy (&alpha;=2.0): -- bits</div>
+        </div>
+
+        <!-- TCP Flag Spectrum -->
+        <div class="drawer-section">
+            <div class="drawer-section-title">🚩 TCP Control Flags Decomposition</div>
+            <div class="flag-grid" id="drawerFlagGrid">
+                <div class="flag-box" id="flagSYN">SYN</div>
+                <div class="flag-box" id="flagACK">ACK</div>
+                <div class="flag-box" id="flagFIN">FIN</div>
+                <div class="flag-box" id="flagRST">RST</div>
+                <div class="flag-box" id="flagPSH">PSH</div>
+                <div class="flag-box" id="flagURG">URG</div>
+            </div>
+        </div>
+
+        <!-- Flow Symmetry & Asymmetry -->
+        <div class="drawer-section">
+            <div class="drawer-section-title">⚖️ Bidirectional Flow Symmetry Meter</div>
+            <div style="display:flex; justify-content:space-between; font-size:0.74rem; margin-bottom:4px;">
+                <span style="color:var(--text-muted);">Forward : Backward Packets:</span>
+                <span style="font-family:var(--font-mono); font-weight:700;" id="drawerSymmetryRatio">--</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.74rem;">
+                <span style="color:var(--text-muted);">Unidirectional Asymmetry:</span>
+                <span style="font-family:var(--font-mono); font-weight:700; color:var(--warning-yellow);" id="drawerAsymmetryPct">--%</span>
+            </div>
+        </div>
+
+        <!-- XAI Feature Attribution Waterfall -->
+        <div class="drawer-section">
+            <div class="drawer-section-title">🧠 Explainable AI (XAI) Attribution Waterfall</div>
+            <div style="font-size:0.70rem; color:var(--text-muted); margin-bottom:8px;">
+                Top feature vectors determining AI confidence:
+            </div>
+            <div id="drawerXaiContainer">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- MITRE Classification -->
+        <div class="drawer-section">
+            <div class="drawer-section-title">🎯 MITRE ATT&amp;CK Mapping</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span class="mitre-id" id="drawerMitreId">--</span>
+                <span style="font-size:0.75rem; font-weight:700; color:#ffffff;" id="drawerMitreName">--</span>
+            </div>
+            <div style="font-size:0.70rem; color:var(--text-muted); margin-top:3px;" id="drawerMitreTactic">Tactic: --</div>
+        </div>
+
+        <!-- Host Firewall Action -->
+        <div class="drawer-section" style="margin-bottom:0;">
+            <div class="drawer-section-title">🛡️ Quarantine Firewall Rule</div>
+            <div class="suggestion-code-row">
+                <div class="suggestion-code" id="drawerFwRule">--</div>
+                <button class="btn-copy" onclick="copySuggestionCommand(this, document.getElementById('drawerFwRule').textContent)">📋 Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1-CLICK FIREWALL RULESET EXPORT MODAL -->
+    <div class="modal-overlay" id="firewallModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--cyan-glow)">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                    </svg>
+                    Multi-Platform Firewall Defense Exporter
+                </div>
+                <button class="btn-close" onclick="closeFirewallModal()">&times;</button>
+            </div>
+
+            <div style="font-size:0.74rem; color:var(--text-muted); margin-bottom:12px;">
+                Autonomous configuration rulesets populated with currently quarantined threat source IPs:
+            </div>
+
+            <div class="tab-nav">
+                <button class="tab-btn active" id="tabPfBtn" onclick="switchFwTab('pf')">macOS Packet Filter (pf.conf)</button>
+                <button class="tab-btn" id="tabIptablesBtn" onclick="switchFwTab('iptables')">Linux Netfilter (iptables)</button>
+                <button class="tab-btn" id="tabBgpBtn" onclick="switchFwTab('bgp')">BGP Flowspec (RFC 5575)</button>
+            </div>
+
+            <textarea class="code-textarea" id="fwCodeTextarea" readonly></textarea>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
+                <span style="font-size:0.72rem; color:var(--text-muted);" id="fwModalQuarantinedNotice">0 Threat IP(s) Quarantined</span>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn-copy" style="padding:6px 14px; font-size:0.75rem;" onclick="copyFwCode(this)">📋 Copy Ruleset</button>
+                    <button class="btn-copy" style="padding:6px 14px; font-size:0.75rem; background:rgba(0,255,136,0.15); border-color:var(--safe-green); color:var(--safe-green);" onclick="downloadFwCode()">⬇️ Download File</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO SYNTHESIS & DASHBOARD SCRIPT -->
+    <script>
+        let audioCtx = null;
+        let isAudioMuted = false;
+        let isAutoStreaming = false;
+        let streamTimer = null;
+        let currentFwRules = {};
+        let activeFwTab = 'pf';
+        let latestFlowsMap = {};
+        let activeTableFilter = 'all';
+        let isPrivacyCloaked = true;
+        let lastReceivedFlows = [];
+
+        function setTablePlaneFilter(filter) {
+            activeTableFilter = filter;
+            const tabAll = document.getElementById('tabFilterAll');
+            const tabPhy = document.getElementById('tabFilterPhy');
+            const tabVir = document.getElementById('tabFilterVir');
+            if (tabAll) tabAll.className = (filter === 'all') ? 'btn-table-tab active' : 'btn-table-tab';
+            if (tabPhy) tabPhy.className = (filter === 'physical') ? 'btn-table-tab active' : 'btn-table-tab';
+            if (tabVir) tabVir.className = (filter === 'virtual') ? 'btn-table-tab active' : 'btn-table-tab';
+            if (lastReceivedFlows && lastReceivedFlows.length > 0) {
+                renderTable(lastReceivedFlows);
+            }
+        }
+
+        async function togglePrivacyCloak() {
+            try {
+                const res = await fetch('/api/privacy', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled: !isPrivacyCloaked })
+                });
+                const data = await res.json();
+                isPrivacyCloaked = !!data.privacy_mode;
+                fetchState();
+            } catch (err) {
+                console.error("Error toggling privacy cloak:", err);
+            }
+        }
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Web Audio Synthesizer
+        function playAudioTone(type) {
+            if (isAudioMuted) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            if (type === 'safe') {
+                const osc1 = audioCtx.createOscillator();
+                const osc2 = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc1.type = 'sine';
+                osc2.type = 'sine';
+                osc1.frequency.setValueAtTime(523.25, now);
+                osc2.frequency.setValueAtTime(659.25, now);
+
+                gain.gain.setValueAtTime(0.18, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+                osc1.connect(gain);
+                osc2.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc1.start(now);
+                osc2.start(now);
+                osc1.stop(now + 0.42);
+                osc2.stop(now + 0.42);
+
+            } else if (type === 'warning') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(660, now);
+
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.setValueAtTime(0.001, now + 0.08);
+                gain.gain.setValueAtTime(0.15, now + 0.12);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.24);
+
+            } else if (type === 'danger') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(850, now);
+                osc.frequency.linearRampToValueAtTime(1250, now + 0.12);
+                osc.frequency.linearRampToValueAtTime(850, now + 0.24);
+                osc.frequency.linearRampToValueAtTime(1250, now + 0.36);
+
+                gain.gain.setValueAtTime(0.20, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.46);
+
+            } else if (type === 'critical') {
+                for (let i = 0; i < 3; i++) {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    const t = now + (i * 0.08);
+
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(1350, t);
+
+                    gain.gain.setValueAtTime(0.25, t);
+                    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(t);
+                    osc.stop(t + 0.06);
+                }
+            }
+        }
+
+        document.getElementById('audioToggle').addEventListener('change', (e) => {
+            isAudioMuted = !e.target.checked;
+        });
+
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clockDisplay').textContent = 
+                now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0').slice(0, 2);
+        }, 100);
+
+        async function fetchState() {
+            try {
+                const res = await fetch('/api/status');
+                if (!res.ok) return;
+                const data = await res.json();
+                renderUI(data);
+            } catch (err) {
+                console.error("Error fetching state:", err);
+            }
+        }
+
+        function renderUI(data) {
+            // Status Banner
+            const banner = document.getElementById('statusBanner');
+            const headline = document.getElementById('statusHeadline');
+            const pill = document.getElementById('statusPillBadge');
+            const ring = document.getElementById('statusRing');
+
+            banner.className = `status-banner ${data.status.toLowerCase()}`;
+            headline.textContent = data.banner;
+            pill.textContent = `STATUS: ${data.status}`;
+            pill.style.color = data.color;
+            pill.style.borderColor = data.color;
+            ring.style.color = data.color;
+
+            // Stats
+            const threatVal = document.getElementById('threatIndexVal');
+            threatVal.textContent = `${data.threat_level}%`;
+            threatVal.style.color = data.color;
+
+            const threatDesc = document.getElementById('threatIndexDesc');
+            if (data.status === 'SAFE') {
+                threatDesc.textContent = "Network traffic is normal & safe.";
+            } else if (data.status === 'CAUTION') {
+                threatDesc.textContent = "Moderate anomalies. Rate-limiting active.";
+            } else {
+                threatDesc.textContent = "CRITICAL: Active volumetric DDoS intrusion!";
+            }
+
+            document.getElementById('totalFlowsVal').textContent = data.total_flows.toLocaleString();
+            document.getElementById('mitigationsVal').textContent = data.attack_count.toLocaleString();
+            document.getElementById('mitigationsSubtext').textContent = 
+                `${data.mitigations.BLOCK_SOURCE_IP || 0 + (data.mitigations.QUICK_SAFETY_BLOCKED || 0)} Blocked • ${data.mitigations.RATE_LIMIT_50PCT || 0} Rate-Limited`;
+
+            // Specs
+            if (data.hardware) {
+                document.getElementById('specDevice').textContent = data.hardware.device.toUpperCase();
+                document.getElementById('specCpu').textContent = `${data.hardware.cpu_percent}%`;
+                document.getElementById('specRam').textContent = `${data.hardware.ram_used_gb} / ${data.hardware.ram_total_gb} GB (${data.hardware.ram_percent}%)`;
+            }
+            document.getElementById('specUptime').textContent = data.uptime;
+
+            // Sniffer Mode buttons
+            const simBtn = document.getElementById('modeSimBtn');
+            const liveBtn = document.getElementById('modeLiveBtn');
+            if (data.sniffer_mode === 'live_capture') {
+                liveBtn.className = 'btn-mode active';
+                simBtn.className = 'btn-mode';
+            } else {
+                simBtn.className = 'btn-mode active';
+                liveBtn.className = 'btn-mode';
+            }
+
+            // Quick Safety
+            const quickBtn = document.getElementById('quickSafetyBtn');
+            const quickBadge = document.getElementById('quickSafetyBadge');
+            const quickText = document.getElementById('quickSafetyBtnText');
+            const quickSubtext = document.getElementById('quickSafetyBtnSubtext');
+            const shieldPolicy = document.getElementById('shieldPolicyVal');
+            const quarantinedCount = document.getElementById('quarantinedCountVal');
+
+            if (data.quick_safety_mode) {
+                quickBtn.className = 'btn-quick-safety active';
+                quickBadge.className = 'badge-pill badge-danger';
+                quickBadge.textContent = 'SHIELD: ENGAGED';
+                quickText.textContent = 'QUICK SAFETY ACTIVE (AUTO-DEFENDING)';
+                quickSubtext.textContent = 'Aggressive quarantine & packet drop active';
+                shieldPolicy.textContent = 'High-Shield (Zero Tolerance)';
+                shieldPolicy.style.color = 'var(--danger-red)';
+            } else {
+                quickBtn.className = 'btn-quick-safety';
+                quickBadge.className = 'badge-pill badge-safe';
+                quickBadge.textContent = 'SHIELD: READY';
+                quickText.textContent = 'ACTIVATE QUICK SAFETY';
+                quickSubtext.textContent = 'Enforce strict zero-tolerance defense shield';
+                shieldPolicy.textContent = 'Standard Adaptive';
+                shieldPolicy.style.color = '#38bdf8';
+            }
+
+            quarantinedCount.textContent = `${data.quarantined_count || 0} Host(s)`;
+
+            // OPSEC Privacy Cloak Controls & Badges
+            isPrivacyCloaked = !!data.privacy_mode;
+            const privBtn = document.getElementById('privacyCloakBtn');
+            const privIcon = document.getElementById('privacyIcon');
+            const privText = document.getElementById('privacyText');
+            const privPill = document.getElementById('privacyPillBadge');
+
+            if (isPrivacyCloaked) {
+                if (privBtn) privBtn.className = 'btn-privacy-cloak';
+                if (privIcon) privIcon.textContent = '🔒';
+                if (privText) privText.textContent = 'OPSEC CLOAK: ACTIVE';
+                if (privPill) privPill.style.display = 'inline-block';
+            } else {
+                if (privBtn) privBtn.className = 'btn-privacy-cloak unmasked';
+                if (privIcon) privIcon.textContent = '👁️';
+                if (privText) privText.textContent = 'CLOAK: OFF (UNMASKED)';
+                if (privPill) privPill.style.display = 'none';
+            }
+
+            // Render Dual-Plane Surveillance (Physical + Virtual)
+            renderDualPlane(data.interfaces_telemetry, data.plane_summary);
+
+            // Render Port Heatmap
+            renderPortHeatmap(data.port_heatmap);
+
+            // Render MITRE Matrix
+            renderMitreSummary(data.mitre_summary);
+
+            // Render AI Security Suggestions
+            renderSuggestions(data.suggestions, data.quick_safety_mode);
+
+            // Save and Render Flow Table
+            lastReceivedFlows = data.recent_flows || [];
+            renderTable(lastReceivedFlows);
+
+            // Render Timeline Canvas
+            renderTimeline(data.timeline);
+        }
+
+        // Dual-Plane Telemetry Renderer (Physical + Virtual)
+        function renderDualPlane(interfacesTelemetry, planeSummary) {
+            if (!interfacesTelemetry) return;
+            const summary = interfacesTelemetry.summary || {};
+            const physical = interfacesTelemetry.physical || [];
+            const virtual = interfacesTelemetry.virtual || [];
+
+            // Header summaries
+            const physMbHeader = document.getElementById('physTotalMbHeader');
+            const virtMbHeader = document.getElementById('virtTotalMbHeader');
+            if (physMbHeader) physMbHeader.textContent = `${summary.tot_phys_mb || 0} MB`;
+            if (virtMbHeader) virtMbHeader.textContent = `${summary.tot_virt_mb || 0} MB`;
+
+            // Physical Plane Card
+            const physPrimaryIface = document.getElementById('physPrimaryIface');
+            const physPrimaryIp = document.getElementById('physPrimaryIp');
+            if (physPrimaryIface) physPrimaryIface.textContent = summary.primary_physical_iface || 'en0';
+            if (physPrimaryIp) physPrimaryIp.textContent = summary.primary_physical_ip || '--';
+
+            const activePhy = physical.find(p => p.name === 'en0') || physical[0];
+            if (activePhy) {
+                const recvMbEl = document.getElementById('physRecvMb');
+                const recvPktsEl = document.getElementById('physRecvPkts');
+                const sentMbEl = document.getElementById('physSentMb');
+                const sentPktsEl = document.getElementById('physSentPkts');
+                if (recvMbEl) recvMbEl.textContent = `${activePhy.bytes_recv_mb} MB`;
+                if (recvPktsEl) recvPktsEl.textContent = `${activePhy.pkts_recv.toLocaleString()} pkts`;
+                if (sentMbEl) sentMbEl.textContent = `${activePhy.bytes_sent_mb} MB`;
+                if (sentPktsEl) sentPktsEl.textContent = `${activePhy.pkts_sent.toLocaleString()} pkts`;
+            }
+
+            const physListEl = document.getElementById('physIfaceList');
+            if (physListEl) {
+                physListEl.innerHTML = '';
+                physical.forEach(p => {
+                    const item = document.createElement('div');
+                    item.className = 'plane-iface-item';
+                    item.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span>${p.icon || '🌐'}</span>
+                            <span style="font-weight:700; color:#38bdf8;">${p.name}</span>
+                            <span style="font-size:0.65rem; color:var(--text-muted);">(${p.description.split('(')[0].trim()})</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.65rem; color:#cbd5e1;">${p.ip}</span>
+                            <span class="badge-pill" style="font-size:0.58rem; padding:1px 5px; ${p.is_up ? 'color:var(--safe-green); border:1px solid var(--safe-green);' : 'color:var(--text-muted);'}">${p.activity_badge}</span>
+                        </div>
+                    `;
+                    physListEl.appendChild(item);
+                });
+            }
+
+            // Virtual Plane Card
+            const activeVirt = virtual.find(v => v.name === 'lo0') || virtual[0];
+            if (activeVirt) {
+                const loopbackEl = document.getElementById('virtLoopbackIface');
+                const virtRecvMbEl = document.getElementById('virtRecvMb');
+                if (loopbackEl) loopbackEl.textContent = activeVirt.name;
+                if (virtRecvMbEl) virtRecvMbEl.textContent = `${summary.tot_virt_mb || 0} MB`;
+            }
+
+            const virtListEl = document.getElementById('virtIfaceList');
+            if (virtListEl) {
+                virtListEl.innerHTML = '';
+                virtual.forEach(v => {
+                    const item = document.createElement('div');
+                    item.className = 'plane-iface-item';
+                    item.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span>${v.icon || '⚡'}</span>
+                            <span style="font-weight:700; color:#c084fc;">${v.name}</span>
+                            <span style="font-size:0.65rem; color:var(--text-muted);">(${v.description.split('(')[0].trim()})</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.65rem; color:#cbd5e1;">${v.ip}</span>
+                            <span class="badge-pill" style="font-size:0.58rem; padding:1px 5px; ${v.is_up ? 'color:#c084fc; border:1px solid #c084fc;' : 'color:var(--text-muted);'}">${v.activity_badge}</span>
+                        </div>
+                    `;
+                    virtListEl.appendChild(item);
+                });
+            }
+        }
+
+        // Port Heatmap Renderer
+        function renderPortHeatmap(portHeatmap) {
+            const grid = document.getElementById('heatmapGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const portLabels = {
+                80: "HTTP Web",
+                443: "HTTPS/TLS",
+                53: "DNS Resolver",
+                22: "SSH Shell",
+                502: "Modbus/SCADA",
+                8080: "IoT Web API",
+                6653: "OpenFlow SDN",
+                1434: "MSSQL Reflection"
+            };
+
+            const ports = [80, 443, 53, 22, 502, 8080, 6653, 1434];
+            ports.forEach(port => {
+                const hits = portHeatmap ? (portHeatmap[port] || 0) : 0;
+                let heatClass = 'cool';
+                if (hits > 12) heatClass = 'hot';
+                else if (hits > 4) heatClass = 'warm';
+
+                const box = document.createElement('div');
+                box.className = `port-heat-box ${heatClass}`;
+                box.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                        <span class="port-number">:${port}</span>
+                        <span class="port-hits">${hits} pkts</span>
+                    </div>
+                    <div class="port-name">${portLabels[port] || 'Custom Port'}</div>
+                `;
+                grid.appendChild(box);
+            });
+        }
+
+        // MITRE ATT&CK Matrix Renderer
+        function renderMitreSummary(mitreSummary) {
+            const grid = document.getElementById('mitreGrid');
+            if (!grid || !mitreSummary) return;
+            grid.innerHTML = '';
+
+            for (const [id, info] of Object.entries(mitreSummary)) {
+                const isThreat = info.count > 0;
+                const div = document.createElement('div');
+                div.className = `mitre-item ${isThreat ? 'active-threat' : ''}`;
+                div.innerHTML = `
+                    <div>
+                        <div class="mitre-id">${id}</div>
+                        <div class="mitre-name">${info.technique || info.name}</div>
+                    </div>
+                    <div class="mitre-badge" style="color: ${isThreat ? 'var(--danger-red)' : 'var(--text-muted)'};">
+                        ${info.count} hits
+                    </div>
+                `;
+                grid.appendChild(div);
+            }
+        }
+
+        // Suggestions Renderer
+        function renderSuggestions(suggestions, isShieldActive) {
+            const container = document.getElementById('suggestionsContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (!suggestions || suggestions.length === 0) {
+                container.innerHTML = '<div style="font-size:0.73rem; color:var(--text-muted); padding:8px;">No threat anomalies detected. Network baseline secure.</div>';
+                return;
+            }
+
+            document.getElementById('suggestionsHeaderBadge').textContent = `${suggestions.length} Active Hardening Rules`;
+
+            suggestions.forEach(sug => {
+                const div = document.createElement('div');
+                const sevClass = (sug.severity || 'info').toLowerCase();
+                div.className = `suggestion-box ${sevClass}`;
+
+                let badgeColor = 'var(--cyan-glow)';
+                if (sevClass === 'critical') badgeColor = 'var(--danger-red)';
+                else if (sevClass === 'high') badgeColor = 'var(--warning-yellow)';
+                else if (sevClass === 'safe') badgeColor = 'var(--safe-green)';
+
+                const statusPill = sug.applied 
+                    ? `<span style="font-size:0.62rem; color:var(--safe-green); font-weight:700;">[AUTO-ENFORCED BY SHIELD]</span>`
+                    : `<span style="font-size:0.62rem; color:${badgeColor}; font-weight:700;">[RECOMMENDED HARDENING]</span>`;
+
+                const cleanCmd = (sug.command || '').replace(/'/g, "\\'");
+
+                div.innerHTML = `
+                    <div class="suggestion-header">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span class="suggestion-title">${sug.title}</span>
+                            <span class="badge-pill" style="font-size:0.60rem; color:${badgeColor}; border:1px solid ${badgeColor}; padding:1px 5px;">${sug.badge}</span>
+                        </div>
+                        ${statusPill}
+                    </div>
+                    <div class="suggestion-desc">${sug.description}</div>
+                    <div class="suggestion-code-row">
+                        <div class="suggestion-code">${sug.command}</div>
+                        <button class="btn-copy" onclick="copySuggestionCommand(this, '${cleanCmd}')">📋 Copy</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function copySuggestionCommand(btn, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = "✓ Copied!";
+                btn.style.background = "var(--safe-green)";
+                btn.style.color = "#000";
+                setTimeout(() => {
+                    btn.textContent = orig;
+                    btn.style.background = "";
+                    btn.style.color = "";
+                }, 1600);
+            });
+        }
+
+        async function toggleQuickSafety() {
+            try {
+                const res = await fetch('/api/quick-safety', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                await res.json();
+                fetchState();
+            } catch (err) {
+                console.error("Error toggling quick safety:", err);
+            }
+        }
+
+        async function setSnifferMode(mode) {
+            try {
+                const res = await fetch('/api/sniffer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mode: mode })
+                });
+                await res.json();
+                fetchState();
+            } catch (err) {
+                console.error("Error setting sniffer mode:", err);
+            }
+        }
+
+        function renderTable(flows) {
+            const tbody = document.getElementById('flowTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            latestFlowsMap = {};
+
+            let phyCount = 0;
+            let virCount = 0;
+            flows.forEach(f => {
+                if (f.net_plane === 'physical') phyCount++;
+                else virCount++;
+            });
+
+            const countPhyEl = document.getElementById('tabCountPhy');
+            const countVirEl = document.getElementById('tabCountVir');
+            if (countPhyEl) countPhyEl.textContent = phyCount;
+            if (countVirEl) countVirEl.textContent = virCount;
+
+            const filtered = flows.filter(f => {
+                if (activeTableFilter === 'physical') return f.net_plane === 'physical';
+                if (activeTableFilter === 'virtual') return f.net_plane === 'virtual';
+                return true;
+            });
+
+            filtered.forEach(flow => {
+                latestFlowsMap[flow.id] = flow;
+                const tr = document.createElement('tr');
+                tr.onclick = () => openForensicDrawer(flow.id);
+
+                let badgeClass = 'badge-safe';
+                if (flow.status_badge.includes('CRITICAL') || flow.status_badge.includes('BLOCKED')) {
+                    badgeClass = 'badge-block';
+                } else if (flow.status_badge.includes('DANGER') || flow.status_badge.includes('ATTACK')) {
+                    badgeClass = 'badge-danger';
+                } else if (flow.status_badge.includes('WARNING') || flow.status_badge.includes('RATE-LIMITED')) {
+                    badgeClass = 'badge-warning';
+                }
+
+                let planeBadge = '';
+                if (flow.net_plane === 'physical') {
+                    const ifName = flow.interface_name ? flow.interface_name.split(' ')[0] : 'en0';
+                    planeBadge = `<span class="badge-plane-phy">🌐 PHY: ${ifName}</span>`;
+                } else {
+                    const ifName = flow.interface_name || 'lo0';
+                    const icon = ifName.includes('lo') ? '🔄' : (ifName.includes('utun') ? '🔒' : '⚡');
+                    planeBadge = `<span class="badge-plane-vir">${icon} VIR: ${ifName.split(' ')[0]}</span>`;
+                }
+
+                const displaySrc = flow.is_masked ? `🔒 ${flow.src_ip}` : flow.src_ip;
+
+                tr.innerHTML = `
+                    <td style="color: var(--text-muted);">${flow.timestamp}</td>
+                    <td style="color: #38bdf8; font-weight:700;">${flow.id}</td>
+                    <td>${planeBadge}</td>
+                    <td style="font-weight:600; color:#e2e8f0;">${displaySrc}</td>
+                    <td>:${flow.dst_port}</td>
+                    <td style="color: #94a3b8;">${flow.protocol}</td>
+                    <td>${flow.category}</td>
+                    <td style="font-weight:600; color:${flow.is_attack ? 'var(--danger-red)' : 'var(--safe-green)'}">${flow.attack_type}</td>
+                    <td>${flow.confidence}%</td>
+                    <td><span style="font-size:0.68rem; font-weight:700; color:${flow.status_color}">${flow.action}</span></td>
+                    <td><span class="badge-pill ${badgeClass}">${flow.status_badge}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderTimeline(timeline) {
+            const canvas = document.getElementById('timelineCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
+            canvas.width = width;
+            canvas.height = height;
+
+            ctx.clearRect(0, 0, width, height);
+            if (!timeline || timeline.length === 0) return;
+
+            const barWidth = Math.max(8, (width - (timeline.length * 4)) / timeline.length);
+            timeline.forEach((item, idx) => {
+                const x = idx * (barWidth + 4) + 8;
+                const barHeight = item.is_attack ? (height * 0.72) : (height * 0.35);
+                const y = height - barHeight - 10;
+
+                ctx.fillStyle = item.color;
+                ctx.shadowColor = item.color;
+                ctx.shadowBlur = item.is_attack ? 8 : 3;
+
+                ctx.beginPath();
+                ctx.roundRect(x, y, barWidth, barHeight, 3);
+                ctx.fill();
+            });
+        }
+
+        // Open Deep Packet Inspection (DPI) & XAI Drawer
+        function openForensicDrawer(flowId) {
+            const flow = latestFlowsMap[flowId];
+            if (!flow) return;
+
+            document.getElementById('drawerFlowId').textContent = `DPI Forensics [${flow.id}]`;
+            document.getElementById('drawerSrcIp').textContent = flow.src_ip;
+            document.getElementById('drawerDstPort').textContent = `:${flow.dst_port}`;
+
+            // Ingress Network Plane & OPSEC Privacy Shield
+            const planeBadge = document.getElementById('drawerNetPlaneBadge');
+            if (planeBadge) {
+                if (flow.net_plane === 'physical') {
+                    planeBadge.className = 'badge-plane-phy';
+                    planeBadge.textContent = '🌐 PHYSICAL WIRE (en0)';
+                } else {
+                    planeBadge.className = 'badge-plane-vir';
+                    planeBadge.textContent = '🔒 VIRTUAL PLANE (' + (flow.interface_name || 'lo0').split(' ')[0] + ')';
+                }
+            }
+            const ifaceEl = document.getElementById('drawerIfaceName');
+            if (ifaceEl) ifaceEl.textContent = flow.interface_name || 'en0';
+            const encEl = document.getElementById('drawerEncapsulation');
+            if (encEl) encEl.textContent = flow.encapsulation || 'IEEE 802.11 / Wi-Fi Framing';
+            const privEl = document.getElementById('drawerPrivacyStatus');
+            if (privEl) {
+                if (flow.is_masked) {
+                    privEl.textContent = '🔒 ZERO-LEAK MASKING ENGAGED';
+                    privEl.style.color = 'var(--safe-green)';
+                } else {
+                    privEl.textContent = '⚠️ RAW ADDRESS (UNMASKED)';
+                    privEl.style.color = 'var(--warning-yellow)';
+                }
+            }
+
+            const badge = document.getElementById('drawerVerdictBadge');
+            badge.textContent = flow.is_attack ? 'ATTACK BLOCKED' : 'BENIGN PASS';
+            badge.className = flow.is_attack ? 'badge-pill badge-danger' : 'badge-pill badge-safe';
+
+            const dpi = flow.dpi || {};
+
+            // Entropy
+            document.getElementById('drawerShannonVal').textContent = `${dpi.shannon_entropy || '4.50'} bits/byte`;
+            document.getElementById('drawerEntropyDesc').textContent = dpi.entropy_label || 'Calculated byte-level randomness';
+            document.getElementById('drawerRenyiVal').textContent = `Rényi Entropy (α=2.0): ${dpi.renyi_entropy || '4.20'} bits`;
+
+            // TCP Flags
+            const flags = dpi.tcp_flags || {};
+            ['SYN', 'ACK', 'FIN', 'RST', 'PSH', 'URG'].forEach(f => {
+                const el = document.getElementById(`flag${f}`);
+                if (el) {
+                    if (flags[f] > 0) {
+                        el.className = 'flag-box active';
+                    } else {
+                        el.className = 'flag-box';
+                    }
+                }
+            });
+
+            // Flow Symmetry
+            document.getElementById('drawerSymmetryRatio').textContent = dpi.flow_symmetry_ratio || '18:24';
+            document.getElementById('drawerAsymmetryPct').textContent = `${dpi.asymmetry_percent || 0}%`;
+
+            // XAI Waterfall
+            const xaiContainer = document.getElementById('drawerXaiContainer');
+            xaiContainer.innerHTML = '';
+            const attributions = dpi.xai_attributions || [];
+            attributions.forEach(item => {
+                const bar = document.createElement('div');
+                bar.className = 'xai-bar-item';
+                const pct = parseInt(item.impact.replace(/[^0-9]/g, '')) || 30;
+                bar.innerHTML = `
+                    <div class="xai-bar-label">
+                        <span style="color:#ffffff; font-weight:600;">${item.feature}</span>
+                        <span style="font-family:var(--font-mono); font-weight:700; color:${item.direction === 'danger' ? 'var(--danger-red)' : 'var(--safe-green)'};">${item.impact}</span>
+                    </div>
+                    <div class="xai-track">
+                        <div class="xai-fill ${item.direction}" style="width: ${pct}%;"></div>
+                    </div>
+                    <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">${item.desc}</div>
+                `;
+                xaiContainer.appendChild(bar);
+            });
+
+            // MITRE
+            const mitre = dpi.mitre || {};
+            document.getElementById('drawerMitreId').textContent = mitre.id || 'T1498.001';
+            document.getElementById('drawerMitreName').textContent = mitre.name || 'Network Denial of Service';
+            document.getElementById('drawerMitreTactic').textContent = `Tactic: ${mitre.tactic || 'Impact'}`;
+
+            // Firewall rule for this specific flow
+            document.getElementById('drawerFwRule').textContent = `sudo pfctl -t ddos_quarantine -T add ${flow.src_ip} && sudo pfctl -k ${flow.src_ip}`;
+
+            document.getElementById('forensicDrawer').className = 'drawer open';
+        }
+
+        function closeForensicDrawer() {
+            document.getElementById('forensicDrawer').className = 'drawer';
+        }
+
+        // Firewall Modal
+        async function openFirewallModal() {
+            try {
+                const res = await fetch('/api/firewall-rules');
+                currentFwRules = await res.json();
+                document.getElementById('fwModalQuarantinedNotice').textContent = 
+                    `${(currentFwRules.quarantined_ips || []).length} Attacker Host(s) in Blacklist Table`;
+                switchFwTab(activeFwTab);
+                document.getElementById('firewallModal').className = 'modal-overlay open';
+            } catch (err) {
+                console.error("Error fetching firewall rules:", err);
+            }
+        }
+
+        function closeFirewallModal() {
+            document.getElementById('firewallModal').className = 'modal-overlay';
+        }
+
+        function switchFwTab(tab) {
+            activeFwTab = tab;
+            document.getElementById('tabPfBtn').className = (tab === 'pf') ? 'tab-btn active' : 'tab-btn';
+            document.getElementById('tabIptablesBtn').className = (tab === 'iptables') ? 'tab-btn active' : 'tab-btn';
+            document.getElementById('tabBgpBtn').className = (tab === 'bgp') ? 'tab-btn active' : 'tab-btn';
+
+            const textarea = document.getElementById('fwCodeTextarea');
+            if (tab === 'pf') {
+                textarea.value = currentFwRules.macos_pf || '';
+            } else if (tab === 'iptables') {
+                textarea.value = currentFwRules.linux_iptables || '';
+            } else if (tab === 'bgp') {
+                textarea.value = currentFwRules.bgp_flowspec || '';
+            }
+        }
+
+        function copyFwCode(btn) {
+            const textarea = document.getElementById('fwCodeTextarea');
+            navigator.clipboard.writeText(textarea.value).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = "✓ Copied Ruleset!";
+                setTimeout(() => { btn.textContent = orig; }, 1600);
+            });
+        }
+
+        function downloadFwCode() {
+            const textarea = document.getElementById('fwCodeTextarea');
+            const blob = new Blob([textarea.value], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = activeFwTab === 'pf' ? 'pf.conf' : (activeFwTab === 'iptables' ? 'ddos_iptables.sh' : 'flowspec_rules.txt');
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Action Handlers
+        async function simulateFlow(vectorKey) {
+            initAudio();
+            try {
+                const res = await fetch('/api/simulate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: vectorKey })
+                });
+                const record = await res.json();
+                if (record.audio_type) {
+                    playAudioTone(record.audio_type);
+                }
+                fetchState();
+            } catch (err) {
+                console.error("Simulation error:", err);
+            }
+        }
+
+        function toggleAutoStream() {
+            const btn = document.getElementById('streamToggleBtn');
+            if (isAutoStreaming) {
+                clearInterval(streamTimer);
+                isAutoStreaming = false;
+                btn.className = "btn-sim btn-stream-toggle";
+                btn.textContent = "⚡ START LIVE STREAM (Continuous Feed)";
+            } else {
+                initAudio();
+                isAutoStreaming = true;
+                btn.className = "btn-sim btn-stream-toggle active";
+                btn.textContent = "⏸ PAUSE LIVE STREAM";
+                const vectors = ['normal_web', 'normal_web', 'syn_flood', 'normal_web', 'botnet_iot', 'normal_web', 'dns_reflection', 'scada_anomaly'];
+                let i = 0;
+                streamTimer = setInterval(() => {
+                    const vec = vectors[i % vectors.length];
+                    simulateFlow(vec);
+                    i++;
+                }, 1400);
+            }
+        }
+
+        fetchState();
+        setInterval(fetchState, 1500);
+    </script>
+</body>
+</html>

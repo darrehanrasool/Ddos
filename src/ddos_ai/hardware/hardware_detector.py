@@ -3,7 +3,12 @@
 from dataclasses import dataclass
 import os
 import platform
-import psutil
+try:
+    import psutil
+    _HAS_PSUTIL = True
+except ImportError:
+    _HAS_PSUTIL = False
+
 import torch
 import logging
 
@@ -27,8 +32,39 @@ class HardwareProfile:
     recommended_device: str
 
 
+def _get_ram_info() -> tuple[float, float]:
+    """Retrieves total and available RAM in GB using psutil or os/sysctl fallback."""
+    if _HAS_PSUTIL:
+        vm = psutil.virtual_memory()
+        return round(vm.total / (1024**3), 2), round(vm.available / (1024**3), 2)
+    
+    # Standard library fallback
+    total_bytes = 0
+    try:
+        if hasattr(os, "sysconf"):
+            if "SC_PAGE_SIZE" in os.sysconf_names and "SC_PHYS_PAGES" in os.sysconf_names:
+                total_bytes = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
+    except Exception:
+        pass
+    
+    if total_bytes == 0 and platform.system() == "Darwin":
+        try:
+            import subprocess
+            out = subprocess.check_output(["sysctl", "-n", "hw.memsize"], text=True)
+            total_bytes = int(out.strip())
+        except Exception:
+            pass
+
+    total_gb = round(total_bytes / (1024**3), 2) if total_bytes > 0 else 8.0
+    return total_gb, round(total_gb * 0.5, 2)
+
+
 def detect_hardware() -> HardwareProfile:
     """Detects available computing hardware, CPU, RAM, and accelerators (MPS/CUDA)."""
+    # Enable MPS fallback so unsupported PyTorch MPS operators gracefully fall back to CPU
+    if platform.system() == "Darwin":
+        os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
+
     has_cuda = torch.cuda.is_available()
     cuda_count = torch.cuda.device_count() if has_cuda else 0
     cuda_name = torch.cuda.get_device_name(0) if has_cuda and cuda_count > 0 else "None"
@@ -42,16 +78,18 @@ def detect_hardware() -> HardwareProfile:
     else:
         recommended = "cpu"
 
-    mem = psutil.virtual_memory()
+    total_ram, avail_ram = _get_ram_info()
+    cpu_logical = (psutil.cpu_count(logical=True) if _HAS_PSUTIL else os.cpu_count()) or 1
+    cpu_physical = (psutil.cpu_count(logical=False) if _HAS_PSUTIL else cpu_logical // 2) or 1
 
     profile = HardwareProfile(
         os_name=platform.system(),
         os_version=platform.version(),
         cpu_architecture=platform.machine(),
-        cpu_count_physical=psutil.cpu_count(logical=False) or 1,
-        cpu_count_logical=psutil.cpu_count(logical=True) or 1,
-        total_ram_gb=round(mem.total / (1024**3), 2),
-        available_ram_gb=round(mem.available / (1024**3), 2),
+        cpu_count_physical=cpu_physical,
+        cpu_count_logical=cpu_logical,
+        total_ram_gb=total_ram,
+        available_ram_gb=avail_ram,
         has_cuda=has_cuda,
         cuda_device_count=cuda_count,
         cuda_device_name=cuda_name,

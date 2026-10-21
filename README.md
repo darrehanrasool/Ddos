@@ -105,9 +105,9 @@ pytest tests/ -v
 | Flow-Transformer (8-Head) | BoT-IoT / CIC | 99.88% | 99.85% | 99.89% | 99.87% | 0.0011 | 0.62 ms |
 | **DDoS-AI Hybrid Ensemble** | **CIC-DDoS2019** | **99.95%** | **99.94%** | **99.96%** | **99.95%** | **0.0004** | **0.48 ms** |
 
-For the full 20-paper matrix, see [benchmark_comparison_matrix.md](file:///Users/darrehanrasool/Desktop/Kidney/papers/baseline_comparisons/benchmark_comparison_matrix.md).
+For the full 20-paper matrix, see [benchmark_comparison_matrix.md](papers/baseline_comparisons/benchmark_comparison_matrix.md).
 
 ---
 
 ## License
-MIT License. See [LICENSE](file:///Users/darrehanrasool/Desktop/Kidney/LICENSE).
+MIT License. See [LICENSE](LICENSE).

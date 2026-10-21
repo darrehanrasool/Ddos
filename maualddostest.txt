@@ -1,0 +1,160 @@
+================================================================================
+       DDOS-AI: STEP-BY-STEP MANUAL TESTING & RUNBOOK INSTRUCTIONS
+       (Browser Web App & Command-Line Terminal Testing)
+================================================================================
+
+TABLE OF CONTENTS:
+  1. Prerequisites & Environment Activation
+  2. Part A: Launching the Cyber SOC Web Browser App
+  3. Part B: Web Browser App Testing & Feature Checklist
+  4. Part C: Manual Terminal Tests (CLI Testing & Sound)
+  5. Part D: Deep Packet Inspection & Model Verification
+  6. Part E: Troubleshooting & Port Management
+
+================================================================================
+1. PREREQUISITES & ENVIRONMENT ACTIVATION
+================================================================================
+Open your macOS Terminal and navigate to the project directory:
+
+  cd /path/to/Ddos
+
+Activate the virtual environment:
+
+  source .venv/bin/activate
+
+(Alternatively, you can run commands directly using `.venv/bin/python`).
+
+================================================================================
+2. PART A: LAUNCHING THE CYBER SOC WEB BROWSER APP
+================================================================================
+
+Option 1: Using the Master CLI (Recommended)
+--------------------------------------------
+  python src/ddos_ai/main.py dashboard --open-browser
+
+Option 2: Using the Dedicated Dashboard Script
+----------------------------------------------
+  python scripts/run_dashboard.py --open-browser
+
+Option 3: Launching on a Custom Port (e.g., if 8080 is in use)
+--------------------------------------------------------------
+  python scripts/run_dashboard.py --port 8081 --open-browser
+
+Browser Access URL:
+  👉 http://127.0.0.1:8080
+
+================================================================================
+3. PART B: WEB BROWSER APP TESTING & FEATURE CHECKLIST
+================================================================================
+Once the dashboard opens in your browser:
+
+[ ] 1. AUDIO ALERTS TEST:
+    - Click "Audio: ON" in the header to ensure browser Web Audio is enabled.
+    - Click any attack simulation button to hear the sound:
+        • Safe Traffic: Harmonic Chime (440Hz / 660Hz)
+        • Warning: Dual Beep (880Hz)
+        • Danger / DDoS: Dual-Tone Siren (1200Hz / 800Hz)
+        • Critical Mitigation: Low-frequency Quarantine Tone (220Hz)
+
+[ ] 2. ONE-CLICK ATTACK SIMULATION BUTTONS:
+    - Click "SYN Flood (CIC-IDS2017)" -> Verifies volumetric TCP flood detection.
+    - Click "DNS Amp (CIC-DDoS2019)"   -> Triggers BGP Flowspec scrubber.
+    - Click "Mirai Botnet (BoT-IoT)"   -> Triggers IoT rate limiter (50%).
+    - Click "Slowloris (Application)"  -> Tests slow HTTP header exhaustion.
+    - Click "Benign HTTP / Video"      -> Verifies clean traffic passing.
+
+[ ] 3. OPSEC PRIVACY CLOAK (HIGH-ALERT SECURITY):
+    - Click "[🔒 OPSEC CLOAK: ACTIVE]" in the top navigation bar.
+    - Confirm all internal IPs are masked (e.g., `10.249.***.*** [INT-MASKED]`).
+    - Toggle it to inspect raw debugging telemetry when needed.
+
+[ ] 4. DUAL-PLANE NETWORK SURVEILLANCE:
+    - Switch between the filter tabs above the live flow table:
+        • [All Planes (Hybrid)] -> Combined physical + virtual flows.
+        • [🌐 Physical]         -> Monitors `en0` (Wi-Fi / Ethernet adapter).
+        • [🔒 Virtual]          -> Monitors `lo0` (IPC), `utun` (VPN), and `vir-sim`.
+
+[ ] 5. LIVE MACOS HARDWARE SNIFFER:
+    - Click "Mode: Synthetic" in the top bar to toggle to "Mode: Live Sniffer".
+    - The engine sniffs macOS Darwin network sockets and displays real host traffic.
+
+[ ] 6. DEEP PACKET INSPECTION (DPI) & XAI DRAWER:
+    - Click on any row in the Live Traffic Flows table.
+    - A side drawer opens displaying:
+        • Shannon & Rényi Entropy scores (detects randomized DDoS headers).
+        • TCP Flag Handshake status (SYN, ACK, FIN, RST, PSH, URG).
+        • Flow Symmetry Ratio & Asymmetry percentage.
+        • Explainable AI (XAI) feature attributions.
+        • MITRE ATT&CK technique mapping.
+
+================================================================================
+4. PART C: MANUAL TERMINAL TESTS (CLI TESTING & SOUND)
+================================================================================
+Run these commands in your terminal for command-line verification:
+
+Test 1: Run the Unified Multi-Dataset Pipeline with Sound Alerts
+----------------------------------------------------------------
+Runs heterogeneous network packets through all 6 AI models with audio:
+  .venv/bin/python scripts/run_unified_pipeline.py --input demo --sound
+
+Test 2: Test Specific Custom Dataset CSV File
+---------------------------------------------
+Run inference on real pre-captured packet flows:
+  .venv/bin/python scripts/run_unified_pipeline.py --input data/raw/network_traffic/cic_ddos2019/cic_ddos2019_sample.csv --sound
+
+Test 3: Hardware & Apple Silicon Accelerator Inspection
+-------------------------------------------------------
+Verifies Apple Silicon Metal Performance Shaders (MPS), RAM, and CPU cores:
+  .venv/bin/python src/ddos_ai/main.py verify-hardware
+
+Test 4: Comprehensive Data Quality & Statistical Entropy Audit
+--------------------------------------------------------------
+Generates entropy distributions, QQ-plots, correlation matrices across all 6 datasets:
+  .venv/bin/python src/ddos_ai/main.py analyze-data
+
+Test 5: Full Benchmark Evaluation on Independent Test Sets
+----------------------------------------------------------
+Evaluates test accuracy, precision, recall, F1-score, and latency:
+  .venv/bin/python src/ddos_ai/main.py evaluate
+
+Test 6: Run Full Automated Test Suite (22 Unit & Integration Tests)
+------------------------------------------------------------------
+Validates preprocessing, models, audio synthesizers, and HTTP server:
+  PYTHONPATH=src .venv/bin/pytest tests/
+
+================================================================================
+5. PART D: VERIFYING YOUR TRAINED MODELS VS PAPERS
+================================================================================
+To view the 6 specialized AI models trained specifically for your system:
+
+  ls -lh models/checkpoints/
+
+You will find:
+  1. CIC-IDS2017:   Classical Fast-Tree + Deep Residual MLP (78 features)
+  2. SDN-DDoS:      Classical Fast-Tree + Deep Residual MLP (17 features)
+  3. CIC-DDoS2019:  Classical Fast-Tree + Deep Residual MLP (70 features)
+  4. NSL-KDD:       Classical Fast-Tree + Deep Residual MLP (40 features)
+  5. TON_IoT:       Classical Fast-Tree + Deep Residual MLP (8 features)
+  6. BoT-IoT:       Classical Fast-Tree + Deep Residual MLP (10 features)
+
+All 6 models are stored locally on your Mac and execute inference with sub-millisecond
+latency using your Apple Silicon hardware accelerator.
+
+================================================================================
+6. PART E: TROUBLESHOOTING & PORT MANAGEMENT
+================================================================================
+
+If you see: "OSError: [Errno 48] Address already in use"
+--------------------------------------------------------
+This means the dashboard is already running on port 8080!
+1. Check what process is using port 8080:
+     lsof -i :8080
+2. Kill the previous instance if you want to restart fresh:
+     lsof -ti :8080 | xargs kill -9
+3. Or launch on a different port:
+     python scripts/run_dashboard.py --port 8081 --open-browser
+
+Stopping the Dashboard:
+-----------------------
+Press `Ctrl+C` in the terminal where the dashboard is running.
+================================================================================

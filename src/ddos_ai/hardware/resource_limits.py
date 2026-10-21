@@ -1,6 +1,11 @@
 """Hardware resource limit enforcement."""
 
-import psutil
+try:
+    import psutil
+    _HAS_PSUTIL = True
+except ImportError:
+    _HAS_PSUTIL = False
+
 import torch
 import logging
 from ddos_ai.core.exceptions import HardwareResourceError
@@ -17,6 +22,9 @@ def enforce_resource_limits(max_ram_fraction: float = 0.90) -> None:
     Raises:
         HardwareResourceError: If current RAM utilization exceeds threshold.
     """
+    if not _HAS_PSUTIL:
+        return
+
     vm = psutil.virtual_memory()
     current_fraction = vm.percent / 100.0
 

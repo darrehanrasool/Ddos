@@ -1,0 +1,51 @@
+{
+  "bot_iot": {
+    "records": 10000,
+    "columns": 14,
+    "missing_or_inf": 0,
+    "duplicates": 0,
+    "memory_mb": 2.38
+  },
+  "cic_ddos2019": {
+    "records": 10000,
+    "columns": 71,
+    "missing_or_inf": 0,
+    "duplicates": 0,
+    "memory_mb": 5.86
+  },
+  "cic_ids2017": {
+    "records": 10000,
+    "columns": 79,
+    "missing_or_inf": 2,
+    "duplicates": 24,
+    "memory_mb": 6.03
+  },
+  "cse_cic_ids2018": {
+    "records": 10000,
+    "columns": 71,
+    "missing_or_inf": 0,
+    "duplicates": 0,
+    "memory_mb": 5.88
+  },
+  "nsl_kdd": {
+    "records": 25192,
+    "columns": 44,
+    "missing_or_inf": 0,
+    "duplicates": 0,
+    "memory_mb": 12.81
+  },
+  "sdn_ddos": {
+    "records": 104345,
+    "columns": 24,
+    "missing_or_inf": 1012,
+    "duplicates": 5091,
+    "memory_mb": 37.93
+  },
+  "ton_iot": {
+    "records": 10000,
+    "columns": 12,
+    "missing_or_inf": 0,
+    "duplicates": 0,
+    "memory_mb": 2.2
+  }
+}

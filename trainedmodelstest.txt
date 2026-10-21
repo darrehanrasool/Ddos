@@ -1,0 +1,2 @@
+## test trained models 
+.venv/bin/python src/ddos_ai/main.py pipeline --input demo

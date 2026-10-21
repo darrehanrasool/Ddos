@@ -47,12 +47,14 @@ flowchart TD
 ## 2. Component Breakdown
 
 ### 2.1 Core Subsystem (`src/ddos_ai/core/`)
+
 - `config.py`: Hierarchical YAML configuration loader with Pydantic type validation and runtime immutability.
 - `constants.py`: Enumerations for network protocol numbers (TCP=6, UDP=17, ICMP=1), attack classification labels, and standard feature names.
 - `exceptions.py`: Custom typed exception taxonomy (`DataValidationError`, `ModelTrainingError`, `HardwareResourceExhaustionError`).
 - `reproducibility.py`: Deterministic seed controllers for Python `random`, `numpy`, `torch` (CUDA & MPS deterministic algorithms).
 
 ### 2.2 Data Pipeline Subsystem (`src/ddos_ai/data/`)
+
 - `dataset_registry.py`: Registry for supported academic benchmarks (CIC-DDoS2019, CIC-IDS2017, BoT-IoT, TON_IoT).
 - `dataset_downloader.py`: Resumable streaming downloader with SHA-256 integrity checks and fallback synthetic flow generation.
 - `preprocessing.py`: Handles $\pm\infty$ replacement, missing value imputation, and RobustScaler transformation.
@@ -60,6 +62,7 @@ flowchart TD
 - `data_splitting.py`: Leakage-free stratified train/validation/test splitting.
 
 ### 2.3 Model Architecture Subsystem (`src/ddos_ai/models/`)
+
 - `classical/`: Optimized wrappers for Logistic Regression, Random Forest, XGBoost/Gradient Boosting, and Support Vector Machines.
 - `deep_learning/`:
   - `tabular_mlp.py`: Deep residual MLP with Batch Normalization, GELU activations, and Dropout.
@@ -69,5 +72,17 @@ flowchart TD
 - `ensemble/`: Stacking and soft-voting meta-classifiers.
 
 ### 2.4 Training & Validation (`src/ddos_ai/training/` & `src/ddos_ai/validation/`)
+
 - Full checkpointing with atomic file writes, early stopping monitoring validation Macro-F1, and learning rate scheduling (Cosine Annealing with Warm Restarts).
 - Probability calibration (Platt Scaling and Isotonic Regression) ensuring reliable threat probability scores for automated firewall rule generation.
+
+### 2.5 Connected Multi-Dataset Defense Pipeline (`src/ddos_ai/pipeline/`)
+
+- `dataset_adapter.py`: Harmonizes diverse schemas (CICFlowMeter, OpenFlow SDN, Bro/Zeek, NetFlow) and projects features into a 16-dimensional Canonical Flow Vector.
+- `dataset_trainer.py`: Automates dataset-specific training across all benchmarks with hardware selection (`cuda`, `mps`, `cpu`).
+- `unified_pipeline.py`: Orchestrates the single connected defense engine:
+  - **Schema Fingerprinting**: Inspects incoming flow fields to select the appropriate native expert model.
+  - **Cascading Inference**: $O(1)$ fast-path tree screening cascading to deep neural models for ambiguous high-entropy flows.
+  - **Meta-Ensemble Consensus**: Aggregates probability distributions across expert sub-pipelines.
+  - **Universal Taxonomy Harmonizer**: Translates diverse labels into standardized threat verdicts (Volumetric TCP Flood, Reflection Amplification, Protocol Exploitation, Application Flood, IoT Botnet, Benign).
+  - **Automated Mitigation Engine**: Emits rule recommendations (`PASS`, `CHALLENGE_SYN_COOKIE`, `RATE_LIMIT_50PCT`, `BGP_FLOWSPEC_SCRUB`, `ACL_BLOCK_IP`) with strict fail-open guardrails.

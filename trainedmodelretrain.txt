@@ -1,0 +1,8 @@
+If you want to retrain or experiment (for example, with more training epochs or on your own custom CSV):
+
+bash
+# Retrain all 6 datasets for 10 epochs using Apple Silicon GPU:
+.venv/bin/python src/ddos_ai/main.py train-datasets --dataset all --epochs 10
+
+# Or retrain only one specific dataset (e.g. SDN-DDoS):
+.venv/bin/python src/ddos_ai/main.py train-datasets --dataset sdn_ddos --epochs 10

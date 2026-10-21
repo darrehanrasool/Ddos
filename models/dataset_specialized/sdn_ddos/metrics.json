@@ -1,0 +1,44 @@
+{
+  "dataset_id": "SDN-DDoS",
+  "samples_total": 100000,
+  "features_count": 17,
+  "classes_count": 2,
+  "classes": {
+    "0": "0",
+    "1": "1"
+  },
+  "literature_benchmark": {
+    "citation": "Elsayed et al. (2020), Mendeley Data",
+    "paper_title": "DDoS Attacks in Software-Defined Networks: Detection and Mitigation Using ML",
+    "model_name": "XGBoost Classifier",
+    "accuracy": 0.978,
+    "precision": 0.975,
+    "recall": 0.978,
+    "f1_score": 0.971
+  },
+  "classical": {
+    "model_type": "HistGradientBoostingClassifier",
+    "accuracy": 0.99987,
+    "f1_macro": 0.99986,
+    "f1_weighted": 0.99987,
+    "precision_macro": 0.99989,
+    "recall_macro": 0.99983,
+    "roc_auc": 0.99999,
+    "train_time_sec": 1.115,
+    "latency_per_sample_ms": 0.0014,
+    "delta_vs_literature_acc": 0.02187
+  },
+  "deep_learning": {
+    "model_type": "TabularResidualMLP",
+    "device": "mps",
+    "accuracy": 0.9746,
+    "f1_macro": 0.97356,
+    "f1_weighted": 0.97471,
+    "precision_macro": 0.97002,
+    "recall_macro": 0.97802,
+    "roc_auc": 0.99869,
+    "train_time_sec": 355.334,
+    "latency_per_sample_ms": 0.0204,
+    "delta_vs_literature_acc": -0.0034
+  }
+}
