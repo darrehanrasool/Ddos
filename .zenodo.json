@@ -1,0 +1,42 @@
+{
+  "title": "DDoS-AI: High-Throughput Cascading Dual-Tier Architecture for Real-Time DDoS Detection and Autonomous Mitigation in Software-Defined Networks",
+  "description": "<p><b>DDoS-AI</b> is a high-throughput network security and artificial intelligence platform designed to detect, classify, and mitigate volumetric, reflection, application-layer, and zero-day Distributed Denial of Service (DDoS) attacks across heterogeneous network environments (Enterprise Clouds, Software-Defined Networks, and IoT).</p><p>Featuring an ultra-fast sub-millisecond histogram-binned tree screening tier cascading to deep tabular residual neural networks for ambiguous high-entropy bursts, DDoS-AI delivers line-rate inspection with a 14.9x latency speedup over recurrent attention baselines while maintaining 96.09% F1-score across InSDN, CIC-DDoS2019, and enterprise traffic traces.</p><p><b>Research Team & Affiliation:</b><br>• Dar Rehan Rasool (Project Lead & Author)<br>• Muneeb Sayed (Contributing Researcher)<br>• Shafiya Bashir Pampori (Contributing Researcher)<br>• Dr. Javad Ahmad (Faculty Supervisor & Contributor)<br>Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India.</p>",
+  "creators": [
+    {
+      "name": "Rasool, Dar Rehan",
+      "affiliation": "Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
+    },
+    {
+      "name": "Sayed, Muneeb",
+      "affiliation": "Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
+    },
+    {
+      "name": "Pampori, Shafiya Bashir",
+      "affiliation": "Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
+    },
+    {
+      "name": "Ahmad, Dr. Javad",
+      "affiliation": "Assistant Professor, Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
+    }
+  ],
+  "access_right": "open",
+  "license": "cc-by-nc-nd-4.0",
+  "upload_type": "software",
+  "keywords": [
+    "DDoS Detection",
+    "Intrusion Prevention System (IPS)",
+    "Cascading Dual-Tier Architecture",
+    "Software-Defined Networking (SDN)",
+    "InSDN",
+    "CIC-DDoS2019",
+    "Machine Learning",
+    "Deep Learning",
+    "Explainable AI (XAI)",
+    "Network Security"
+  ],
+  "communities": [
+    {
+      "identifier": "zenodo"
+    }
+  ]
+}

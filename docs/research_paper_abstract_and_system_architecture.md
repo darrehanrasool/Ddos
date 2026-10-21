@@ -1,6 +1,12 @@
 # DDoS-AI: Multi-Domain Resilient Cyber Defense Architecture & Research Framework
 
-**Author / Project Lead**: DDoS-AI Engineering & Research Benchmark  
+**Research Team & Authors**:
+- **Dr. Javad Ahmad** (Professor, Faculty Supervisor & Project Contributor / Principal Investigator)
+- **Dar Rehan Rasool** (Project Lead & Author, M.Tech Artificial Intelligence)
+- **Muneeb Sayed** (Co-Author & Contributing Researcher, M.Tech Artificial Intelligence)
+- **Shafiya Bashir Pampori** (Co-Author & Contributing Researcher, M.Tech Artificial Intelligence)
+
+**Affiliation**: Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India  
 **Artifact Classification**: Academic Abstract, Comprehensive System Architecture, and Comparative Literature Analysis  
 **Repository Target**: `docs/research_paper_abstract_and_system_architecture.md`  
 

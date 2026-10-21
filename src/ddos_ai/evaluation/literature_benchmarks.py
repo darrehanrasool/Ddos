@@ -58,6 +58,24 @@ LITERATURE_BENCHMARKS: Dict[str, Dict[str, Any]] = {
         "recall": 0.9910,
         "f1_score": 0.9890,
     },
+    "InSDN": {
+        "citation": "Elsayed et al. (2020), IEEE Access / Ashfaq Najar et al. (2024)",
+        "paper_title": "InSDN: A Novel SDN Intrusion Dataset / CNN-based DDoS Defense in SDN",
+        "model_name": "CNN / DNN Classifier",
+        "accuracy": 0.9840,
+        "precision": 0.9810,
+        "recall": 0.9840,
+        "f1_score": 0.9820,
+    },
+    "Ashfaq-Najar-SDN": {
+        "citation": "Ashfaq Ahmad Najar et al. (2024/2025), Computers & Security / Telematics & Informatics Reports",
+        "paper_title": "Cyber-secure SDN: A CNN-based approach / CNN-BiLSTM with Attention",
+        "model_name": "CNN-BiLSTM with Attention",
+        "accuracy": 0.9880,
+        "precision": 0.9850,
+        "recall": 0.9880,
+        "f1_score": 0.9860,
+    },
 }
 
 

@@ -1,17 +1,36 @@
 cff-version: 1.2.0
-message: "If you use this benchmark, methodology, or codebase, please cite it as below."
+message: "If you use this benchmark, methodology, architecture, or codebase in your academic research, please cite it as below."
+title: "DDoS-AI: High-Throughput Cascading Dual-Tier Architecture for Real-Time DDoS Detection and Autonomous Mitigation in Software-Defined Networks"
+version: 1.0.0
+date-released: 2026-10-21
+url: "https://github.com/darrehanrasool/DDoS-AI"
+repository-code: "https://github.com/darrehanrasool/DDoS-AI"
+license: "LicenseRef-Strict-Academic-Research"
+type: software
 authors:
   - family-names: "Rasool"
     given-names: "Dar Rehan"
-title: "DDoS-AI: Enterprise-Grade Deep Learning and Machine Learning Platform for High-Throughput DDoS Attack Detection and Mitigation"
-version: 1.0.0
-date-released: 2026-10-18
-url: "https://github.com/darrehanrasool/DDoS-AI"
+    affiliation: "Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
+    email: "rehanrasool@iust.ac.in"
+  - family-names: "Sayed"
+    given-names: "Muneeb"
+    affiliation: "Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
+  - family-names: "Pampori"
+    given-names: "Shafiya Bashir"
+    affiliation: "Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
+  - family-names: "Ahmad"
+    given-names: "Dr. Javad"
+    affiliation: "Assistant Professor, Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
+    role: "Faculty Supervisor & Principal Investigator"
 keywords:
   - "Distributed Denial of Service (DDoS)"
+  - "Intrusion Prevention System (IPS)"
+  - "Cascading Dual-Tier Architecture"
+  - "Software-Defined Networking (SDN)"
+  - "InSDN"
+  - "CIC-DDoS2019"
   - "Machine Learning"
   - "Deep Learning"
-  - "CIC-DDoS2019"
-  - "Transformers"
-  - "Network Intrusion Detection"
+  - "Metal Performance Shaders (MPS)"
   - "Explainable AI (XAI)"
+abstract: "DDoS-AI is an enterprise-grade, high-throughput network security and artificial intelligence platform designed to detect, classify, and mitigate volumetric, reflection, application-layer, and zero-day Distributed Denial of Service (DDoS) attacks. Featuring an ultra-fast O(1) histogram-binned tree screening tier (sub-millisecond line-rate inspection) cascading to deep residual tabular neural networks for ambiguous high-entropy flows, the architecture achieves a 14.9x latency speedup over recurrent attention baselines while maintaining 96.09% F1-score across heterogeneous multi-domain network environments."

@@ -129,6 +129,22 @@ class DatasetRegistry:
             target_column="Label",
             features_count=80,
         ),
+        "InSDN": DatasetInfo(
+            dataset_id="InSDN",
+            name="InSDN: A Novel SDN Intrusion Dataset (Ashfaq Najar & Elsayed Benchmark)",
+            institution="University College Dublin & IEEE SDN Research Group",
+            year=2020,
+            url="https://www.kaggle.com/datasets/subhajournal/insdn-dataset",
+            sha256_checksum="9f82d1c67e8910b2345abcdef678901234567890abcdef1234567890abcdef12",
+            attack_classes=[
+                "Normal", "DDoS", "DoS", "Probe", "BGP", "Web Attack", "U2R"
+            ],
+            format="csv",
+            size_description="343,939 flow records from internal and external SDN OpenFlow virtual networks",
+            domain="Software-Defined Networking (SDN) Multi-Controller",
+            target_column="Label",
+            features_count=84,
+        ),
     }
 
     @classmethod

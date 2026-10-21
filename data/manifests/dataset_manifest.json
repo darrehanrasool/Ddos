@@ -52,7 +52,7 @@
     }
   },
   "CIC-DDoS2019": {
-    "file_path": "T/tmpduzxetir/cic_ddos2019/cic_ddos2019_sample.csv",
+    "file_path": "T/tmp0me8galc/cic_ddos2019/cic_ddos2019_sample.csv",
     "sha256": "7a5c77a0956edf03aeba83607f62d06c21ef24273defc6e8fd912f4b420029ab",
     "records": 200,
     "features_count": 71,
@@ -129,7 +129,7 @@
       "Idle Min",
       "Label"
     ],
-    "updated_at": "2026-10-20T19:29:45.191042"
+    "updated_at": "2026-10-21T20:00:46.724172"
   },
   "CIC-IDS2017": {
     "file_path": "raw/network_traffic/cic_ids2017/cic_ids2017_sample.csv",

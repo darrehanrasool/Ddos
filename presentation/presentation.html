@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDoS-AI: The Fun & Easy Team Presentation</title>
+    <style>
+        :root {
+            --bg-dark: #070b14;
+            --bg-card: rgba(15, 23, 42, 0.9);
+            --cyan: #00f0ff;
+            --emerald: #00ff88;
+            --amber: #ffd000;
+            --danger: #ff2a5f;
+            --purple: #c084fc;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Navigation */
+        .header {
+            height: 56px;
+            background: rgba(10, 15, 29, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .brand {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--cyan);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge-team {
+            background: rgba(192, 132, 252, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            color: var(--purple);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--cyan);
+            color: #000;
+            border-color: var(--cyan);
+        }
+
+        .btn-notes {
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--emerald);
+            border-color: rgba(0, 255, 136, 0.4);
+        }
+
+        .counter {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 90px;
+            text-align: center;
+        }
+
+        /* Main Slide Viewport */
+        .viewport {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 36px;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            max-width: 1180px;
+            height: 100%;
+            max-height: 700px;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 16px;
+            padding: 34px 44px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tag {
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        h1.title {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            line-height: 1.25;
+        }
+
+        h2.subtitle {
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.45;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 10px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 18px;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 240, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .card-danger { border-left: 5px solid var(--danger); }
+        .card-success { border-left: 5px solid var(--emerald); }
+        .card-info { border-left: 5px solid var(--cyan); }
+        .card-warn { border-left: 5px solid var(--amber); }
+
+        .card-head {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-text {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .card-text strong {
+            color: #f1f5f9;
+        }
+
+        .story-box {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px dashed rgba(0, 255, 136, 0.4);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 0.88rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin: 12px 0;
+        }
+
+        table.simple-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-top: 12px;
+        }
+
+        table.simple-table th {
+            background: rgba(15, 23, 42, 0.95);
+            color: var(--cyan);
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+            font-weight: 700;
+        }
+
+        table.simple-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+        }
+
+        /* Speaker Notes Panel */
+        .notes-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 26, 0.98);
+            border-top: 2px solid var(--cyan);
+            padding: 16px 40px;
+            max-height: 180px;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 200;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .notes-drawer.open {
+            transform: translateY(0);
+        }
+
+        .notes-title {
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .notes-text {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: #f1f5f9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="brand">
+            <span>🛡️ DDoS-AI: The Easy Guide</span>
+            <span class="badge-team">IUST Centre of AI Team</span>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn btn-notes" onclick="toggleNotes()">🎙️ What to Say (Press N)</button>
+            <button class="btn" onclick="prev()">◀ Prev</button>
+            <span class="counter" id="counter">Slide 1 / 14</span>
+            <button class="btn" onclick="next()">Next ▶</button>
+            <button class="btn" onclick="toggleFS()">⛶ Fullscreen (F)</button>
+        </div>
+    </header>
+
+    <!-- Main Slide Viewport -->
+    <main class="viewport">
+
+        <!-- SLIDE 1 -->
+        <section class="slide active" id="s1">
+            <div class="tag">IUST Centre of AI • Team Rehearsal Deck</div>
+            <h1 class="title">Welcome to DDoS-AI: The Ultimate Network Bouncer!</h1>
+            <h2 class="subtitle">How we built a smart AI security guard that protects computers from internet mobs.</h2>
+
+            <div class="grid-2">
+                <div class="card card-info">
+                    <div class="card-head">👨‍🏫 Faculty Supervisor & Contributor</div>
+                    <div class="card-text">
+                        <strong>Dr. Javad Ahmad</strong> (Professor, IUST)<br>
+                        <em>Project Conceptualization, Research Direction & Supervision</em>
+                    </div>
+                </div>
+
+                <div class="card card-success">
+                    <div class="card-head">🎓 Student Research Team (M.Tech AI)</div>
+                    <div class="card-text">
+                        • <strong>Dar Rehan Rasool</strong> (Project Lead & Fast AI Engine)<br>
+                        • <strong>Muneeb Sayed</strong> (Machine Learning & Attack Detective)<br>
+                        • <strong>Shafiya Bashir Pampori</strong> (Data Quality & Math Entropy Auditor)
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-box" style="margin-top: 20px;">
+                💡 <strong>The Big Idea in 1 Sentence:</strong> Our project is like a smart bouncer at the door of a famous restaurant. When 10,000 fake pranksters try to crowd the door to ruin the business, our AI bouncer spots the fake crowd in 1 microsecond and throws them out so real, hungry customers can walk in safely!
+            </div>
+        </section>
+
+        <!-- SLIDE 2 -->
+        <section class="slide" id="s2">
+            <div class="tag">The Problem in Plain English</div>
+            <h1 class="title">What is a DDoS Attack? (The 5,000 Pranksters Story)</h1>
+            <h2 class="subtitle">A real-world story to understand why servers crash during a cyber attack.</h2>
+
+            <div class="story-box">
+                🍛 <strong>The Restaurant Story:</strong><br>
+                Imagine you, Muneeb, and Shafiya open a popular <strong>Kashmiri Wazwan Restaurant</strong> in Lal Chowk with <strong>10 dining tables</strong>. On normal days, families walk in, order Gushtaba, eat, pay, and leave.<br><br>
+                A rival restaurant owner gets jealous. He hires <strong>5,000 fake pranksters (a Botnet)</strong> and tells them: <em>"Go stand in front of their entrance, shout nonsense, and block the road!"</em><br><br>
+                Now your actual hungry customers standing outside can't even reach the door handle! The restaurant is paralyzed.
+            </div>
+
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card card-info">
+                    <div class="card-head">Your Restaurant</div>
+                    <div class="card-text">The Web Server (Google, Amazon, University Portal).</div>
+                </div>
+                <div class="card card-warn">
+                    <div class="card-head">The 10 Tables</div>
+                    <div class="card-text">Server CPU threads and memory capacity.</div>
+                </div>
+                <div class="card card-danger">
+                    <div class="card-head">The 5,000 Pranksters</div>
+                    <div class="card-text">The <strong>DDoS Botnet</strong> (hacked webcams and routers).</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3 -->
+        <section class="slide" id="s3">
+            <div class="tag">The 3 Attack Types</div>
+            <h1 class="title">The 3 Ways Attackers Try to Ruin the Restaurant</h1>
+            <h2 class="subtitle">Every DDoS attack in the world falls into one of these three pranks.</h2>
+
+            <div class="grid-3">
+                <div class="card card-danger">
+                    <div class="card-head">1. The Bulldozer Mob</div>
+                    <div class="card-text">
+                        • <strong>The Prank:</strong> 3,000 screaming people try to shove through your door at once.<br>
+                        • <strong>Result:</strong> Street and door are physically jammed!<br>
+                        • <strong>In Computers:</strong> <strong>Volumetric Floods (UDP / DNS Reflection)</strong>. Chokes internet pipes with gigabits of trash.
+                    </div>
+                </div>
+
+                <div class="card card-warn">
+                    <div class="card-head">2. The Frozen Handshake</div>
+                    <div class="card-text">
+                        • <strong>The Prank:</strong> A guy reaches out to shake hands with the cashier: <em>"Hi, can I order?"</em> When the cashier reaches out, the guy <strong>freezes and stares blankly</strong> without ordering. Soon, the cashier's hands are all tied up!<br>
+                        • <strong>In Computers:</strong> <strong>TCP SYN Flood (Neptune)</strong>. Sends <code>SYN=1</code>, but never completes the <code>ACK</code> handshake.
+                    </div>
+                </div>
+
+                <div class="card card-info">
+                    <div class="card-head">3. The Sly Kahwa Sipper</div>
+                    <div class="card-text">
+                        • <strong>The Prank:</strong> 10 guys in suits walk in, take all 10 tables, order <strong>1 cup of Kahwa</strong>, and take <strong>one tiny sip every 45 minutes</strong> for 8 hours.<br>
+                        • <strong>Result:</strong> Tables are 100% full, but bandwidth is zero!<br>
+                        • <strong>In Computers:</strong> <strong>Slowloris</strong>. Holds web server threads hostage with low bandwidth.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4 -->
+        <section class="slide" id="s4">
+            <div class="tag">Why Previous Work Failed</div>
+            <h1 class="title">The 4 Big Mistakes Other Researchers Made</h1>
+            <h2 class="subtitle">Why traditional academic models fail when tested in the real world.</h2>
+
+            <div class="grid-2">
+                <div class="card card-danger">
+                    <div class="card-head">Mistake 1: The "Suit-Only" Silo</div>
+                    <div class="card-text">
+                        Researchers trained their AI only to recognize office workers in suits. When tested on IoT smart lightbulbs or SDN switches, the AI panicked and collapsed!
+                    </div>
+                </div>
+
+                <div class="card card-danger">
+                    <div class="card-head">Mistake 2: The "Lazy Detective" Lag</div>
+                    <div class="card-text">
+                        Researchers used heavy recurrent models (BiLSTM) that take 30 milliseconds per packet. At 10 Gbps flood speeds, a line of 10,000 packets forms, overflowing the switch!
+                    </div>
+                </div>
+
+                <div class="card card-danger">
+                    <div class="card-head">Mistake 3: The "Watcher, Not Doer"</div>
+                    <div class="card-text">
+                        Over 95% of published papers only print: <em>"Hey, look, an attack happened!"</em> but do NOTHING to stop it. The server still crashes.
+                    </div>
+                </div>
+
+                <div class="card card-danger">
+                    <div class="card-head">Mistake 4: Crashing the Laptop</div>
+                    <div class="card-text">
+                        Their code requires supercomputers and crashes with out-of-memory errors on normal laptops due to unbatched memory leaks.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5 -->
+        <section class="slide" id="s5">
+            <div class="tag">Literature Benchmark</div>
+            <h1 class="title">Who is Dr. Ashfaq Ahmad Najar?</h1>
+            <h2 class="subtitle">The prominent Kashmiri researcher and the "Philosophical Detective" model.</h2>
+
+            <div class="story-box">
+                🔍 <strong>Dr. Ashfaq's Model (The Philosophical Detective):</strong><br>
+                Dr. Ashfaq Ahmad Najar (Ph.D., Central University of Kerala; Assistant Professor) published landmark papers in Elsevier (2024/2025). He built a deep neural net combining <strong>1D-CNN + BiLSTM + Attention</strong>.<br><br>
+                Think of his model like a brilliant detective who sits every single customer in an armchair:<br>
+                • <em>"Tell me your future thoughts! (Forward LSTM)"</em><br>
+                • <em>"Now tell me your childhood memories backwards! (Backward LSTM)"</em><br>
+                • <em>"Let me stare into your eyes to see which word is important! (Attention)"</em><br><br>
+                <strong>The Result:</strong> It's very smart (95.9% accuracy), but takes <strong>0.19 milliseconds per person</strong>. In a massive flood, a huge line forms and the switch drops packets!
+            </div>
+        </section>
+
+        <!-- SLIDE 6 -->
+        <section class="slide" id="s6">
+            <div class="tag">Our Breakthrough</div>
+            <h1 class="title">The Smart Bouncer + The Senior Detective</h1>
+            <h2 class="subtitle">How our Cascading Dual-Tier Engine makes the system 14.9x faster.</h2>
+
+            <div class="grid-2">
+                <div class="card card-success">
+                    <div class="card-head">Tier 1: The Fast Bouncer (&lt; 0.8 ms)</div>
+                    <div class="card-text">
+                        • <strong>Model:</strong> HistGradientBoosting with 256 integer bins.<br>
+                        • <strong>What it does:</strong> Checks 3 quick rules in <strong>1.9 microseconds</strong>: <em>"Are you dressed normally? Do you have money? Did you complete the handshake?"</em><br>
+                        • <strong>Result:</strong> <strong>95%+ of normal human traffic passes instantly</strong> without waiting for neural networks!
+                    </div>
+                </div>
+
+                <div class="card card-info">
+                    <div class="card-head">Tier 2: The Senior Detective</div>
+                    <div class="card-text">
+                        • <strong>Model:</strong> Deep Tabular Residual MLP with skip connections ($\mathbf{y} = \mathcal{F}(\mathbf{x}) + \mathbf{x}$).<br>
+                        • <strong>What it does:</strong> Only when someone arrives in a trenchcoat and sunglasses acting weird, the bouncer sends them to Tier 2 for deep inspection.<br>
+                        • <strong>Result:</strong> Full deep learning intelligence, but <strong>14.9x faster</strong>!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7 -->
+        <section class="slide" id="s7">
+            <div class="tag">Multi-Dataset Harmonization</div>
+            <h1 class="title">The Universal Passport (Canonical Adapter)</h1>
+            <h2 class="subtitle">Why we trained on 6 datasets and how we made them talk the same language.</h2>
+
+            <div class="story-box">
+                🌍 <strong>The Dilemma:</strong><br>
+                An office PC speaks a language of 78 features. A robotic SDN switch speaks 17 features. A smart lightbulb speaks 10 features.<br>
+                If your AI only speaks "Office PC", it crashes when an "SDN Switch" arrives!
+            </div>
+
+            <div class="card card-success" style="margin-top: 10px;">
+                <div class="card-head">Our Solution: The Universal Passport (16 Features)</div>
+                <div class="card-text">
+                    Our <strong>Canonical Flow Adapter</strong> converts data from all 6 datasets (CIC-DDoS2019, CIC-IDS2017, SDN-DDoS, NSL-KDD, BoT-IoT, TON_IoT, and InSDN) into the exact same standard passport: <code>[duration, asymmetry, packet_rate, syn_flag, ack_flag, ...]</code>.<br>
+                    <strong>Result:</strong> Our AI bouncer can protect ANY network in the world without getting confused!
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8 -->
+        <section class="slide" id="s8">
+            <div class="tag">Detection Clues</div>
+            <h1 class="title">How Does the AI Know It's Fake?</h1>
+            <h2 class="subtitle">The 3 dead giveaways that reveal an attack botnet.</h2>
+
+            <div class="grid-3">
+                <div class="card card-info">
+                    <div class="card-head">1. Shannon Entropy</div>
+                    <div class="card-text">
+                        • <strong>Normal Traffic:</strong> High variety (tea, kebabs, rice, juice). High Entropy = Healthy!<br>
+                        • <strong>Attack Traffic:</strong> 10,000 bots order the exact same 64-byte tap water. Variety collapses to zero = <strong>Low Entropy</strong>!
+                    </div>
+                </div>
+
+                <div class="card card-warn">
+                    <div class="card-head">2. Flow Symmetry</div>
+                    <div class="card-text">
+                        • <strong>Normal Traffic:</strong> Two-way conversation (You ask Google for a picture, Google sends it back).<br>
+                        • <strong>Attack Traffic:</strong> Attacker shouts 10,000 packets forward and receives 0 replies (100% one-way!).
+                    </div>
+                </div>
+
+                <div class="card card-danger">
+                    <div class="card-head">3. TCP Handshake Flags</div>
+                    <div class="card-text">
+                        • <strong>Normal Traffic:</strong> Handshake finished cleanly (<code>SYN</code> then <code>ACK</code>).<br>
+                        • <strong>Attack Traffic:</strong> Attackers spam <code>SYN=1</code> and leave their hands frozen in mid-air (<code>ACK=0</code>).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9 -->
+        <section class="slide" id="s9">
+            <div class="tag">The Secret Behind The Red Screen</div>
+            <h1 class="title">Why is the Screen RED While My Mac is Fine?</h1>
+            <h2 class="subtitle">The Bulletproof Glass and the Robotic Wipers story.</h2>
+
+            <div class="story-box">
+                🛡️ <strong>The Bulletproof Glass Story:</strong><br>
+                Think of your Mac as sitting behind <strong>thick bulletproof glass</strong> (our firewall software).<br><br>
+                When you click "SYN Flood" or "DNS Amp", the simulator fires paintballs at the glass.<br>
+                The alarm sensor on the wall turns <strong>RED</strong> shouting: <em>"INCOMING PAINTBALLS!"</em><br>
+                The robotic wipers on the outside immediately wipe the paint away before it touches the glass (<code>ACL_BLOCK_IP</code>).<br><br>
+                You are sitting safely inside drinking tea. Your Mac is fast and playing YouTube <strong>PRECISELY BECAUSE the wipers blocked the paint!</strong>
+            </div>
+
+            <div class="card card-info" style="margin-top: 10px;">
+                <div class="card-head">What does "40 Mitigated Attacks" mean?</div>
+                <div class="card-text">
+                    It means <strong>40 attacks were fired, and our system blocked all 40 of them.</strong> None reached your Mac!
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10 -->
+        <section class="slide" id="s10">
+            <div class="tag">Intelligent Control</div>
+            <h1 class="title">What is an "Ambiguous Burst"? (Black Friday)</h1>
+            <h2 class="subtitle">Why our system never accidentally blocks normal users downloading movies.</h2>
+
+            <div class="story-box">
+                🛍️ <strong>The Black Friday Rush:</strong><br>
+                Imagine it is 12:00 AM on Eid or Black Friday. Suddenly, 50 real human families rush into your restaurant at once! Traffic spikes by 5,000% in 2 seconds.<br><br>
+                A dumb firewall panics and punches all 50 people in the face, kicking out your own paying customers!<br>
+                <strong>What our smart AI does instead:</strong> It uses the <strong>Velvet Rope (Rate Limiting 50%)</strong>: <em>"Welcome! Please enter 5 at a time so the kitchen doesn't collapse."</em>
+            </div>
+
+            <div class="grid-3">
+                <div class="card card-success">
+                    <div class="card-head">PASS (P &lt; 15%)</div>
+                    <div class="card-text">Normal web browsing and 4K YouTube videos pass with zero delay.</div>
+                </div>
+                <div class="card card-warn">
+                    <div class="card-head">RATE_LIMIT_50PCT</div>
+                    <div class="card-text">Ambiguous bursts are gracefully slowed down without disconnecting users.</div>
+                </div>
+                <div class="card card-danger">
+                    <div class="card-head">ACL_BLOCK_IP</div>
+                    <div class="card-text">Confirmed evil botnets get completely banned from the network.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11 -->
+        <section class="slide" id="s11">
+            <div class="tag">Scientific Verification</div>
+            <h1 class="title">Lab Proof: Us vs. Dr. Ashfaq Ahmad Najar</h1>
+            <h2 class="subtitle">We coded his exact model and benchmarked it on Apple Silicon hardware.</h2>
+
+            <table class="simple-table">
+                <thead>
+                    <tr>
+                        <th>Model Tested</th>
+                        <th>Accuracy</th>
+                        <th>Time per Flow</th>
+                        <th>Throughput (Speed)</th>
+                        <th>Verdict</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Dr. Ashfaq's CNN-BiLSTM-Attn</strong></td>
+                        <td>95.90%</td>
+                        <td>0.1907 ms</td>
+                        <td>5,243 flows/sec</td>
+                        <td>Accurate, but recurrent gating is slow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DDoS-AI Tier 1 (Fast Bouncer)</strong></td>
+                        <td style="color: var(--emerald);">97.20%</td>
+                        <td style="color: var(--cyan);">0.0019 ms</td>
+                        <td style="color: var(--cyan);">533,950 flows/sec</td>
+                        <td>Ultra-fast, clears normal browsing</td>
+                    </tr>
+                    <tr style="background: rgba(0, 240, 255, 0.08); font-weight: 700;">
+                        <td><strong>DDoS-AI Cascading Engine</strong></td>
+                        <td style="color: var(--emerald);">96.00%</td>
+                        <td style="color: var(--cyan);">0.0128 ms</td>
+                        <td style="color: var(--cyan);">78,035 flows/sec</td>
+                        <td style="color: var(--emerald);">14.9x FASTER with 96% accuracy!</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card card-success" style="margin-top: 16px;">
+                <div class="card-head">🏆 The Big Victory:</div>
+                <div class="card-text">
+                    Our system jumped throughput from 5,200 to <strong>78,000+ flows per second</strong>, meaning our software can protect high-speed 10 Gbps enterprise networks!
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 12 -->
+        <section class="slide" id="s12">
+            <div class="tag">The Live Dashboard</div>
+            <h1 class="title">The Cyberpunk Web Dashboard with Sound</h1>
+            <h2 class="subtitle">Situational awareness, privacy protection, and audio synthesizer.</h2>
+
+            <div class="grid-3">
+                <div class="card card-info">
+                    <div class="card-head">🌐 Dual-Plane Surveillance</div>
+                    <div class="card-text">Monitors physical Wi-Fi (<code>en0</code>) and virtual VPN tunnels (<code>lo0</code>, <code>utun</code>) in one screen.</div>
+                </div>
+
+                <div class="card card-success">
+                    <div class="card-head">🔒 OPSEC Privacy Cloak</div>
+                    <div class="card-text">Automatically hides internal IP addresses (<code>10.249.***.*** [INT-MASKED]</code>) so no private data leaks when projecting in class!</div>
+                </div>
+
+                <div class="card card-warn">
+                    <div class="card-head">🔊 Real-Time Synth Sound</div>
+                    <div class="card-text">Safe Chime (Green), Warning Beep (Yellow), Danger Siren (Red), and Low-Frequency Quarantine Bass.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 13 -->
+        <section class="slide" id="s13">
+            <div class="tag">Cheat Code for Questions</div>
+            <h1 class="title">How to Answer the Professor's Questions</h1>
+            <h2 class="subtitle">The exact 3 answers to memorize for an A+ grade.</h2>
+
+            <div class="card card-info" style="margin-bottom: 12px;">
+                <div class="card-head">Q1: "Why is the screen RED right now?"</div>
+                <div class="card-text">
+                    <strong>Answer:</strong> <em>"Sir, because we have the benchmark attack simulation running to demonstrate the AI. Notice our Mac is fine because the AI blocked the attack at the firewall layer!"</em><br>
+                    👉 <em>(Then click 'Benign HTTP' and watch it turn GREEN in 1 second!)</em>
+                </div>
+            </div>
+
+            <div class="card card-success" style="margin-bottom: 12px;">
+                <div class="card-head">Q2: "Will this accidentally block my 4K YouTube movie?"</div>
+                <div class="card-text">
+                    <strong>Answer:</strong> <em>"No, Sir! Downloading a 4K movie has completed TCP ACK handshakes and two-way symmetry. A DDoS attack is a one-way spam of identical packets. Mathematically, they look completely opposite!"</em>
+                </div>
+            </div>
+
+            <div class="card card-warn">
+                <div class="card-head">Q3: "Why is your system faster than deep learning papers?"</div>
+                <div class="card-text">
+                    <strong>Answer:</strong> <em>"Because 95% of normal packets pass through our fast bouncer in 1.9 microseconds without waking up heavy neural networks!"</em>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 14 -->
+        <section class="slide" id="s14">
+            <div class="tag">Final Slide</div>
+            <h1 class="title">We Are Ready for Thesis Defense & Research!</h1>
+            <h2 class="subtitle">A complete, high-speed, multi-dataset cyber defense system.</h2>
+
+            <div class="card" style="text-align: center; padding: 26px; border-color: var(--cyan);">
+                <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 8px;">DDoS-AI Research Team</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
+                    <strong>Dr. Javad Ahmad</strong> (Faculty Supervisor & Project Guide)<br>
+                    <strong>Dar Rehan Rasool</strong> (Project Lead) • <strong>Muneeb Sayed</strong> • <strong>Shafiya Bashir Pampori</strong><br>
+                    <span style="color: var(--cyan); font-weight: 700;">Centre of Artificial Intelligence (CAI) • IUST Kashmir</span>
+                </p>
+                <div style="margin-top: 16px; color: var(--emerald); font-weight: 700;">
+                    🎉 Ready to meet Dr. Javad Sir and Dr. Ashfaq Ahmad Najar!
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Speaker Notes Drawer -->
+    <aside class="notes-drawer" id="notesDrawer">
+        <div class="notes-title">
+            <span>🎙️ What to Say Out Loud</span>
+            <span style="cursor: pointer;" onclick="toggleNotes()">✕ Close (Esc)</span>
+        </div>
+        <div class="notes-text" id="notesText">Loading speech script...</div>
+    </aside>
+
+    <script>
+        const total = 14;
+        let cur = 1;
+
+        const scripts = {
+            1: "Hey everyone! Welcome to our project presentation. We know cybersecurity papers use scary words like 'Spatio-Temporal Hyperplanes'. Today, we are throwing all confusing jargon out the window. We are going to explain our entire project using one simple, funny, real-world story: The Story of Our Restaurant and the Smart Bouncer.",
+            2: "A DDoS attack is not a hacker typing green code to steal passwords. It is much simpler and dumber: it is an angry internet mob crowding your front door so your real users can't get in. Our job was to build an AI bouncer that can tell the difference between a hungry customer and a paid prankster in less than one millisecond.",
+            3: "There are three kinds of attacks: The Bulldozer that jams the road, the Frozen Handshake that ties up the cashier's hands, and the Sly Sipper that steals all the chairs. Traditional firewalls usually only catch the Bulldozer. Our system catches all three.",
+            4: "When we read existing research papers, we realized they all make four big mistakes. They only train on one type of traffic, they use models that are too slow to run in real time, they only print warnings without taking defensive action, and their code crashes normal laptops. We decided to fix all four problems.",
+            5: "Dr. Ashfaq Ahmad Najar is a brilliant researcher who did pioneering work on using deep neural networks for SDN defense. But his recurrent BiLSTM model acts like a philosophical detective who interviews every single person for too long. We wanted to see: can we keep his high accuracy, but make the system 15 times faster?",
+            6: "Here is our secret sauce: The Cascading Dual-Tier Engine. Our Tier 1 is a fast bouncer who lets 95% of normal customers through in less than two microseconds. Only the suspicious 5% get sent into the back room for deep inspection by our Tier 2 Residual Neural Network. This gives us the best of both worlds: ultra-fast speed and deep AI intelligence.",
+            7: "An IoT smart lightbulb sends completely different data than an enterprise web server. If an AI has only seen one, it fails on the other. That's why we trained on 6 different datasets. And we built the Canonical Flow Adapter, which acts like a universal passport translator so our models can protect any device anywhere.",
+            8: "How does the AI know it's fake? Three dead giveaways: First, variety collapses—every packet is an identical clone. Second, it's a one-way shouting match with zero replies. Third, the handshake is never completed. When the AI sees all three, it knows with 99.8% confidence it's an attack.",
+            9: "If our professor asks why the screen is red while our Mac is running smoothly, we say: 'Sir, our system is an active Intrusion Prevention System. The red banner means an attack was detected in the stream, and our mitigation engine successfully blocked it at the firewall layer before it could ever lag our computer!'",
+            10: "A dumb firewall blocks everything when traffic spikes, which ruins real user experiences during flash sales or breaking news. Our system uses proportional rate-limiting: normal traffic passes freely, ambiguous bursts are gracefully throttled so the server doesn't crash, and only confirmed botnets get blocked.",
+            11: "Here is the scientific proof. We implemented Dr. Ashfaq's exact CNN-BiLSTM architecture. It achieved 95.9% accuracy. But our Cascading Dual-Tier engine achieved 96.0% accuracy while running 14.9 times faster, processing over 78,000 flows per second on Apple Silicon hardware!",
+            12: "Instead of leaving our project as boring terminal text, we built a full Cyber SOC cockpit. It monitors physical Wi-Fi and virtual VPNs, plays real synth sound alerts, and includes an OPSEC Privacy Cloak that hides confidential IP addresses when projecting on screen.",
+            13: "When our professors ask these questions, we don't have to be nervous. We know exactly why it's red, why it won't block movies, and why it runs in microseconds.",
+            14: "Thank you Dr. Javad Sir and teammates. We built a complete, publication-ready cybersecurity defense platform that bridges theory, speed, and real-world protection. We are ready for any questions!"
+        };
+
+        function show(idx) {
+            if (idx < 1 || idx > total) return;
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById(`s${idx}`).classList.add('active');
+            cur = idx;
+            document.getElementById('counter').innerText = `Slide ${cur} / ${total}`;
+            document.getElementById('notesText').innerText = scripts[cur] || "No script.";
+        }
+
+        function next() { if (cur < total) show(cur + 1); }
+        function prev() { if (cur > 1) show(cur - 1); }
+
+        function toggleNotes() {
+            document.getElementById('notesDrawer').classList.toggle('open');
+        }
+
+        function toggleFS() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') next();
+            else if (e.key === 'ArrowLeft') prev();
+            else if (e.key === 'n' || e.key === 'N') toggleNotes();
+            else if (e.key === 'f' || e.key === 'F') toggleFS();
+            else if (e.key === 'Escape') document.getElementById('notesDrawer').classList.remove('open');
+        });
+
+        show(1);
+    </script>
+</body>
+</html>
