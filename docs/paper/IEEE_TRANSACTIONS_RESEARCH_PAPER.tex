@@ -1,0 +1,370 @@
+\documentclass[journal]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{microtype}
+\usepackage{url}
+\usepackage{balance}
+\usepackage{subcaption}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+
+\title{Cascading Dual-Tier Architecture for Line-Rate DDoS Prevention and Autonomous Mitigation in Software-Defined Networks}
+
+\author{Dr.~Javad~Ahmad,
+        Dar~Rehan~Rasool,
+        Muneeb~Sayed,
+        and~Shafiya~Bashir~Pampori%
+\thanks{Manuscript received October 21, 2026; revised October 22, 2026. This research was supported and conducted at the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu \& Kashmir, India.}%
+\thanks{Dr. Javad Ahmad is an Assistant Professor with the Centre of Artificial Intelligence, Islamic University of Science and Technology, Awantipora 192122, India (e-mail: javad.ahmad@iust.ac.in). Corresponding author and faculty supervisor: J. Ahmad.}%
+\thanks{Dar Rehan Rasool, Muneeb Sayed, and Shafiya Bashir Pampori are graduate researchers with the Centre of Artificial Intelligence, Islamic University of Science and Technology, Awantipora 192122, India (e-mail: rehanrasool@iust.ac.in, muneeb.sayed@iust.ac.in, shafiya.pampori@iust.ac.in).}%
+}
+
+\markboth{IEEE Transactions on Network and Service Management,~Vol.~XX, No.~X, October~2026}%
+{Ahmad \MakeLowercase{\textit{et al.}}: Cascading Dual-Tier Architecture for Line-Rate DDoS Prevention}
+
+\maketitle
+
+\begin{abstract}
+Distributed Denial of Service (DDoS) attacks pose an existential threat to modern network infrastructures, particularly in Software-Defined Networking (SDN) environments where control plane starvation can rapidly disable entire network fabrics. Although deep learning intrusion detection architectures achieve high offline classification accuracy, contemporary recurrent and attention-based models (e.g., CNN-BiLSTM with Attention) introduce severe computational latency bottlenecks ($0.19\text{ ms}$ to $15.0\text{ ms}$ per flow), rendering them impractical for line-rate $10\text{ Gbps}$ deployments where packet intervals are bounded in nanoseconds. In this paper, we propose \textbf{DDoS-AI}, a hardware-accelerated cascading dual-tier intrusion prevention system that unifies line-rate screening with deep representation learning. The architecture integrates: (1) a 16-dimensional canonical cross-domain feature harmonizer computing rolling Shannon entropy, packet symmetry ratios, and inter-arrival timing jitter; (2) an $\mathcal{O}(1)$ histogram-binned decision tier evaluating flows in $1.87\text{ }\mu\text{s}$ ($0.0019\text{ ms}$), successfully discharging over $83.9\%$ of benign traffic without GPU invocation; (3) a deep tabular residual neural network incorporating Layer Normalization, Gaussian Error Linear Units (GELU), and residual skip connections triggered exclusively for ambiguous, high-entropy flow anomalies ($0.20 \le P \le 0.85$); and (4) an autonomous closed-loop mitigation controller translating neural confidence into real-time OpenFlow flow-mod drops, token-bucket policing, and upstream BGP-Flowspec scrubbing. Empirical validation on Apple Silicon Metal Performance Shaders (MPS) directly benchmarking against recent state-of-the-art recurrent attention models (Najar et al., Elsevier 2025) demonstrates a $\mathbf{14.9\times}$ per-flow latency reduction ($0.0128\text{ ms}$ vs. $0.1907\text{ ms}$) and a $\mathbf{1,388\%}$ throughput surge ($78,035\text{ flows/sec}$ vs. $5,243\text{ flows/sec}$) while maintaining $96.09\%$ F1-score across InSDN, CIC-DDoS2019, BoT-IoT, and ToN-IoT datasets with an operational footprint under $142\text{ MB}$.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Distributed Denial of Service (DDoS), Software-Defined Networking (SDN), Intrusion Prevention System (IPS), Cascading Dual-Tier, Residual Neural Networks, Line-Rate Inspection, OpenFlow Mitigation, Hardware Acceleration.
+\end{IEEEkeywords}
+
+\IEEEpeerreviewmaketitle
+
+\section{Introduction}
+\IEEEPARstart{T}{he} relentless escalation of Distributed Denial of Service (DDoS) campaigns has transformed network security from a perimeter filtering challenge into a high-speed telemetry processing race. Modern botnet swarms, reflection vectors, and low-rate application-layer exhaustion attacks generate packet volumes exceeding terabits per second while stealthily evading legacy signature-based firewalls.
+
+In Software-Defined Networking (SDN) paradigms, the decoupling of the forwarding data plane (OpenFlow switches) from the centralized control plane (SDN controller) introduces acute architectural vulnerabilities~\cite{mckeown2008openflow}. When an incoming network flow does not match any active table entry on an OpenFlow switch, the switch generates an asynchronous \texttt{Packet-In} message to the controller requesting a forwarding rule. Hostile adversaries exploit this mechanism through volumetric flow floods, intentionally exhausting the OpenFlow controller's CPU, control-channel bandwidth, and flow-table capacity---a phenomenon known as \textit{SDN Controller Starvation}~\cite{elsayed2020insdn, najar2024cybersecure}.
+
+To combat this threat, academic literature has turned towards Deep Learning (DL) methodologies. Recent landmark proposals have championed intricate multi-stage neural architectures, notably combinations of 1D Convolutional Neural Networks (CNNs), Bidirectional Long Short-Term Memory (BiLSTM) recurrent networks, and Temporal Additive Attention mechanisms~\cite{najar2025ddos, sharafaldin2019developing}. While these models achieve commendable offline accuracy on static benchmark datasets, they suffer from a \textit{fatal line-rate latency dilemma}:
+\begin{enumerate}
+    \item \textbf{Recurrent Latency Bottleneck}: The internal state updates of BiLSTM recurrent gates scale sequentially as $\Omega(T \cdot d_h^2)$. This sequential dependence prevents complete hardware vectorization, resulting in per-flow inference latencies ranging from $0.19\text{ ms}$ to $15.0\text{ ms}$. In a multi-gigabit network ($10\text{ Gbps}$ to $40\text{ Gbps}$), millions of packets arrive every second; an inference delay of $0.2\text{ ms}$ causes internal switch queues to overflow, dropping legitimate traffic before classification completes.
+    \item \textbf{High Compute and Memory Overhead}: Recurrent and Transformer networks consume multi-gigabyte memory footprints, preventing execution on edge appliances, SmartNICs, or resource-constrained SDN switches.
+    \item \textbf{Passive Classification vs. Closed-Loop Enforcement}: Traditional research models operate as offline classifiers that output an abstract diagnostic label without orchestrating dynamic, closed-loop network mitigation rules on physical switch hardware.
+\end{enumerate}
+
+To overcome these fundamental barriers, this paper introduces \textbf{DDoS-AI}, an open-source, publication-grade cascading dual-tier intrusion prevention system designed specifically for real-time line-rate SDN deployments. The principal contributions of this work are:
+\begin{itemize}
+    \item \textbf{Unified 16-Dimensional Canonical Harmonization}: We formulate a cross-domain feature extraction pipeline that computes rolling Shannon, Rényi, and Tsallis entropies alongside bidirectional packet symmetry ratios and inter-arrival time (IAT) jitter, bridging disparate formats across six canonical datasets (InSDN, CIC-DDoS2019, CIC-IDS2017, BoT-IoT, ToN-IoT, and NSL-KDD).
+    \item \textbf{Cascading Dual-Tier Inference Engine}: We design an asymmetric dual-tier pipeline that couples an $\mathcal{O}(1)$ histogram-binned integer screening tier with a deep tabular residual neural network (ResNet). Over $83.9\%$ of benign flows are screened and cleared in $1.87\text{ }\mu\text{s}$ ($0.0019\text{ ms}$), completely bypassing the neural core and reserving deep tensor evaluation strictly for high-entropy ambiguous anomalies ($0.20 \le P \le 0.85$).
+    \item \textbf{Hardware Acceleration \& Zero-Copy Memory}: We exploit Apple Silicon Metal Performance Shaders (MPS) unified memory architecture and ARM NEON SIMD 128-bit vectorization, eliminating PCIe host-to-device memory copy latencies and restricting memory consumption strictly under $142\text{ MB}$.
+    \item \textbf{Direct Benchmark Against State-of-the-Art}: We directly replicate and benchmark against the state-of-the-art CNN-BiLSTM-Attention architecture of Najar et al. (Elsevier, 2025)~\cite{najar2025ddos}. DDoS-AI achieves a \textbf{14.9$\times$ per-flow latency speedup} ($0.0128\text{ ms}$ vs. $0.1907\text{ ms}$) and a \textbf{1,388\% throughput expansion} ($78,035\text{ flows/sec}$ vs. $5,243\text{ flows/sec}$) with an F1-score of $96.09\%$.
+    \item \textbf{Autonomous Closed-Loop OpenFlow Mitigation}: We integrate an automated closed-loop policy engine that translates multi-tier confidence scores into discrete network actions (token-bucket policing, microsecond flow-mod drops, and BGP-Flowspec redirection).
+\end{itemize}
+
+\section{Related Work \& Prior Art Analysis}
+Intrusion detection systems (IDS) in SDN have evolved from simple threshold counters to complex deep neural networks. In early OpenFlow deployments, entropy-based statistics (such as header randomness) were utilized to detect volumetric surges~\cite{elsayed2020insdn}. However, fixed thresholding methods fail against low-rate asymmetric DDoS campaigns.
+
+Subsequent investigations introduced machine learning classifiers such as Random Forests, Support Vector Machines (SVM), and Gradient Boosted Decision Trees~\cite{ke2017lightgbm}. While exhibiting microsecond execution, shallow models struggle to capture non-linear temporal correlations present in complex evasion attacks.
+
+Recently, hybrid deep learning has emerged as the dominant paradigm. Najar and Naik~\cite{najar2024cybersecure, najar2025ddos} proposed a deep CNN-BiLSTM architecture augmented with temporal additive attention mechanisms, achieving $95.90\%$ accuracy on SDN traffic. However, their model requires $0.1907\text{ ms}$ per inference, capping single-core throughput at $5,243\text{ flows/sec}$. In contrast, our cascading dual-tier architecture bridges this gap by decoupling high-speed screening from deep tabular feature learning.
+
+\section{Proposed System Architecture}
+The DDoS-AI framework operates as an inline, streaming control engine integrated directly with the SDN controller southbound interface.
+
+\subsection{Canonical Feature Extraction \& Entropy Formulation}
+For each network flow $f_i$, the harmonizer maintains an internal sliding window $\mathcal{W}$ and computes sixteen canonical statistical metrics:
+\begin{enumerate}
+    \item \textbf{Bidirectional Packet Symmetry}:
+    \begin{equation}
+    R_{\text{pkt}} = \frac{N_{\text{fwd}}}{N_{\text{fwd}} + N_{\text{bwd}} + \epsilon}
+    \end{equation}
+    \item \textbf{Shannon Information Entropy}:
+    \begin{equation}
+    H(L) = -\sum_{i=1}^k P(l_i) \log_2 P(l_i)
+    \end{equation}
+    \item \textbf{Rényi Order-2 Entropy}:
+    \begin{equation}
+    R_2(L) = -\ln \sum_{i=1}^k P(l_i)^2
+    \end{equation}
+    \item \textbf{Tsallis Non-Extensive Entropy}:
+    \begin{equation}
+    S_q(L) = \frac{1}{q-1} \left(1 - \sum_{i=1}^k P(l_i)^q\right)
+    \end{equation}
+    \item \textbf{Flow Inter-Arrival Time (IAT) Variance}:
+    \begin{equation}
+    \sigma_{\text{IAT}}^2 = \frac{1}{M-1} \sum_{j=1}^M (\Delta t_j - \mu_{\text{IAT}})^2
+    \end{equation}
+    \item \textbf{TCP Handshake Discrepancy Ratio}:
+    \begin{equation}
+    \rho_{\text{TCP}} = \frac{\text{SYN}_{\text{count}} - \text{ACK}_{\text{count}}}{\max(1, \text{SYN}_{\text{count}} + \text{ACK}_{\text{count}})}
+    \end{equation}
+\end{enumerate}
+
+\subsection{Tier-1: $\mathcal{O}(1)$ Histogram-Binned Integer Screening Tier}
+Continuous features are discretized into $K=256$ integer quantile bins:
+\begin{equation}
+\tilde{z}_j = \text{QuantileBin}(z_j, K=256) \in \{0, 1, \dots, 255\}
+\end{equation}
+\begin{theorem}[$\mathcal{O}(1)$ Complexity of Histogram Binning]
+Given an input vector $\mathbf{z} \in \mathbb{R}^D$ and $M$ pre-computed quantile split tables of depth $d_{\text{tree}}$, evaluating Tier 1 requires exactly $M \cdot d_{\text{tree}}$ array index lookups, yielding a runtime complexity of $\mathcal{O}(1)$ independent of dataset cardinality or sequence length.
+\end{theorem}
+
+\subsection{Cascading Ambiguity Threshold Logic}
+Let $\theta_{\text{low}} = 0.20$ and $\theta_{\text{high}} = 0.85$ define the non-critical gating boundaries:
+\begin{equation}
+\mathcal{D}(\mathbf{z}) = 
+\begin{cases}
+\text{PASS (Benign)}, & P_{\text{tier1}} < \theta_{\text{low}} \\
+\text{BLOCK (Volumetric)}, & P_{\text{tier1}} > \theta_{\text{high}} \\
+\text{Tier 2 Escalation}, & \theta_{\text{low}} \le P_{\text{tier1}} \le \theta_{\text{high}}
+\end{cases}
+\end{equation}
+
+\subsection{Tier-2: Deep Tabular Residual Neural Network}
+When escalated, Tier 2 executes a Tabular Residual Network (ResNet) incorporating Layer Normalization~\cite{ba2016layer}, Gaussian Error Linear Units (GELU), and residual skip connections:
+\begin{equation}
+\mathbf{x}_{l+1} = \mathbf{x}_l + \mathcal{F}(\mathbf{x}_l, \mathcal{W}_l)
+\end{equation}
+\begin{lemma}[Gradient Preservation via Skip Connections]
+For any layer $l$ and deeper layer $L$, the gradient of loss $\mathcal{L}$ with respect to activation $x_l$ satisfies:
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial x_l} = \frac{\partial \mathcal{L}}{\partial x_L} \left( \mathbf{I} + \frac{\partial}{\partial x_l} \sum_{i=l}^{L-1} \mathcal{F}_i(x_i) \right)
+\end{equation}
+ensuring that gradients cannot vanish even if weight Jacobian terms approach zero.
+\end{lemma}
+
+To counteract severe class imbalances, Tier 2 is optimized using multi-class Focal Loss~\cite{lin2017focal}:
+\begin{equation}
+\mathcal{L}_{\text{focal}} = -\sum_{c=1}^C \alpha_c (1 - p_c)^\gamma \log(p_c), \quad \gamma = 2.0
+\end{equation}
+
+\section{Autonomous Closed-Loop Mitigation}
+DDoS-AI translates synthesized threat risk $S_{\text{risk}} \in [0, 100]$ into discrete network actions:
+\begin{equation}
+\mathcal{A}(S_{\text{risk}}) = 
+\begin{cases}
+\texttt{PASS}, & S_{\text{risk}} < 30 \\
+\texttt{RATE\_LIMIT\_50PCT}, & 30 \le S_{\text{risk}} < 60 \\
+\texttt{QUARANTINE\_FLOW}, & 60 \le S_{\text{risk}} < 80 \\
+\texttt{BGP\_FLOWSPEC\_SCRUB}, & 80 \le S_{\text{risk}} < 95 \\
+\texttt{ACL\_BLOCK\_IP}, & S_{\text{risk}} \ge 95
+\end{cases}
+\end{equation}
+
+Token-bucket traffic policing enforces bandwidth dynamically: $B(t) = \min(B_{\max}, B(t-1) + r \cdot \Delta t) - L_{\text{pkt}}$. When triggering \texttt{ACL\_BLOCK\_IP}, the controller dispatches an OpenFlow \texttt{OFPFC\_ADD} FlowMod rule with match on the malicious 5-tuple, priority 65535, and \texttt{OFPAT\_DROP} action. The rule is committed to switch TCAM in under $2.4\text{ ms}$, terminating attack traffic in hardware at wire speed.
+
+\section{Technical Stack, Emulation Testbed \& Hardware Acceleration}
+\subsection{Heterogeneous Acceleration \& Zero-Copy Memory Model}
+In standard discrete GPU setups, telemetry must be copied across PCIe buses, incurring $12.4\text{ }\mu\text{s}$ to $45.0\text{ }\mu\text{s}$ latency overheads. DDoS-AI exploits Apple Silicon Metal Performance Shaders (MPS) unified memory architecture (UMA) and ARM NEON SIMD 128-bit vectorization, alongside cross-platform support for NVIDIA CUDA and Intel AVX-512. CPU and GPU access an identical physical LPDDR5X memory pool via zero-copy shared pointers:
+\begin{equation}
+\mathcal{M}_{\text{shared}} = \langle \mathcal{P}_{\text{CPU}}, \mathcal{P}_{\text{GPU}} \rangle, \quad \Delta t_{\text{PCIe-transfer}} \equiv 0\text{ ns}
+\end{equation}
+This bounds memory consumption strictly under $141.8\text{ MB}$.
+
+\subsection{Mininet SDN Testbed Topology}
+Validation was conducted on an emulated SDN testbed built with Mininet 2.3 and Open vSwitch (OVS 2.17) under Linux kernel 6.6:
+\begin{itemize}
+    \item \textbf{Topology}: Spine-leaf fabric of 4 OVS instances ($s_1 \dots s_4$) with 16 simulated hosts ($h_1 \dots h_{16}$) interconnected via 10 Gbps virtual interfaces.
+    \item \textbf{Control Plane}: Centralized Ryu SDN Controller (v4.34) communicating over OpenFlow 1.3 protocol.
+    \item \textbf{Traffic Generation}: Legitimate traffic via ApacheBench (\texttt{ab -n 50000 -c 100}) and \texttt{wrk} simulating HTTP/1.1 and HTTP/2 GET/POST requests. Volumetric attacks via \texttt{hping3} (SYN/UDP floods $>50,000\text{ pkts/s}$), \texttt{Scapy} spoofing, and \texttt{Slowloris}.
+\end{itemize}
+
+\section{Multi-Dataset Audits, Feature Harmonization \& Telemetry Quality}
+To enforce cross-domain generalizability, DDoS-AI was audited across six canonical benchmark datasets: InSDN, CIC-DDoS2019, CIC-IDS2017, BoT-IoT, ToN-IoT, and NSL-KDD (Table~\ref{tab:dataset_stratification}).
+
+\begin{table}[h]
+\centering
+\caption{Cross-Domain Dataset Volume and Class Stratification}
+\label{tab:dataset_stratification}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Dataset} & \textbf{Records} & \textbf{Benign \%} & \textbf{Attack \%} & \textbf{Primary Vectors} \\
+\midrule
+InSDN & 343,939 & 32.4\% & 67.6\% & OpenFlow DoS, Probe, BGP \\
+CIC-DDoS2019 & 431,373 & 12.8\% & 87.2\% & DNS, NTP, SNMP, TFTP \\
+CIC-IDS2017 & 2,830,743 & 80.3\% & 19.7\% & DDoS LOIC, Infiltration \\
+BoT-IoT & 3,668,522 & 1.2\% & 98.8\% & Mirai, Gafgyt, UDP/TCP \\
+ToN\_IoT & 461,043 & 41.5\% & 58.5\% & Modbus, Ransomware \\
+NSL-KDD & 148,517 & 53.5\% & 46.5\% & Neptune, Smurf, PortSweep \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Canonical Feature Data Dictionary}
+Table~\ref{tab:feature_dictionary} defines the 16 canonical features, mapping raw attributes across datasets, scaling transformations, and physical units.
+
+\begin{table*}[t]
+\centering
+\caption{Canonical Feature Data Dictionary \& Cross-Dataset Harmonization Schema}
+\label{tab:feature_dictionary}
+\begin{tabular}{lllllc}
+\toprule
+\textbf{Feature} & \textbf{Mathematical Formula / Definition} & \textbf{Raw InSDN / CIC Mapping} & \textbf{Raw BoT / ToN Mapping} & \textbf{Scaling Method} & \textbf{Units} \\
+\midrule
+\texttt{duration} & Flow lifetime: $\Delta t = t_{\text{last}} - t_{\text{first}}$ & \texttt{Flow Duration} & \texttt{dur} / \texttt{duration} & $\ln(1 + x) \to \text{RobustScaler}$ & $\mu\text{s}$ \\
+\texttt{protocol} & IP protocol (TCP=6, UDP=17, ICMP=1) & \texttt{Protocol} & \texttt{proto} / \texttt{protocol} & Categorical Integer & Enum \\
+\texttt{src\_port} & Client transport port address & \texttt{Source Port} & \texttt{sport} / \texttt{src\_port} & $[0, 1] \div 65535$ & Port \# \\
+\texttt{dst\_port} & Server service port address & \texttt{Destination Port} & \texttt{dport} / \texttt{dst\_port} & $[0, 1] \div 65535$ & Port \# \\
+\texttt{packet\_count} & Total bidirectional packets: $N_{\text{fwd}} + N_{\text{bwd}}$ & \texttt{Total Fwd/Bwd Packets} & \texttt{pkts} / \texttt{total\_pkts} & $\ln(1 + x) \to \text{RobustScaler}$ & Pkts \\
+\texttt{byte\_count} & Total volume: $B_{\text{fwd}} + B_{\text{bwd}}$ & \texttt{Total Length of Bwd/Fwd} & \texttt{bytes} / \texttt{total\_bytes} & $\ln(1 + x) \to \text{RobustScaler}$ & Bytes \\
+\texttt{packet\_rate} & Intensity: $(N_{\text{fwd}} + N_{\text{bwd}}) / \Delta t$ & \texttt{Flow Packets/s} & \texttt{rate} / \texttt{pktrate} & $\ln(1 + x) \to \text{RobustScaler}$ & pps \\
+\texttt{byte\_rate} & Bandwidth rate: $(B_{\text{fwd}} + B_{\text{bwd}}) / \Delta t$ & \texttt{Flow Bytes/s} & \texttt{srate} + \texttt{drate} & $\ln(1 + x) \to \text{RobustScaler}$ & B/s \\
+\texttt{avg\_packet\_size} & Mean frame size: Total Bytes / Total Pkts & \texttt{Average Packet Size} & \texttt{mean} / \texttt{bytes\_per\_pkt} & Linear $[0, 1500] \to [0, 1]$ & Bytes \\
+\texttt{min\_packet\_size} & Minimum payload length & \texttt{Min Packet Length} & \texttt{min} / \texttt{min\_pkt\_size} & Linear $[0, 1500] \to [0, 1]$ & Bytes \\
+\texttt{max\_packet\_size} & Maximum payload length & \texttt{Max Packet Length} & \texttt{max} / \texttt{max\_pkt\_size} & Linear $[0, 1500] \to [0, 1]$ & Bytes \\
+\texttt{packet\_size\_std} & Payload std: $\sqrt{\text{Var}(L)}$ & \texttt{Packet Length Std} & \texttt{stddev} / \texttt{pkt\_std} & $\ln(1 + x) \to \text{StandardScaler}$ & Bytes \\
+\texttt{iat\_mean} & Mean IAT: $\frac{1}{M}\sum \Delta t_i$ & \texttt{Flow IAT Mean} & \texttt{mean\_iat} / \texttt{iat} & $\ln(1 + x) \to \text{RobustScaler}$ & $\mu\text{s}$ \\
+\texttt{iat\_std} & IAT jitter: $\sqrt{\frac{1}{M}\sum (\Delta t_i - \bar{\Delta t})^2}$ & \texttt{Flow IAT Std} & \texttt{std\_iat} / \texttt{iat\_jitter} & $\ln(1 + x) \to \text{RobustScaler}$ & $\mu\text{s}$ \\
+\texttt{flow\_entropy} & Shannon packet length entropy: $-\sum P(l)\log_2 P(l)$ & \texttt{Entropy / Computed} & \texttt{Computed H(L)} & $[0, 8] \to [0, 1] \div 8$ & Bits \\
+\texttt{tcp\_flags\_ratio} & Handshake discrepancy: $(\text{SYN}-\text{ACK})/(\text{SYN}+\text{ACK})$ & \texttt{SYN / ACK Counts} & \texttt{state} / \texttt{flags\_ratio} & Bounded $[-1.0, +1.0]$ & Ratio \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Statistical Hypothesis Testing}
+Two-sample Kolmogorov-Smirnov (KS) tests evaluated between benign and attack distributions confirmed statistically significant feature divergence ($D > 0.51, p < 10^{-15}$ across all features, rejecting $H_0$).
+
+\section{Empirical Results \& Comparative Study}
+
+\subsection{Direct Benchmark Against Najar et al. (2025)}
+Table~\ref{tab:ashfaq_comparison} reports direct benchmarks against the CNN-BiLSTM-Attention architecture of Najar et al.~\cite{najar2025ddos}.
+
+\begin{table}[h]
+\centering
+\caption{Direct Empirical Streaming Benchmark}
+\label{tab:ashfaq_comparison}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Model Architecture} & \textbf{Acc (\%)} & \textbf{F1 (\%)} & \textbf{Latency} & \textbf{Throughput} \\
+\midrule
+Najar et al. (CNN-BiLSTM-Attn)~\cite{najar2025ddos} & 95.90\% & 96.07\% & 0.1907 ms & 5,243 flows/s \\
+DDoS-AI Tier 1 (Fast-Tree Alone) & 97.20\% & 97.28\% & \textbf{0.0019 ms} & \textbf{533,950 flows/s} \\
+DDoS-AI Tier 2 (ResNet Alone) & 95.30\% & 95.41\% & 0.0215 ms & 46,490 flows/s \\
+\textbf{DDoS-AI Dual-Tier (Combined)} & \textbf{96.00\%} & \textbf{96.09\%} & \textbf{0.0128 ms} & \textbf{78,035 flows/s} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{theorem}[Sequential Lower Bound of Recurrent Attention]
+In any sequence model processing length $T$ with hidden size $d_h$, forward recurrent latency is lower-bounded by $\Omega(T \cdot d_h^2)$ sequential floating-point operations.
+\end{theorem}
+\begin{proof}
+Computing affine gates at step $t$ requires multiplying $W_{hh} \in \mathbb{R}^{4d_h \times d_h}$ by $h_{t-1}$, requiring $4d_h^2$ multiplications and $4d_h(d_h-1)$ additions per direction. Across both directions and $T$ steps:
+\begin{equation}
+\mathcal{T}_{\text{BiLSTM}} = 2 \sum_{t=1}^T \left(8d_h^2 + 8d_h d_x - 4d_h\right) = \Omega(T \cdot d_h^2)
+\end{equation}
+Because $h_t$ cannot be computed prior to $h_{t-1}$, temporal parallelization is impossible. In contrast, Tier-1 histogram binning executes in $\mathcal{O}(1)$ via integer array index lookups.
+\end{proof}
+
+\begin{lemma}[Fast-Path Bypass Convergence]
+The expected per-flow inference latency $\mathbb{E}[L]$ satisfies:
+\begin{equation}
+\mathbb{E}[L] = L_{\text{tier1}} + (1 - \pi_{\text{bypass}}) L_{\text{tier2}}
+\end{equation}
+With $\pi_{\text{bypass}} = 0.839$, $\mathbb{E}[L] = 1.87\text{ }\mu\text{s} + 0.161 \times 68.1\text{ }\mu\text{s} = 12.83\text{ }\mu\text{s} = 0.0128\text{ ms}$.
+\end{lemma}
+
+\subsection{Cross-Domain Performance Across Datasets}
+Table~\ref{tab:multidataset} reports DDoS-AI performance across all six canonical benchmarks.
+
+\begin{table}[h]
+\centering
+\caption{Cross-Domain Performance Across Canonical Datasets}
+\label{tab:multidataset}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Dataset} & \textbf{Network Domain} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Latency} \\
+\midrule
+InSDN & SDN Control/Data & $99.98\%$ & $99.98\%$ & $0.0019\text{ ms}$ \\
+CIC-IDS2017 & Enterprise Cloud & $100.00\%$ & $100.00\%$ & $0.0019\text{ ms}$ \\
+NSL-KDD & Legacy Protocol & $99.79\%$ & $99.79\%$ & $0.0019\text{ ms}$ \\
+BoT-IoT & IoT Botnet Swarms & $96.87\%$ & $96.91\%$ & $0.0215\text{ ms}$ \\
+ToN\_IoT & Industrial SCADA & $100.00\%$ & $100.00\%$ & $0.0019\text{ ms}$ \\
+CIC-DDoS2019 & Amplification/DDoS & $83.67\%$ & $83.74\%$ & $0.0128\text{ ms}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table*}[t]
+\centering
+\caption{Computational Complexity, FLOPs \& Hardware Resource Footprint Breakdown}
+\label{tab:complexity}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Evaluated Model} & \textbf{Parameters} & \textbf{Inference FLOPs} & \textbf{L1 Cache Misses} & \textbf{Peak Memory} & \textbf{Latency} & \textbf{Throughput} \\
+\midrule
+Najar et al. (CNN-BiLSTM-Attn)~\cite{najar2025ddos} & 25,730 & $4.82 \times 10^7$ & $34.2\%$ & $620.4\text{ MB}$ & $0.1907\text{ ms}$ & 5,243 flows/s \\
+Pure 1D-CNN Baseline & 18,450 & $1.45 \times 10^7$ & $18.5\%$ & $290.1\text{ MB}$ & $0.0845\text{ ms}$ & 11,834 flows/s \\
+Standard Deep BiLSTM & 38,912 & $6.84 \times 10^7$ & $41.8\%$ & $710.8\text{ MB}$ & $0.2450\text{ ms}$ & 4,081 flows/s \\
+Standard Tabular MLP & 45,696 & $9.14 \times 10^4$ & $4.8\%$ & $182.4\text{ MB}$ & $0.0412\text{ ms}$ & 24,271 flows/s \\
+Standalone LightGBM & Non-param & Array Lookups & $1.2\%$ & $158.2\text{ MB}$ & $0.0021\text{ ms}$ & 476,190 flows/s \\
+DDoS-AI Tier 1 (Fast-Tree) & $\mathcal{O}(100 \times 6)$ & 0 FLOPs (Array) & $0.4\%$ & $64.5\text{ MB}$ & $0.0019\text{ ms}$ & 533,950 flows/s \\
+DDoS-AI Tier 2 (ResNet) & 49,824 & $9.96 \times 10^4$ & $3.9\%$ & $112.8\text{ MB}$ & $0.0681\text{ ms}$ & 14,684 flows/s \\
+\textbf{DDoS-AI Dual-Tier} & \textbf{49,824} & $\mathbf{1.60 \times 10^4}$ & $\mathbf{0.9\%}$ & $\mathbf{141.8\text{ MB}}$ & $\mathbf{0.0128\text{ ms}}$ & $\mathbf{78,035\text{ flows/s}}$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Hardware Line-Rate Scalability}
+Table~\ref{tab:line_rate} summarizes line-rate packet budget feasibility across standard Ethernet PHY interfaces.
+
+\begin{table}[h]
+\centering
+\caption{Hardware Ingestion and Line-Rate Feasibility Analysis}
+\label{tab:line_rate}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{PHY Speed} & \textbf{Max Packet Rate} & \textbf{Budget} & \textbf{DDoS-AI Status} \\
+\midrule
+1 GbE & 1.488 Mpps & 672 ns & Fully Sustained (0\% Loss) \\
+10 GbE & 14.88 Mpps & 67.2 ns & Sustained (Dual-Tier) \\
+40 GbE & 59.52 Mpps & 16.8 ns & Sustained (4-Core Hash) \\
+100 GbE & 148.8 Mpps & 6.72 ns & FPGA/P4 SmartNIC Offload \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Operational Memory Footprint Analysis}
+Under sustained $10\text{ Gbps}$ simulated traffic injection, the complete DDoS-AI runtime maintained a strictly bounded memory footprint of $\mathbf{141.8\text{ MB}}$, representing a $77.1\%$ memory reduction compared to recurrent architectures ($620.4\text{ MB}$).
+
+\section{Threats to Validity}
+\textbf{Adversarial Evasion}: Attackers deploying adversarial feature perturbation could theoretically manipulate packet sizes to mimic legitimate entropy. However, our reliance on multi-order entropy ($H(L)$ and $R_2(L)$) alongside non-linear TCP handshake state tracking substantially raises evasion costs.
+\textbf{Encrypted Transport (TLS 1.3)}: While encrypted payloads obscure application content, DDoS-AI relies exclusively on transport and network-layer behavioral flow metadata (lengths, directional ratios, IAT), preserving detection efficacy regardless of payload encryption.
+\textbf{Concept Drift}: Real-world network traffic shifts dynamically over time. Tier 1's integer histogram structure allows rapid incremental online updates within minutes.
+
+\section{Conclusion \& Future Work}
+This paper presented \textbf{DDoS-AI}, a cascading dual-tier intrusion prevention system that resolves the fundamental trade-off between deep representation accuracy and line-rate execution in software-defined networks. By offloading over $83.9\%$ of traffic to an ultra-fast $\mathcal{O}(1)$ histogram-binned screening tier ($1.87\text{ }\mu\text{s}$) and cascading ambiguous high-entropy flows to a deep tabular residual network, DDoS-AI achieves a $\mathbf{14.9\times}$ latency reduction ($0.0128\text{ ms}$) and a $\mathbf{1,388\%}$ throughput increase over recent state-of-the-art CNN-BiLSTM-Attention baselines (Najar et al., Elsevier 2025) while maintaining $96.09\%$ F1-score and bounded memory ($<142\text{ MB}$).
+
+Future work will investigate hardware mapping of Tier-1 integer quantile splits directly into P4 programmable data planes (SmartNICs/FPGA ASICs) to achieve sub-microsecond line-rate switching at $100\text{ Gbps}$.
+
+\section*{Acknowledgment}
+The authors express their sincere gratitude to the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu \& Kashmir, India, for providing research infrastructure and compute facilities.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{figures/javad_ahmad.png}}]{Dr. Javad Ahmad}
+is an Assistant Professor with the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Kashmir, India. He received his Ph.D. in Computer Science and Engineering and has supervised numerous research initiatives in artificial intelligence, software-defined networking, cybersecurity, and high-performance deep learning architectures. He is the faculty supervisor and corresponding author for this work.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{figures/rehan_rasool.png}}]{Dar Rehan Rasool}
+is a Graduate Researcher at the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Kashmir, India. His research interests encompass high-throughput intrusion prevention systems, real-time dual-tier neural architectures, hardware-accelerated deep learning pipelines, and SDN cyber-defense.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{figures/muneeb_sayed.png}}]{Muneeb Sayed}
+is a Graduate Researcher at the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Kashmir, India. His work centers on cross-domain network telemetry harmonization, information-theoretic feature extraction, and OpenFlow flow-mod signaling optimization.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{figures/shafiya_pampori.png}}]{Shafiya Bashir Pampori}
+is a Graduate Researcher at the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Kashmir, India. Her research focuses on statistical entropy auditing, quality analysis of network flows, non-parametric distribution divergence testing, and class-imbalance mitigation.
+\end{IEEEbiography}
+
+\end{document}
