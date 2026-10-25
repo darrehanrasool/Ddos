@@ -1,6 +1,6 @@
 """Stacking Meta-Classifier Ensemble."""
 
-from typing import List
+from typing import Any, List
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 import logging

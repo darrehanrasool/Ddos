@@ -1,6 +1,6 @@
 """Soft and hard voting ensemble classifier."""
 
-from typing import List, Optional
+from typing import Any, List, Optional
 import numpy as np
 import logging
 
