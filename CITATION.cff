@@ -3,8 +3,8 @@ message: "If you use this benchmark, methodology, architecture, or codebase in y
 title: "DDoS-AI: High-Throughput Cascading Dual-Tier Architecture for Real-Time DDoS Detection and Autonomous Mitigation in Software-Defined Networks"
 version: 1.0.0
 date-released: 2026-10-21
-url: "https://github.com/darrehanrasool/DDoS-AI"
-repository-code: "https://github.com/darrehanrasool/DDoS-AI"
+url: "https://github.com/darrehanrasool/Ddos"
+repository-code: "https://github.com/darrehanrasool/Ddos"
 license: "LicenseRef-Strict-Academic-Research"
 type: software
 authors:
@@ -12,8 +12,8 @@ authors:
     given-names: "Dar Rehan"
     affiliation: "Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
     email: "rehanrasool@iust.ac.in"
-  - family-names: "Sayed"
-    given-names: "Muneeb"
+  - family-names: "Shah"
+    given-names: "Muneeb Syed"
     affiliation: "Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
   - family-names: "Pampori"
     given-names: "Shafiya Bashir"

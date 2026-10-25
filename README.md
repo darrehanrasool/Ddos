@@ -139,11 +139,21 @@ Comprehensive academic evaluations, comparative matrices, and researcher reviews
 
 ---
 
+## 🤝 Community, Security & Contributing
+
+We welcome community collaboration, academic discussions, and defensive contributions. Please consult our project guidelines:
+
+- 📋 [**Contributing Guidelines**](CONTRIBUTING.md): Setup instructions, testing commands, code styling, and pull request procedures.
+- 🛡️ [**Security Policy**](SECURITY.md): Vulnerability disclosure procedures, SLA, and security research scope.
+- 📜 [**Code of Conduct**](CODE_OF_CONDUCT.md): Professional standards, ethical defensive research guidelines, and reporting protocols.
+
+---
+
 ## 📜 Intellectual Property & License
 
 This project is licensed under the **Strict Academic & Non-Commercial Research Evaluation License** (All Rights Reserved).
 
-- **Copyright**: © 2026 Dar Rehan Rasool, Muneeb Sayed, Shafiya Bashir Pampori, and Dr. Javad Ahmad.
+- **Copyright**: © 2026 Dr. Javad Ahmad, Dar Rehan Rasool, Muneeb Syed Shah, and Shafiya Bashir Pampori.
 - **Affiliation**: Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India.
 - **Commercial Use**: **Strictly Prohibited**. No commercial use, resale, closed-source packaging, or incorporation into commercial appliances/cloud services is permitted without an executed licensing agreement.
 - **Academic Citation**: Any research, thesis, or paper utilizing this methodology or codebase must cite the authors and official Zenodo DOI via [CITATION.cff](CITATION.cff).
@@ -158,7 +168,7 @@ If you use DDoS-AI in your research, please cite:
 
 ```bibtex
 @software{rasool2026ddosai,
-  author       = {Rasool, Dar Rehan and Sayed, Muneeb and Pampori, Shafiya Bashir and Ahmad, Dr. Javad},
+  author       = {Rasool, Dar Rehan and Shah, Muneeb Syed and Pampori, Shafiya Bashir and Ahmad, Dr. Javad},
   title        = {DDoS-AI: High-Throughput Cascading Dual-Tier Architecture for Real-Time DDoS Detection and Autonomous Mitigation in Software-Defined Networks},
   month        = oct,
   year         = 2026,

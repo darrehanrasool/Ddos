@@ -1,118 +1,85 @@
-# Contributor Covenant Code of Conduct
+# Code of Conduct
 
 ## Our Pledge
 
-We as members, contributors, and leaders pledge to make participation in our
-community a harassment-free experience for everyone, regardless of age, body
-size, visible or invisible disability, ethnicity, sex characteristics, gender
-identity and expression, level of experience, education, socio-economic status,
-nationality, personal appearance, race, caste, color, religion, or sexual
-identity and orientation.
+As contributors, researchers, and maintainers of the **DDoS-AI** project, we are committed to fostering a professional, respectful, collaborative, and productive academic and open-source research community. 
 
-We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community.
+We pledge to provide an environment where all participants can collaborate, share ideas, and contribute to cutting-edge cybersecurity and artificial intelligence research free from harassment, hostility, and discrimination.
 
-## Our Standards
+We welcome individuals of all backgrounds, cultures, nationalities, languages, and technical skill levels, and we expect all members of the community to treat one another with dignity, courtesy, and mutual respect.
 
-Examples of behavior that contributes to a positive environment for our
-community include:
+---
 
-- Demonstrating empathy and kindness toward other people
-- Being respectful of differing opinions, viewpoints, and clinical experiences
-- Giving and gracefully accepting constructive feedback
-- Accepting responsibility and apologizing to those affected by our mistakes,
-  and learning from the experience
-- Focusing on what is best not just for us as individuals, but for the overall
-  community and patient outcomes
+## Standards of Conduct
 
-Examples of unacceptable behavior include:
+### Expected Behavior
 
-- The use of sexualized language or imagery, and sexual attention or advances of
-  any kind
-- Trolling, insulting or derogatory comments, and personal or political attacks
-- Public or private harassment
-- Publishing others' private information, such as a physical or email address,
-  or patient data, without their explicit permission
-- Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+We encourage behavior that supports a healthy, rigorous, and collegial research environment:
 
-## Enforcement Responsibilities
+- **Professional Courtesy**: Interact respectfully, politely, and constructively with fellow researchers, contributors, and users.
+- **Constructive Scientific Discourse**: Evaluate ideas, code, experimental methodologies, and benchmarks based on technical merit and factual evidence.
+- **Welcoming Diverse Perspectives**: Be receptive to different technical viewpoints, research paradigms, and educational backgrounds.
+- **Graceful Collaboration**: Accept constructive feedback professionally, acknowledge mistakes readily, and work collaboratively to resolve technical disagreements.
+- **Research Integrity & Ethics**: Adhere to the highest standards of scientific honesty, academic attribution, and ethical defensive cybersecurity research.
+- **Mentorship & Empathy**: Support newcomers, junior researchers, and students by offering helpful, patient guidance.
 
-Community leaders are responsible for clarifying and enforcing our standards of
-acceptable behavior and will take appropriate and fair corrective action in
-response to any behavior that they deem inappropriate, threatening, offensive,
-or harmful.
+### Unacceptable Behavior
 
-Community leaders have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct, and will communicate reasons for moderation
-decisions when appropriate.
+To maintain a healthy, professional academic environment, the following behaviors are strictly prohibited:
 
-## Scope
+- **Harassment & Bullying**: Any form of intimidation, persistent hostility, stalking, or abusive communication, whether public or private.
+- **Derogatory or Dehumanizing Remarks**: Offensive language, personal attacks, insults, or derogatory commentary directed at an individual or group.
+- **Discriminatory Conduct**: Discrimination or exclusion based on race, ethnicity, religion, nationality, disability, age, or socioeconomic status.
+- **Trolling & Disruptive Conduct**: Sustained disruption of discussions, off-topic spamming, inflammatory arguments, or bad-faith behavior in issues, pull requests, or forums.
+- **Violation of Privacy (Doxxing)**: Publishing or threatening to publish private personal data (such as private email addresses, physical addresses, phone numbers, or confidential institution data) without explicit written consent.
+- **Malicious & Offensive Exploitation**: Using or weaponizing this repository, its models, or its network attack tools for unauthorized network disruption, malicious offensive attacks, or criminal acts.
+- **Unprofessional Tone**: Profanity, vitriol, or aggression in commit messages, documentation, discussions, or code review comments.
 
-This Code of Conduct applies within all community spaces, and also applies when
-an individual is officially representing the community in public spaces.
-Examples of representing our community include using an official e-mail address,
-posting via an official social media account, or acting as an appointed
-representative at an online or offline event.
+---
 
-## Enforcement
+## Academic & Defensive Research Ethics
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-[security@ddos-ai.org].
-All complaints will be reviewed and investigated promptly and fairly.
+Because DDoS-AI is a cybersecurity research platform handling network intrusion detection, traffic analysis, and packet emulation, contributors must uphold strict ethical standards:
 
-All community leaders are obligated to respect the privacy and security of the
-reporter of any incident.
+1. **Defensive Purpose**: All contributions, models, algorithms, and telemetry tools must be designed and evaluated solely for defensive network security, resilience assessment, and academic benchmarking.
+2. **Authorized Testing Only**: Any traffic emulation or benchmark execution must strictly be performed in isolated, authorized lab environments or synthetic testbeds (e.g., local virtual interfaces `lo`/`lo0` or dedicated testnets).
+3. **Intellectual Honesty**: Plagiarism, falsification of benchmark metrics, unauthorized use of third-party code without license compliance, and failure to cite original research are severe ethical violations.
 
-## Enforcement Guidelines
+---
 
-Community leaders will follow these Community Impact Guidelines in determining
-the consequences for any action they deem in violation of this Code of Conduct:
+## Enforcement & Reporting
 
-### 1. Correction
+### Reporting an Incident
 
-**Community Impact**: Use of inappropriate language or other behavior deemed
-unprofessional or unwelcome in the community.
-**Consequence**: A private, written warning from community leaders, providing
-clarity around the nature of the violation and an explanation of why the
-behavior was inappropriate. A public apology may be requested.
+If you experience or witness behavior that violates this Code of Conduct, please report it immediately to the project maintainers:
 
-### 2. Warning
+- **Project Lead**: Dar Rehan Rasool ([rehanrasool@iust.ac.in](mailto:rehanrasool@iust.ac.in))
+- **Faculty Supervisor**: Dr. Javad Ahmad, Centre of Artificial Intelligence (CAI), IUST
 
-**Community Impact**: A violation through a single incident or series of
-actions.
-**Consequence**: A warning with consequences for continued behavior. No
-interaction with the people involved, including unsolicited interaction with
-those enforcing the Code of Conduct, for a specified period of time. This
-includes avoiding interactions in community spaces as well as external channels
-like social media. Violating these terms may lead to a temporary or permanent
-ban.
+All reports will be treated with confidentiality, discretion, and seriousness. The leadership team will investigate the matter fairly and impartially.
 
-### 3. Temporary Ban
+### Enforcement Guidelines
 
-**Community Impact**: A serious violation of community standards, including
-sustained inappropriate behavior.
-**Consequence**: A temporary ban from any sort of interaction or public
-communication with the community for a specified period of time. No public or
-private interaction with the people involved, including unsolicited interaction
-with those enforcing the Code of Conduct, is allowed during this period.
-Violating these terms may lead to a permanent ban.
+The maintainers will take fair and appropriate corrective action in response to any violation. The enforcement process follows a structured escalation ladder:
 
-### 4. Permanent Ban
+1. **Correction**:
+   - *Nature*: Minor unprofessional language or minor first-time infraction.
+   - *Action*: A private, constructive written clarification and explanation from maintainers, with a request to rectify the behavior.
 
-**Community Impact**: Demonstrating a pattern of violation of community
-standards, including sustained inappropriate behavior, harassment of an
-individual, or aggression toward or disparagement of classes of individuals.
-**Consequence**: A permanent ban from any sort of public interaction within the
-community.
+2. **Formal Warning**:
+   - *Nature*: Repeated infractions, unconstructive hostility, or targeted disrespect.
+   - *Action*: A formal written warning specifying the violation and setting clear conditions for continued participation.
+
+3. **Temporary Suspension**:
+   - *Nature*: Serious breach of community standards, sustained harassment, or disruptive behavior.
+   - *Action*: Temporary suspension from participating in repository issues, pull requests, and communication channels for a specified duration (e.g., 14 to 30 days).
+
+4. **Permanent Removal**:
+   - *Nature*: Severe or repeated harassment, malicious network activity, hate speech, intentional data leaks, or persistent refusal to follow community standards.
+   - *Action*: Permanent ban from all repository repositories, communication channels, and associated project organizations.
+
+---
 
 ## Attribution
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage],
-version 2.1, available at
-[https://www.contributor-covenant.org/version/2/1/code_of_conduct.html][v2.1].
-
-[homepage]: https://www.contributor-covenant.org
-[v2.1]: https://www.contributor-covenant.org/version/2/1/code_of_conduct.html
+This Code of Conduct is designed to maintain high academic and open-source standards of professionalism, scientific integrity, and collegial collaboration.
