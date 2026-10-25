@@ -131,10 +131,10 @@ def test_opsec_privacy_and_dual_plane_telemetry():
     assert telemetry["summary"]["physical_count"] > 0
     assert telemetry["summary"]["virtual_count"] > 0
 
-    # Ensure vir-sim and lo0 are in virtual plane
+    # Ensure vir-sim and loopback (lo0 on macOS, lo on Linux) are in virtual plane
     virt_names = [v["name"] for v in telemetry["virtual"]]
     assert "vir-sim" in virt_names
-    assert "lo0" in virt_names
+    assert any(name in virt_names for name in ("lo0", "lo"))
 
     # 3. Privacy Mode Toggle
     assert state.privacy_mode is True  # Default on
