@@ -1,7 +1,7 @@
 # DDoS-AI: Enterprise Deep Learning & Machine Learning DDoS Defense Platform
 
 [![Tests: 22 Passed](https://img.shields.io/badge/tests-22%20passed-brightgreen.svg?logo=pytest)](tests/)
-[![CI Workflow](https://github.com/darrehanrasool/DDoS-AI/actions/workflows/tests.yml/badge.svg)](https://github.com/darrehanrasool/DDoS-AI/actions)
+[![CI Workflow](https://github.com/darrehanrasool/Ddos/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/darrehanrasool/Ddos/actions/workflows/tests.yml)
 [![License: Strict Academic](https://img.shields.io/badge/License-Strict%20Academic-red.svg)](LICENSE)
 [![DOI: Zenodo](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.ddos--ai-blue.svg)](https://zenodo.org/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -76,8 +76,8 @@ DDoS-AI/
 ### 1. Installation & Environment Activation
 
 ```bash
-git clone https://github.com/darrehanrasool/DDoS-AI.git
-cd DDoS-AI
+git clone https://github.com/darrehanrasool/Ddos.git
+cd Ddos
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements-dev.txt
@@ -165,6 +165,6 @@ If you use DDoS-AI in your research, please cite:
   publisher    = {Zenodo},
   version      = {v1.0.0},
   institution  = {Centre of Artificial Intelligence, Islamic University of Science and Technology (IUST)},
-  url          = {https://github.com/darrehanrasool/DDoS-AI}
+  url          = {https://github.com/darrehanrasool/Ddos}
 }
 ```

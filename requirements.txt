@@ -12,8 +12,6 @@ catboost>=1.2.0
 
 # Deep Learning Frameworks
 torch>=2.1.0
-torchvision>=0.16.0
-torchaudio>=2.1.0
 
 # Model Explainability & Interpretability
 shap>=0.43.0
