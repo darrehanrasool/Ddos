@@ -5,15 +5,15 @@
 ---
 
 ### Authors:
-- **Dr. Javad Ahmad** *(Assistant Professor, Faculty Supervisor & Corresponding Author)*  
+- **Dr. Javad Ahmad\*** *(Assistant Professor, Faculty Supervisor & Co-Corresponding Author)*  
   *Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Pulwama, Jammu & Kashmir – 192122, India*  
   Email: `javad.ahmad@iust.ac.in`
-- **Dar Rehan Rasool**  
-  *Graduate Researcher, Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Pulwama, Jammu & Kashmir – 192122, India*  
+- **Dar Rehan Rasool\*** *(Graduate Researcher, Project Lead, Primary Implementation Author & Co-Corresponding Author)*  
+  *Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Pulwama, Jammu & Kashmir – 192122, India*  
   Email: `rehanrasool@iust.ac.in`
-- **Muneeb Sayed**  
+- **Muneeb Syed Shah**  
   *Graduate Researcher, Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India*  
-  Email: `muneeb.sayed@iust.ac.in`
+  Email: `muneeb.shah@iust.ac.in`
 - **Shafiya Bashir Pampori**  
   *Graduate Researcher, Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India*  
   Email: `shafiya.pampori@iust.ac.in`
@@ -270,12 +270,12 @@ The authors express their sincere gratitude to the **Centre of Artificial Intell
 ## Authors' Biographies
 
 ### Dr. Javad Ahmad
-**Dr. Javad Ahmad** is an Assistant Professor with the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Kashmir, India. He received his Ph.D. in Computer Science and Engineering and has supervised numerous research initiatives in artificial intelligence, software-defined networking, cybersecurity, and high-performance deep learning architectures. He is the faculty supervisor and corresponding author for this work.
+**Dr. Javad Ahmad** is an Assistant Professor with the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Kashmir, India. He received his Ph.D. in Computer Science and Engineering and has supervised numerous research initiatives in artificial intelligence, software-defined networking, cybersecurity, and high-performance deep learning architectures. He is the faculty supervisor and co-corresponding author for this work.
 
 ### Dar Rehan Rasool
-**Dar Rehan Rasool** is a Graduate Researcher at the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Kashmir, India. His research interests encompass high-throughput intrusion prevention systems, real-time dual-tier neural architectures, hardware-accelerated deep learning pipelines, and SDN cyber-defense.
+**Dar Rehan Rasool** is a Graduate Researcher at the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Kashmir, India. He is the project lead, primary system implementation engineer, and co-corresponding author for DDoS-AI. His research interests encompass high-throughput intrusion prevention systems, real-time dual-tier neural architectures, hardware-accelerated deep learning pipelines, and SDN cyber-defense.
 
-### Muneeb Sayed
+### Muneeb Syed Shah
 **Muneeb Sayed** is a Graduate Researcher at the Centre of Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Kashmir, India. His work centers on cross-domain network telemetry harmonization, information-theoretic feature extraction, and OpenFlow flow-mod signaling optimization.
 
 ### Shafiya Bashir Pampori

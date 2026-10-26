@@ -2,7 +2,7 @@
 **Centre of Artificial Intelligence (CAI)**  
 **Islamic University of Science and Technology (IUST), Awantipora, Kashmir**  
 *Paper Title: "Cascading Dual-Tier Architecture for Line-Rate DDoS Prevention and Autonomous Mitigation in Software-Defined Networks"*  
-*Authors: Dr. Javad Ahmad (Faculty Supervisor & Corresponding Author), Dar Rehan Rasool, Muneeb Sayed, Shafiya Bashir Pampori*
+*Authors: Dr. Javad Ahmad* (Faculty Supervisor & Co-Corresponding Author), Dar Rehan Rasool* (Project Lead, System Implementation Author & Co-Corresponding Author), Muneeb Syed Shah, Shafiya Bashir Pampori*
 
 ---
 
