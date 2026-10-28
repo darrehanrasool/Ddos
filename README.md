@@ -128,12 +128,9 @@ PYTHONPATH=src pytest tests/ -v
 
 Comprehensive academic evaluations, comparative matrices, and researcher reviews are documented in:
 
-- 📄 [**Full IEEE Transactions Research Paper (LaTeX Source)**](docs/paper/IEEE_TRANSACTIONS_RESEARCH_PAPER.tex): Ready for Overleaf / IEEE submission.
-- 🌐 [**Interactive Print-Ready Research Paper (HTML / PDF)**](docs/paper/IEEE_TRANSACTIONS_RESEARCH_PAPER.html): 1-click double-column browser view & PDF download.
-- 📑 [**Research Paper Manuscript (Markdown)**](docs/paper/IEEE_TRANSACTIONS_RESEARCH_PAPER.md): Complete paper text and formulas for ResearchGate.
 - 📖 [**Master Literature & Citation Catalog**](docs/research/MASTER_LITERATURE_CATALOG.md): Complete BibTeX and APA citations for all benchmark papers.
 - 🔬 [**Dr. Ashfaq Ahmad Najar Comparative Study**](docs/research/ashfaq_ahmad_najar_comparative_study.md): Line-by-line review of CNN/BiLSTM-Attention SDN defense and comparative scientific matrix.
-- 📑 [**Research Paper Abstract & System Architecture**](docs/research_paper_abstract_and_system_architecture.md): Publication-ready abstract and design blueprint.
+- 📑 [**Research Paper Abstract & System Architecture**](docs/research_paper_abstract_and_system_architecture.md): Academic abstract and design blueprint.
 - 🏛️ [**Provisional Patent Specification Draft (Form 2)**](docs/patent/PROVISIONAL_PATENT_SPECIFICATION_DRAFT.md): Indian Patent Office (IPO) compliant specification.
 - 📋 [**IUST Invention Disclosure Form (IDF)**](docs/patent/INVENTION_DISCLOSURE_FORM_IUST.md): University CIED & IPR Cell submission document.
 

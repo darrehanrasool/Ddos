@@ -218,3 +218,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Research paper manuscripts, preprints, survey materials & PDFs (kept local, unpushed)
+papers/
+docs/paper/
+docs/paper.zip
+*.pdf
+
