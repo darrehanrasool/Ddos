@@ -24,10 +24,10 @@
 
 | Sl. No. | Inventor Full Name | Designation | Affiliation | Contribution % | Email / Phone |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | **Dar Rehan Rasool** | M.Tech AI Student & Lead Inventor | Centre of Artificial Intelligence, IUST | 40% | `rehanrasool@iust.ac.in` |
-| 2 | **Dr. Javad Ahmad** | Assistant Professor & Faculty Supervisor | Centre of Artificial Intelligence, IUST | 30% | `javad.ahmad@iust.ac.in` |
-| 3 | **Muneeb Syed Shah** | M.Tech AI Student & Co-Inventor | Centre of Artificial Intelligence, IUST | 15% | `muneeb.shah@iust.ac.in` |
-| 4 | **Shafiya Bashir Pampori** | M.Tech AI Student & Co-Inventor | Centre of Artificial Intelligence, IUST | 15% | `shafiya.pampori@iust.ac.in` |
+| 1 | **Dar Rehan Rasool** | M.Tech Student | Centre for Artificial Intelligence, IUST | 40% | `rehanrasool@iust.ac.in` |
+| 2 | **Dr. Javad Ahmad** | Assistant Professor & Faculty Supervisor | Centre for Artificial Intelligence, IUST | 30% | `javad.ahmad@iust.ac.in` |
+| 3 | **Muneeb Syed Shah** | M.Tech Student | Centre for Artificial Intelligence, IUST | 15% | `muneeb.shah@iust.ac.in` |
+| 4 | **Shafiya Bashir Pampori** | M.Tech Student | Centre for Artificial Intelligence, IUST | 15% | `shafiya.pampori@iust.ac.in` |
 
 ### 1.4 Applicant Details (Patent Owner)
 - **Applicant Name**: Islamic University of Science and Technology (IUST)

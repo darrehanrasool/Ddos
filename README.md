@@ -44,9 +44,9 @@ This research project and benchmark platform is collaboratively developed under 
 | Role | Name | Designation & Affiliation | Research & Project Contribution |
 | :--- | :--- | :--- | :--- |
 | **Faculty Research Supervisor** | **Dr. Javad Ahmad\*** | Professor & Faculty Supervisor, Centre of Artificial Intelligence (CAI) | Project Conceptualization, Research Supervision & Strategic Architecture Direction |
-| **Lead Author & Principal Researcher** | **Dar Rehan Rasool** | Lead Architect & Author (`@darrehanrasool`), M.Tech AI Student, CAI, IUST | Dual-Tier Cascading Engine, Deep Tabular Residual Networks, Live Packet Ingestion, Dashboard & Benchmarks |
-| **Contributing Researcher** | **Muneeb Syed Shah** | M.Tech AI Student, Centre of Artificial Intelligence (CAI), IUST | Machine Learning Intrusion Detection, Canonical Schema Harmonization & Cross-Dataset Evaluation |
-| **Contributing Researcher** | **Shafiya Bashir Pampori** | M.Tech AI Student, Centre of Artificial Intelligence (CAI), IUST | Statistical Entropy Auditing, Telemetry Quality Analysis & Data Integrity |
+| **Lead Author & Principal Researcher** | **Dar Rehan Rasool** | M.Tech Student, Centre for Artificial Intelligence, IUST | Dual-Tier Cascading Engine, Deep Tabular Residual Networks, Live Packet Ingestion, Dashboard & Benchmarks |
+| **Contributing Researcher** | **Muneeb Syed Shah** | M.Tech Student, Centre for Artificial Intelligence, IUST | Machine Learning Intrusion Detection, Canonical Schema Harmonization & Cross-Dataset Evaluation |
+| **Contributing Researcher** | **Shafiya Bashir Pampori** | M.Tech Student, Centre for Artificial Intelligence, IUST | Statistical Entropy Auditing, Telemetry Quality Analysis & Data Integrity |
 
 - **Academic Unit**: Centre of Artificial Intelligence (CAI)
 - **Institution**: Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India
