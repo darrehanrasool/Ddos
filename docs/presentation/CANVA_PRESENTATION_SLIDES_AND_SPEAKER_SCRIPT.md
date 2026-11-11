@@ -25,9 +25,9 @@
 
 ### Presenters & Research Team:
 - **Dr. Javad Ahmad** — Professor, Faculty Supervisor & Project Contributor (PI)
-- **Dar Rehan Rasool** — Project Lead & Graduate Researcher (M.Tech AI)
-- **Muneeb Sayed** — Contributing Researcher (M.Tech AI)
-- **Shafiya Bashir Pampori** — Contributing Researcher (M.Tech AI)
+- **Dar Rehan Rasool** — Project Lead & M.Tech AI Student
+- **Muneeb Syed Shah** — M.Tech AI Student & Contributing Researcher
+- **Shafiya Bashir Pampori** — M.Tech AI Student & Contributing Researcher
 
 ### Institutional Affiliation:
 **Centre of Artificial Intelligence (CAI)**  

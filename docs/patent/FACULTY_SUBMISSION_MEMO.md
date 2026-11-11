@@ -1,7 +1,7 @@
 # EXECUTIVE MEMORANDUM
 
 **TO:** Dr. Javad Ahmad, Assistant Professor & Faculty Supervisor  
-**FROM:** Dar Rehan Rasool, Muneeb Sayed, Shafiya Bashir Pampori (Graduate Researchers)  
+**FROM:** Dar Rehan Rasool, Muneeb Syed Shah, Shafiya Bashir Pampori (M.Tech AI Students)  
 **CENTRE:** Centre of Artificial Intelligence (CAI)  
 **INSTITUTION:** Islamic University of Science and Technology (IUST), Awantipora, Kashmir  
 **DATE:** October 21, 2026  
