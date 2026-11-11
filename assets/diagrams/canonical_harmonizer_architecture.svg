@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 760" width="100%" height="100%">
+        <!-- Background -->
+        <rect width="1360" height="760" fill="url(#bg-grad)" />
+        <rect width="1360" height="760" fill="none" stroke="#1e293b" stroke-width="2" />
+        
+        <defs>
+            <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#070c18" />
+                <stop offset="100%" stop-color="#0d1527" />
+            </linearGradient>
+            <linearGradient id="header-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="50%" stop-color="#818cf8" />
+                <stop offset="100%" stop-color="#c084fc" />
+            </linearGradient>
+            <linearGradient id="card-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#141e33" />
+                <stop offset="100%" stop-color="#0f172a" />
+            </linearGradient>
+            <linearGradient id="card-benign-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#062e1e" />
+                <stop offset="100%" stop-color="#041f14" />
+            </linearGradient>
+            <linearGradient id="card-attack-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#360a0f" />
+                <stop offset="100%" stop-color="#24070a" />
+            </linearGradient>
+            <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+                <feOffset dx="0" dy="4" />
+                <feComponentTransfer><feFuncA type="linear" slope="0.4" /></feComponentTransfer>
+                <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+            <filter id="glow-cyan" x="-10%" y="-10%" width="120%" height="120%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+            <!-- Arrow Markers -->
+            <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+            </marker>
+            <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+            </marker>
+            <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#f87171" />
+            </marker>
+            <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#c084fc" />
+            </marker>
+            <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24" />
+            </marker>
+            <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+            </marker>
+        </defs>
+        
+        
+        <g class="header">
+            <text x="36" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800" fill="url(#header-grad)" letter-spacing="0.2">DDoS-AI: Canonical Cross-Domain Network Feature Harmonizer</text>
+            <text x="36" y="66" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5" font-weight="500" fill="#94a3b8">Standardizing 6 Heterogeneous Network Architectures into a Unified 16-D Feature Space</text>
+            <line x1="36" y1="80" x2="1324" y2="80" stroke="#1e293b" stroke-width="1.2" />
+        </g>
+        
+        
+        <g class="card">
+            <rect x="40" y="130" width="260" height="95" rx="10" fill="url(#card-grad)" stroke="#38bdf8" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="41" y="131" width="258" height="3" rx="1" fill="#38bdf8" opacity="0.8" />
+            <text x="170.0" y="154" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#38bdf8" text-anchor="middle">InSDN Dataset</text>
+        
+            <text x="170.0" y="172" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Software-Defined Networking</text>
+            
+            <g class="badge">
+                <rect x="129.5" y="180" width="81.0" height="18" rx="9" fill="#0f172a" stroke="#38bdf8" stroke-width="1" />
+                <text x="170.0" y="193" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#38bdf8" text-anchor="middle">SDN FABRIC</text>
+            </g>
+            
+                <text x="56" y="216" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• OpenFlow Switch &amp; Controller Telemetry</text>
+                
+                <text x="56" y="232" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• 84 Native Features (TCP/UDP/ICMP Floods)</text>
+                </g>
+        <g class="card">
+            <rect x="40" y="235" width="260" height="95" rx="10" fill="url(#card-grad)" stroke="#818cf8" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="41" y="236" width="258" height="3" rx="1" fill="#818cf8" opacity="0.8" />
+            <text x="170.0" y="259" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#a5b4fc" text-anchor="middle">CIC-DDoS2019</text>
+        
+            <text x="170.0" y="277" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Volumetric &amp; Reflection</text>
+            
+            <g class="badge">
+                <rect x="129.5" y="285" width="81.0" height="18" rx="9" fill="#0f172a" stroke="#818cf8" stroke-width="1" />
+                <text x="170.0" y="298" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#818cf8" text-anchor="middle">VOLUMETRIC</text>
+            </g>
+            
+                <text x="56" y="321" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• DNS, NTP, LDAP, NetBIOS, MSSQL, SYN</text>
+                
+                <text x="56" y="337" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• 88 Native CICFlowMeter Features</text>
+                </g>
+        <g class="card">
+            <rect x="40" y="340" width="260" height="95" rx="10" fill="url(#card-grad)" stroke="#34d399" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="41" y="341" width="258" height="3" rx="1" fill="#34d399" opacity="0.8" />
+            <text x="170.0" y="364" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#34d399" text-anchor="middle">CIC-IDS2017</text>
+        
+            <text x="170.0" y="382" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Enterprise Cloud Intrusions</text>
+            
+            <g class="badge">
+                <rect x="129.5" y="390" width="81.0" height="18" rx="9" fill="#0f172a" stroke="#34d399" stroke-width="1" />
+                <text x="170.0" y="403" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#34d399" text-anchor="middle">ENTERPRISE</text>
+            </g>
+            
+                <text x="56" y="426" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• DoS Hulk, GoldenEye, Slowloris, Slowhttptest</text>
+                
+                <text x="56" y="442" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• 79 Native Flow Telemetry Metrics</text>
+                </g>
+        <g class="card">
+            <rect x="40" y="445" width="260" height="95" rx="10" fill="url(#card-grad)" stroke="#fbbf24" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="41" y="446" width="258" height="3" rx="1" fill="#fbbf24" opacity="0.8" />
+            <text x="170.0" y="469" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#fbbf24" text-anchor="middle">NSL-KDD Dataset</text>
+        
+            <text x="170.0" y="487" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Legacy Protocol Defense</text>
+            
+            <g class="badge">
+                <rect x="129.5" y="495" width="81.0" height="18" rx="9" fill="#0f172a" stroke="#fbbf24" stroke-width="1" />
+                <text x="170.0" y="508" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#fbbf24" text-anchor="middle">LEGACY DOS</text>
+            </g>
+            
+                <text x="56" y="531" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Smurf, Neptune, Teardrop, Pod</text>
+                
+                <text x="56" y="547" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• 41 Legacy Connection Records</text>
+                </g>
+        <g class="card">
+            <rect x="40" y="550" width="260" height="95" rx="10" fill="url(#card-grad)" stroke="#c084fc" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="41" y="551" width="258" height="3" rx="1" fill="#c084fc" opacity="0.8" />
+            <text x="170.0" y="574" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#c084fc" text-anchor="middle">BoT-IoT &amp; ToN-IoT</text>
+        
+            <text x="170.0" y="592" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">IoT &amp; Industrial IIoT</text>
+            
+            <g class="badge">
+                <rect x="129.5" y="600" width="81.0" height="18" rx="9" fill="#0f172a" stroke="#c084fc" stroke-width="1" />
+                <text x="170.0" y="613" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#c084fc" text-anchor="middle">IOT / IIOT</text>
+            </g>
+            
+                <text x="56" y="636" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Mirai, Gafgyt, MQTT, Modbus Floods</text>
+                
+                <text x="56" y="652" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Lightweight Telemetry Sensors</text>
+                </g>
+        <g class="card">
+            <rect x="360" y="130" width="420" height="515" rx="10" fill="url(#card-grad)" stroke="#38bdf8" stroke-width="1.6" filter="url(#glow-cyan)" />
+            <rect x="361" y="131" width="418" height="3" rx="1" fill="#38bdf8" opacity="0.8" />
+            <text x="570.0" y="154" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#38bdf8" text-anchor="middle">Cross-Domain Alignment Engine</text>
+        
+            <text x="570.0" y="172" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Mathematical Mapping &amp; Normalization</text>
+            
+            <g class="badge">
+                <rect x="497.0" y="180" width="146.0" height="18" rx="9" fill="#0f172a" stroke="#38bdf8" stroke-width="1" />
+                <text x="570.0" y="193" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#38bdf8" text-anchor="middle">HARMONIZATION ENGINE</text>
+            </g>
+            
+                <text x="376" y="216" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Schema Mapping Dictionary across 6 Datasets</text>
+                
+                <text x="376" y="232" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Zero-Imputation for Missing Protocol Fields</text>
+                
+                <text x="376" y="248" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Outlier Winsorization &amp; Infinite Ratio Clipping</text>
+                
+                <text x="570.0" y="264" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">─────────────────────────────────────────────────</text>
+                
+                <text x="570.0" y="280" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">Statistical Feature Generators:</text>
+                
+                <text x="376" y="296" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Rolling Shannon Entropy: H(X) = -∑ p(x) log₂ p(x)</text>
+                
+                <text x="376" y="312" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Packet Size Asymmetry: |Fwd - Bwd| / (Fwd + Bwd)</text>
+                
+                <text x="376" y="328" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Inter-Arrival Time (IAT) Jitter &amp; Dispersion</text>
+                
+                <text x="376" y="344" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• SYN-to-ACK TCP Handshake Disruption Ratios</text>
+                
+                <text x="570.0" y="360" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">─────────────────────────────────────────────────</text>
+                
+                <text x="376" y="376" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Robust Scaler Scaling (Median &amp; IQR Normalized)</text>
+                
+                <text x="376" y="392" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Eliminates Cross-Domain Generalization Collapse</text>
+                </g>
+        <g class="card">
+            <rect x="840" y="130" width="480" height="515" rx="10" fill="url(#card-grad)" stroke="#34d399" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="841" y="131" width="478" height="3" rx="1" fill="#34d399" opacity="0.8" />
+            <text x="1080.0" y="154" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#6ee7b7" text-anchor="middle">16-D Standardized Canonical Feature Vector</text>
+        
+            <text x="1080.0" y="172" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Mathematically Coherent Across All Networks</text>
+            
+            <g class="badge">
+                <rect x="1010.25" y="180" width="139.5" height="18" rx="9" fill="#0f172a" stroke="#34d399" stroke-width="1" />
+                <text x="1080.0" y="193" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#34d399" text-anchor="middle">UNIFIED 16-D VECTOR</text>
+            </g>
+            
+                <text x="1080.0" y="216" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle"> 1. flow_duration          : Microsecond duration of session</text>
+                
+                <text x="1080.0" y="232" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle"> 2. total_fwd_packets      : Packets transmitted forward</text>
+                
+                <text x="1080.0" y="248" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle"> 3. total_bwd_packets      : Packets received backward</text>
+                
+                <text x="1080.0" y="264" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle"> 4. fwd_pkt_length_mean    : Mean payload bytes forward</text>
+                
+                <text x="1080.0" y="280" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle"> 5. bwd_pkt_length_mean    : Mean payload bytes backward</text>
+                
+                <text x="1080.0" y="296" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle"> 6. flow_iat_mean          : Mean inter-arrival time (jitter)</text>
+                
+                <text x="1080.0" y="312" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle"> 7. flow_iat_std           : Dispersion of arrival intervals</text>
+                
+                <text x="1080.0" y="328" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle"> 8. fwd_iat_mean           : Forward transmission regularity</text>
+                
+                <text x="1080.0" y="344" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle"> 9. bwd_iat_mean           : Backward acknowledgement delay</text>
+                
+                <text x="1080.0" y="360" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">10. flow_packets_per_s     : Volumetric packet throughput</text>
+                
+                <text x="1080.0" y="376" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">11. flow_bytes_per_s       : Bandwidth saturation rate</text>
+                
+                <text x="1080.0" y="392" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">12. pkt_length_variance    : Dispersion of packet sizes</text>
+                
+                <text x="1080.0" y="408" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">13. packet_length_entropy  : Shannon entropy of lengths</text>
+                
+                <text x="1080.0" y="424" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">14. syn_flag_ratio         : Ratio of SYN packets (TCP flood)</text>
+                
+                <text x="1080.0" y="440" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">15. ack_flag_ratio         : Ratio of ACK packets (Reflection)</text>
+                
+                <text x="1080.0" y="456" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">16. subflow_symmetry       : Directional flow balance index</text>
+                </g>
+        <g class="connector">
+            <line x1="300" y1="177" x2="360" y2="177" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#arrow-cyan)" />
+        </g>
+        <g class="connector">
+            <line x1="300" y1="282" x2="360" y2="282" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#arrow-cyan)" />
+        </g>
+        <g class="connector">
+            <line x1="300" y1="387" x2="360" y2="387" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#arrow-cyan)" />
+        </g>
+        <g class="connector">
+            <line x1="300" y1="492" x2="360" y2="492" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#arrow-cyan)" />
+        </g>
+        <g class="connector">
+            <line x1="300" y1="597" x2="360" y2="597" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#arrow-cyan)" />
+        </g>
+        <g class="connector">
+            <line x1="780" y1="387" x2="840" y2="387" stroke="#34d399" stroke-width="1.8" marker-end="url(#arrow-green)" />
+        
+            <rect x="753.0" y="372.0" width="114" height="14" rx="4" fill="#0b1120" opacity="0.9" />
+            <text x="810.0" y="383.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600" fill="#34d399" text-anchor="middle">Standardized 16-D</text>
+            </g>
+        </svg>

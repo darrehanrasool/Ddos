@@ -1,0 +1,295 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 780" width="100%" height="100%">
+        <!-- Background -->
+        <rect width="1360" height="780" fill="url(#bg-grad)" />
+        <rect width="1360" height="780" fill="none" stroke="#1e293b" stroke-width="2" />
+        
+        <defs>
+            <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#070c18" />
+                <stop offset="100%" stop-color="#0d1527" />
+            </linearGradient>
+            <linearGradient id="header-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="50%" stop-color="#818cf8" />
+                <stop offset="100%" stop-color="#c084fc" />
+            </linearGradient>
+            <linearGradient id="card-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#141e33" />
+                <stop offset="100%" stop-color="#0f172a" />
+            </linearGradient>
+            <linearGradient id="card-benign-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#062e1e" />
+                <stop offset="100%" stop-color="#041f14" />
+            </linearGradient>
+            <linearGradient id="card-attack-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#360a0f" />
+                <stop offset="100%" stop-color="#24070a" />
+            </linearGradient>
+            <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+                <feOffset dx="0" dy="4" />
+                <feComponentTransfer><feFuncA type="linear" slope="0.4" /></feComponentTransfer>
+                <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+            <filter id="glow-cyan" x="-10%" y="-10%" width="120%" height="120%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+            <!-- Arrow Markers -->
+            <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+            </marker>
+            <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+            </marker>
+            <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#f87171" />
+            </marker>
+            <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#c084fc" />
+            </marker>
+            <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24" />
+            </marker>
+            <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+            </marker>
+        </defs>
+        
+        
+        <g class="header">
+            <text x="36" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800" fill="url(#header-grad)" letter-spacing="0.2">DDoS-AI: Deep Tabular Residual Neural Network (ResNet-Tabular)</text>
+            <text x="36" y="66" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5" font-weight="500" fill="#94a3b8">Layer-Normalized Tabular Architecture with Skip Connections, GELU Activations, and Focal Loss</text>
+            <line x1="36" y1="80" x2="1324" y2="80" stroke="#1e293b" stroke-width="1.2" />
+        </g>
+        
+        
+        <g class="card">
+            <rect x="40" y="140" width="200" height="170" rx="10" fill="url(#card-grad)" stroke="#38bdf8" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="41" y="141" width="198" height="3" rx="1" fill="#38bdf8" opacity="0.8" />
+            <text x="140.0" y="164" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#38bdf8" text-anchor="middle">Input Features</text>
+        
+            <text x="140.0" y="182" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Canonical Normalized Flow</text>
+            
+            <g class="badge">
+                <rect x="93.0" y="190" width="94.0" height="18" rx="9" fill="#0f172a" stroke="#38bdf8" stroke-width="1" />
+                <text x="140.0" y="203" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#38bdf8" text-anchor="middle">INPUT TENSOR</text>
+            </g>
+            
+                <text x="56" y="226" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Input: x ∈ ℝ¹⁶</text>
+                
+                <text x="56" y="242" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• 16 Continuous Features</text>
+                
+                <text x="56" y="258" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Robust Scaled</text>
+                
+                <text x="56" y="274" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Outlier Resilient</text>
+                </g>
+        <g class="card">
+            <rect x="280" y="140" width="220" height="170" rx="10" fill="url(#card-grad)" stroke="#818cf8" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="281" y="141" width="218" height="3" rx="1" fill="#818cf8" opacity="0.8" />
+            <text x="390.0" y="164" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#a5b4fc" text-anchor="middle">Input Projection Stem</text>
+        
+            <text x="390.0" y="182" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Feature Dimension Expansion</text>
+            
+            <g class="badge">
+                <rect x="349.5" y="190" width="81.0" height="18" rx="9" fill="#0f172a" stroke="#818cf8" stroke-width="1" />
+                <text x="390.0" y="203" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#818cf8" text-anchor="middle">STEM LAYER</text>
+            </g>
+            
+                <text x="296" y="226" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Linear (16 ➔ 128)</text>
+                
+                <text x="296" y="242" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Layer Normalization</text>
+                
+                <text x="296" y="258" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• GELU Activation</text>
+                
+                <text x="296" y="274" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Output: h₀ ∈ ℝ¹²⁸</text>
+                </g>
+        <g class="card">
+            <rect x="540" y="140" width="240" height="240" rx="10" fill="url(#card-grad)" stroke="#c084fc" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="541" y="141" width="238" height="3" rx="1" fill="#c084fc" opacity="0.8" />
+            <text x="660.0" y="164" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#d8b4fe" text-anchor="middle">Residual Block 1</text>
+        
+            <text x="660.0" y="182" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Identity Skip Connection</text>
+            
+            <g class="badge">
+                <rect x="616.25" y="190" width="87.5" height="18" rx="9" fill="#0f172a" stroke="#c084fc" stroke-width="1" />
+                <text x="660.0" y="203" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#c084fc" text-anchor="middle">RES-BLOCK 1</text>
+            </g>
+            
+                <text x="556" y="226" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Linear (128 ➔ 128)</text>
+                
+                <text x="556" y="242" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Layer Normalization</text>
+                
+                <text x="556" y="258" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• GELU Activation</text>
+                
+                <text x="556" y="274" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Dropout (p = 0.20)</text>
+                
+                <text x="660.0" y="290" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">─────────────────────────</text>
+                
+                <text x="556" y="306" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Skip: h₁ = h₀ + F₁(h₀)</text>
+                
+                <text x="556" y="322" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Mitigates Vanishing Gradient</text>
+                </g>
+        <g class="card">
+            <rect x="820" y="140" width="240" height="240" rx="10" fill="url(#card-grad)" stroke="#c084fc" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="821" y="141" width="238" height="3" rx="1" fill="#c084fc" opacity="0.8" />
+            <text x="940.0" y="164" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#d8b4fe" text-anchor="middle">Residual Block 2</text>
+        
+            <text x="940.0" y="182" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Dimension Projection Skip</text>
+            
+            <g class="badge">
+                <rect x="896.25" y="190" width="87.5" height="18" rx="9" fill="#0f172a" stroke="#c084fc" stroke-width="1" />
+                <text x="940.0" y="203" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#c084fc" text-anchor="middle">RES-BLOCK 2</text>
+            </g>
+            
+                <text x="836" y="226" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Linear (128 ➔ 64)</text>
+                
+                <text x="836" y="242" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Layer Normalization</text>
+                
+                <text x="836" y="258" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• GELU Activation</text>
+                
+                <text x="836" y="274" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Dropout (p = 0.20)</text>
+                
+                <text x="940.0" y="290" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">─────────────────────────</text>
+                
+                <text x="836" y="306" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Proj Skip: W_s · h₁ + F₂(h₁)</text>
+                
+                <text x="836" y="322" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Dimensionality Bottleneck</text>
+                </g>
+        <g class="card">
+            <rect x="1100" y="140" width="220" height="240" rx="10" fill="url(#card-grad)" stroke="#c084fc" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="1101" y="141" width="218" height="3" rx="1" fill="#c084fc" opacity="0.8" />
+            <text x="1210.0" y="164" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#d8b4fe" text-anchor="middle">Residual Block 3</text>
+        
+            <text x="1210.0" y="182" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Deep Non-Linear Representation</text>
+            
+            <g class="badge">
+                <rect x="1166.25" y="190" width="87.5" height="18" rx="9" fill="#0f172a" stroke="#c084fc" stroke-width="1" />
+                <text x="1210.0" y="203" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#c084fc" text-anchor="middle">RES-BLOCK 3</text>
+            </g>
+            
+                <text x="1116" y="226" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Linear (64 ➔ 64)</text>
+                
+                <text x="1116" y="242" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Layer Normalization</text>
+                
+                <text x="1116" y="258" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• GELU Activation</text>
+                
+                <text x="1116" y="274" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Dropout (p = 0.10)</text>
+                
+                <text x="1210.0" y="290" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">─────────────────────────</text>
+                
+                <text x="1116" y="306" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Skip: h₃ = h₂ + F₃(h₂)</text>
+                
+                <text x="1116" y="322" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Output: h₃ ∈ ℝ⁶⁴</text>
+                </g>
+        <g class="card">
+            <rect x="540" y="440" width="520" height="260" rx="10" fill="url(#card-grad)" stroke="#34d399" stroke-width="1.6" filter="url(#glow-cyan)" />
+            <rect x="541" y="441" width="518" height="3" rx="1" fill="#34d399" opacity="0.8" />
+            <text x="800.0" y="464" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#34d399" text-anchor="middle">Calibrated Decision Head &amp; Objective Function</text>
+        
+            <text x="800.0" y="482" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">Temperature-Scaled Platt Calibration &amp; Focal Loss</text>
+            
+            <g class="badge">
+                <rect x="743.25" y="490" width="113.5" height="18" rx="9" fill="#0f172a" stroke="#34d399" stroke-width="1" />
+                <text x="800.0" y="503" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#34d399" text-anchor="middle">CALIBRATED HEAD</text>
+            </g>
+            
+                <text x="556" y="526" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Classification Head: Linear (64 ➔ 1)</text>
+                
+                <text x="556" y="542" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Platt Temperature Scaling: z / T (with T = 1.10)</text>
+                
+                <text x="556" y="558" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Probability: P(Attack) = σ(z / T)</text>
+                
+                <text x="800.0" y="574" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">────────────────────────────────────────────────────────</text>
+                
+                <text x="800.0" y="590" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">Focal Loss Objective Function (Class-Imbalance Mitigated):</text>
+                
+                <text x="556" y="606" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• FL(p_t) = -α_t · (1 - p_t)^γ · log(p_t)    [γ = 2.0, α = 0.25]</text>
+                
+                <text x="556" y="622" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Downweights easy benign negatives; focuses gradients on rare volumetric anomalies</text>
+                
+                <text x="800.0" y="638" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">────────────────────────────────────────────────────────</text>
+                
+                <text x="800.0" y="654" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#38bdf8" text-anchor="middle">Hardware Acceleration: Apple Silicon Metal Performance Shaders (MPS) &amp; NVIDIA CUDA</text>
+                </g>
+        <g class="card">
+            <rect x="1100" y="440" width="220" height="120" rx="10" fill="url(#card-benign-grad)" stroke="#10b981" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="1101" y="441" width="218" height="3" rx="1" fill="#10b981" opacity="0.8" />
+            <text x="1210.0" y="464" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#34d399" text-anchor="middle">Benign Clearance</text>
+        
+            <text x="1210.0" y="482" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">P(Attack) &lt; 0.50</text>
+            
+            <g class="badge">
+                <rect x="1175.0" y="490" width="70" height="18" rx="9" fill="#0f172a" stroke="#10b981" stroke-width="1" />
+                <text x="1210.0" y="503" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#10b981" text-anchor="middle">BENIGN</text>
+            </g>
+            
+                <text x="1116" y="526" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Normal Traffic Confirmed</text>
+                
+                <text x="1116" y="542" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• Egress Forwarding</text>
+                </g>
+        <g class="card">
+            <rect x="1100" y="580" width="220" height="120" rx="10" fill="url(#card-attack-grad)" stroke="#f87171" stroke-width="1.6" filter="url(#shadow)" />
+            <rect x="1101" y="581" width="218" height="3" rx="1" fill="#f87171" opacity="0.8" />
+            <text x="1210.0" y="604" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#f87171" text-anchor="middle">Attack Confirmed</text>
+        
+            <text x="1210.0" y="622" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" fill="#94a3b8" text-anchor="middle">P(Attack) ≥ 0.50</text>
+            
+            <g class="badge">
+                <rect x="1175.0" y="630" width="70" height="18" rx="9" fill="#0f172a" stroke="#f87171" stroke-width="1" />
+                <text x="1210.0" y="643" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="9" font-weight="600" fill="#f87171" text-anchor="middle">ATTACK</text>
+            </g>
+            
+                <text x="1116" y="666" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• High-Entropy DDoS Alert</text>
+                
+                <text x="1116" y="682" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="400" fill="#cbd5e1">• OpenFlow Mitigation</text>
+                </g>
+        <g class="connector">
+            <line x1="240" y1="225" x2="280" y2="225" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#arrow-cyan)" />
+        
+            <rect x="233.0" y="210.0" width="54" height="14" rx="4" fill="#0b1120" opacity="0.9" />
+            <text x="260.0" y="221.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600" fill="#38bdf8" text-anchor="middle">x ∈ ℝ¹⁶</text>
+            </g>
+        <g class="connector">
+            <line x1="500" y1="225" x2="540" y2="225" stroke="#818cf8" stroke-width="1.8" marker-end="url(#arrow-purple)" />
+        
+            <rect x="487.0" y="210.0" width="66" height="14" rx="4" fill="#0b1120" opacity="0.9" />
+            <text x="520.0" y="221.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600" fill="#818cf8" text-anchor="middle">h₀ ∈ ℝ¹²⁸</text>
+            </g>
+        <g class="connector">
+            <line x1="780" y1="225" x2="820" y2="225" stroke="#c084fc" stroke-width="1.8" marker-end="url(#arrow-purple)" />
+        
+            <rect x="767.0" y="210.0" width="66" height="14" rx="4" fill="#0b1120" opacity="0.9" />
+            <text x="800.0" y="221.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600" fill="#c084fc" text-anchor="middle">h₁ ∈ ℝ¹²⁸</text>
+            </g>
+        <g class="connector">
+            <line x1="1060" y1="225" x2="1100" y2="225" stroke="#c084fc" stroke-width="1.8" marker-end="url(#arrow-purple)" />
+        
+            <rect x="1050.0" y="210.0" width="60" height="14" rx="4" fill="#0b1120" opacity="0.9" />
+            <text x="1080.0" y="221.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600" fill="#c084fc" text-anchor="middle">h₂ ∈ ℝ⁶⁴</text>
+            </g>
+        <g class="connector-ortho">
+            <path d="M 1210 380 L 1210 410 L 800 410 L 800 440" fill="none" stroke="#34d399" stroke-width="1.8" marker-end="url(#arrow-green)" />
+        
+            <rect x="949" y="391" width="102" height="14" rx="4" fill="#0b1120" opacity="0.9" />
+            <text x="1000" y="402" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600" fill="#34d399" text-anchor="middle">h₃ ∈ ℝ⁶⁴ Latent</text>
+            </g>
+        <g class="connector">
+            <line x1="1060" y1="500" x2="1100" y2="500" stroke="#10b981" stroke-width="1.8" marker-end="url(#arrow-green)" />
+        
+            <rect x="1050.0" y="485.0" width="60" height="14" rx="4" fill="#0b1120" opacity="0.9" />
+            <text x="1080.0" y="496.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600" fill="#10b981" text-anchor="middle">P &lt; 0.50</text>
+            </g>
+        <g class="connector">
+            <line x1="1060" y1="640" x2="1100" y2="640" stroke="#f87171" stroke-width="1.8" marker-end="url(#arrow-red)" />
+        
+            <rect x="1050.0" y="625.0" width="60" height="14" rx="4" fill="#0b1120" opacity="0.9" />
+            <text x="1080.0" y="636.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600" fill="#f87171" text-anchor="middle">P ≥ 0.50</text>
+            </g>
+        </svg>
