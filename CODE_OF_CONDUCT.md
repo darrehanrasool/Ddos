@@ -54,7 +54,7 @@ Because DDoS-AI is a cybersecurity research platform handling network intrusion 
 If you experience or witness behavior that violates this Code of Conduct, please report it immediately to the project maintainers:
 
 - **Project Lead**: Dar Rehan Rasool ([rehanrasool@iust.ac.in](mailto:rehanrasool@iust.ac.in))
-- **Faculty Supervisor**: Dr. Javad Ahmad, Centre of Artificial Intelligence (CAI), IUST
+- **Faculty Supervisors**: Dr. M. Abdul Jawad & Dr. Riyaz Ahmed, Centre for Artificial Intelligence (CAI), IUST
 
 All reports will be treated with confidentiality, discretion, and seriousness. The leadership team will investigate the matter fairly and impartially.
 

@@ -25,9 +25,10 @@
 | Sl. No. | Inventor Full Name | Designation | Affiliation | Contribution % | Email / Phone |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | **Dar Rehan Rasool** | M.Tech Student | Centre for Artificial Intelligence, IUST | 40% | `rehanrasool@iust.ac.in` |
-| 2 | **Dr. Javad Ahmad** | Assistant Professor & Faculty Supervisor | Centre for Artificial Intelligence, IUST | 30% | `javad.ahmad@iust.ac.in` |
-| 3 | **Muneeb Syed Shah** | M.Tech Student | Centre for Artificial Intelligence, IUST | 15% | `muneeb.shah@iust.ac.in` |
-| 4 | **Shafiya Bashir Pampori** | M.Tech Student | Centre for Artificial Intelligence, IUST | 15% | `shafiya.pampori@iust.ac.in` |
+| 2 | **Dr. M. Abdul Jawad** | Professor & Faculty Supervisor | Centre for Artificial Intelligence, IUST | 20% | `jawad.ahmad@iust.ac.in` |
+| 3 | **Dr. Riyaz Ahmed** | Professor & Faculty Supervisor | Centre for Artificial Intelligence, IUST | 15% | `riyaz.ahmed@iust.ac.in` |
+| 4 | **Muneeb Syed Shah** | M.Tech Student | Centre for Artificial Intelligence, IUST | 12.5% | `muneeb.shah@iust.ac.in` |
+| 5 | **Shafiya Bashir Pampori** | M.Tech Student | Centre for Artificial Intelligence, IUST | 12.5% | `shafiya.pampori@iust.ac.in` |
 
 ### 1.4 Applicant Details (Patent Owner)
 - **Applicant Name**: Islamic University of Science and Technology (IUST)
@@ -127,9 +128,10 @@ The undersigned inventors solemnly declare that:
 ### Signatures of Inventors:
 
 1. **Dar Rehan Rasool** (Lead Inventor): _______________________ Date: ____________
-2. **Dr. Javad Ahmad** (Faculty Supervisor): _______________________ Date: ____________
-3. **Muneeb Sayed** (Co-Inventor): _______________________ Date: ____________
-4. **Shafiya Bashir Pampori** (Co-Inventor): _______________________ Date: ____________
+2. **Dr. M. Abdul Jawad** (Faculty Supervisor): _______________________ Date: ____________
+3. **Dr. Riyaz Ahmed** (Faculty Supervisor): _______________________ Date: ____________
+4. **Muneeb Syed Shah** (Co-Inventor): _______________________ Date: ____________
+5. **Shafiya Bashir Pampori** (Co-Inventor): _______________________ Date: ____________
 
 ---
 **Approved by IPR Cell / CIED, IUST Awantipora:**  
