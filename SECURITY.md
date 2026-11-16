@@ -37,7 +37,7 @@ You can report a private vulnerability directly through GitHub:
 ### 2. Direct Confidential Email
 If you prefer email, please reach out to the project leadership:
 - **Lead Author & Maintainer**: Dar Rehan Rasool ([rehanrasool@iust.ac.in](mailto:rehanrasool@iust.ac.in))
-- **Faculty Supervisors**: Dr. M. Abdul Jawad & Dr. Riyaz Ahmed, Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST)
+- **Faculty Supervisor**: Dr. M. Abdul Jawad, Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST)
 
 ### Information to Include in Your Report
 

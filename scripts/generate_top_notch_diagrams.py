@@ -14,7 +14,7 @@ Covering all implemented models & systems:
 6. Master Multi-Dataset Comparative Benchmark vs SOTA (Ashfaq Ahmad Najar 2025 Baseline)
 
 Research Attribution:
-    Faculty Research Supervisors: Dr. M. Abdul Jawad* & Dr. Riyaz Ahmed* (Professors & Supervisors, CAI, IUST)
+    Faculty Research Supervisor: Dr. M. Abdul Jawad* (Professor & Supervisor, CAI, IUST)
     Lead Author & Principal Researcher: Dar Rehan Rasool (@darrehanrasool)
     Contributing Researchers: Muneeb Syed Shah & Shafiya Bashir Pampori (CAI, IUST)
 """

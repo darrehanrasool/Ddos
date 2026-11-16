@@ -43,8 +43,7 @@ This research project and benchmark platform is collaboratively developed under 
 
 | Role | Name | Designation & Affiliation | Research & Project Contribution |
 | :--- | :--- | :--- | :--- |
-| **Faculty Research Supervisor** | **Dr. M. Abdul Jawad\*** | Professor & Faculty Supervisor, Centre for Artificial Intelligence (CAI) | Project Conceptualization, Research Direction & Strategic Architecture Advisory |
-| **Faculty Research Supervisor** | **Dr. Riyaz Ahmed\*** | Professor & Faculty Supervisor, Centre for Artificial Intelligence (CAI) | Co-Supervision, Theoretical Review, Academic Validation & Methodological Oversight |
+| **Faculty Research Supervisor** | **Dr. M. Abdul Jawad\*** | Professor & Faculty Supervisor, Centre for Artificial Intelligence (CAI) | Project Conceptualization, Research Supervision & Strategic Architecture Direction |
 | **Lead Author & Principal Researcher** | **Dar Rehan Rasool** | M.Tech Student, Centre for Artificial Intelligence, IUST | Dual-Tier Cascading Engine, Deep Tabular Residual Networks, Live Packet Ingestion, Dashboard & Benchmarks |
 | **Contributing Researcher** | **Muneeb Syed Shah** | M.Tech Student, Centre for Artificial Intelligence, IUST | Machine Learning Intrusion Detection, Canonical Schema Harmonization & Cross-Dataset Evaluation |
 | **Contributing Researcher** | **Shafiya Bashir Pampori** | M.Tech Student, Centre for Artificial Intelligence, IUST | Statistical Entropy Auditing, Telemetry Quality Analysis & Data Integrity |
@@ -52,7 +51,7 @@ This research project and benchmark platform is collaboratively developed under 
 - **Academic Unit**: Centre for Artificial Intelligence (CAI)
 - **Institution**: Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India
 - **Copyright & Handle**: `@darrehanrasool` • [GitHub: darrehanrasool](https://github.com/darrehanrasool)
-- *\* Denotes corresponding/supervising senior faculty authors.*
+- *\* Denotes corresponding/supervising senior faculty author.*
 
 ---
 
@@ -411,7 +410,7 @@ We welcome community collaboration, academic discussions, and defensive contribu
 
 This project is licensed under the **Strict Academic & Non-Commercial Research Evaluation License** (All Rights Reserved).
 
-- **Copyright**: © 2026 Dr. M. Abdul Jawad, Dr. Riyaz Ahmed, Dar Rehan Rasool, Muneeb Syed Shah, and Shafiya Bashir Pampori.
+- **Copyright**: © 2026 Dr. M. Abdul Jawad, Dar Rehan Rasool, Muneeb Syed Shah, and Shafiya Bashir Pampori.
 - **Affiliation**: Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India.
 - **Commercial Use**: **Strictly Prohibited**. No commercial use, resale, closed-source packaging, or incorporation into commercial appliances/cloud services is permitted without an executed licensing agreement.
 - **Academic Citation**: Any research, thesis, or paper utilizing this methodology or codebase must cite the authors and official Zenodo DOI via [CITATION.cff](CITATION.cff).
@@ -425,7 +424,7 @@ See the full terms in [LICENSE](LICENSE).
 ```bibtex
 @article{rasool2026ddosai,
   title={DDoS-AI: Cascading Dual-Tier Architecture for Line-Rate DDoS Prevention and Autonomous Mitigation in Software-Defined Networks},
-  author={Rasool, Dar Rehan and Jawad, Dr. M. Abdul* and Ahmed, Dr. Riyaz* and Shah, Muneeb Syed and Pampori, Shafiya Bashir},
+  author={Rasool, Dar Rehan and Jawad, Dr. M. Abdul* and Shah, Muneeb Syed and Pampori, Shafiya Bashir},
   affiliation={Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Kashmir, India},
   journal={IEEE Transactions on Network and Service Management / Zenodo},
   year={2026},
@@ -436,4 +435,4 @@ See the full terms in [LICENSE](LICENSE).
 ```
 
 **Copyright © 2026 Dar Rehan Rasool (`@darrehanrasool`). All Rights Reserved.**  
-Supervised by **Dr. M. Abdul Jawad\*** & **Dr. Riyaz Ahmed\***, Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST).
+Supervised by **Dr. M. Abdul Jawad\***, Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST).

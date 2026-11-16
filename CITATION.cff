@@ -22,10 +22,6 @@ authors:
     given-names: "Dr. M. Abdul"
     affiliation: "Professor, Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
     role: "Faculty Supervisor & Principal Investigator"
-  - family-names: "Ahmed"
-    given-names: "Dr. Riyaz"
-    affiliation: "Professor, Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India"
-    role: "Faculty Supervisor & Co-Principal Investigator"
 keywords:
   - "Distributed Denial of Service (DDoS)"
   - "Intrusion Prevention System (IPS)"

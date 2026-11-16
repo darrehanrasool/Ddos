@@ -25,7 +25,6 @@
 
 ### Presenters & Research Team:
 - **Dr. M. Abdul Jawad** — Professor, Faculty Supervisor & Project Contributor (PI)
-- **Dr. Riyaz Ahmed** — Professor, Faculty Supervisor & Project Contributor
 - **Dar Rehan Rasool** — Project Lead & M.Tech Student, Centre for Artificial Intelligence, IUST
 - **Muneeb Syed Shah** — M.Tech Student, Centre for Artificial Intelligence, IUST
 - **Shafiya Bashir Pampori** — M.Tech Student, Centre for Artificial Intelligence, IUST
@@ -36,7 +35,7 @@
 
 ---
 #### 🎙️ Speaker Script (What to say):
-> *"Good morning, respected Professors Dr. M. Abdul Jawad Sir, Dr. Riyaz Ahmed Sir, Dr. Ashfaq Ahmad Najar, and esteemed committee members. Today, we are proud to present **DDoS-AI**, an autonomous cyber threat defense and intrusion mitigation platform engineered at the Centre for Artificial Intelligence, IUST. Our research bridges the gap between heterogeneous network environments—Enterprise Clouds, Software-Defined Networks, and IoT—and high-throughput, line-rate autonomous mitigation."*
+> *"Good morning, respected Professor Dr. M. Abdul Jawad Sir, Dr. Ashfaq Ahmad Najar, and esteemed committee members. Today, we are proud to present **DDoS-AI**, an autonomous cyber threat defense and intrusion mitigation platform engineered at the Centre for Artificial Intelligence, IUST. Our research bridges the gap between heterogeneous network environments—Enterprise Clouds, Software-Defined Networks, and IoT—and high-throughput, line-rate autonomous mitigation."*
 
 ---
 
@@ -355,7 +354,6 @@ We implemented Dr. Ashfaq Ahmad Najar's exact **CNN-BiLSTM-Attention** architect
 
 **Research Team**:
 - **Dr. M. Abdul Jawad** (Faculty Supervisor & Project Contributor)
-- **Dr. Riyaz Ahmed** (Faculty Supervisor & Project Contributor)
 - **Dar Rehan Rasool** (Project Lead, M.Tech Student)
 - **Muneeb Syed Shah** (M.Tech Student)
 - **Shafiya Bashir Pampori** (M.Tech Student)
@@ -363,4 +361,4 @@ We implemented Dr. Ashfaq Ahmad Najar's exact **CNN-BiLSTM-Attention** architect
 **Centre for Artificial Intelligence (CAI)**  
 **Islamic University of Science and Technology (IUST), Kashmir**
 
-*Open for Questions from Dr. M. Abdul Jawad Sir, Dr. Riyaz Ahmed Sir, and Dr. Ashfaq Ahmad Najar.*
+*Open for Questions from Dr. M. Abdul Jawad Sir and Dr. Ashfaq Ahmad Najar.*
