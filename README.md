@@ -17,6 +17,11 @@
 
 ## 🖥️ Interactive Cyber SOC Dashboard & Real-Time Defense Console
 
+<div align="center">
+  <img src="assets/screenshots/cyber_soc_dashboard.png" alt="DDoS-AI Real-Time Cyber SOC Dashboard & Executive Threat Console" width="100%">
+  <p><em>Real-Time Cyber Security Operations Center (SOC) Console — Live dual-plane packet telemetry, active DDoS threat index beacon, sub-millisecond cascading latency, interactive multi-vector attack generator, MITRE ATT&amp;CK matrix, and OPSEC cryptographic IP cloaking.</em></p>
+</div>
+
 DDoS-AI includes a production-grade Cyber Security Operations Center (SOC) dashboard equipped with dual-plane telemetry ingestion (Physical `en0` and Virtual `lo0`/`lo`, `vir-sim`, `utun0`-`utun3` adapters), real-time threat beacons, sub-millisecond latency tracking, live Web Audio API acoustic synthesis (Safe Chime, Warning Beep, Danger Siren, Quarantine Tone), OPSEC cryptographic IP masking, and autonomous closed-loop OpenFlow mitigation rule dispatching.
 
 ---
@@ -268,6 +273,11 @@ python scripts/run_dashboard.py --port 8080
 ```
 Open **[http://127.0.0.1:8080](http://127.0.0.1:8080)** in any modern web browser:
 
+<div align="center">
+  <img src="assets/screenshots/cyber_soc_dashboard_full.png" alt="DDoS-AI Full-Stack Cyber SOC Dashboard & Deep Packet Inspection Stream" width="100%">
+  <p><em>Figure 7: Full-Stack Real-Time Cyber SOC Interface — Comprehensive view displaying autonomous AI network hardening suggestions, physical (Wi-Fi/Ethernet) vs. virtual (VPN/tunnels) interface surveillance, and live packet stream forensics with deep packet inspection (DPI) and OPSEC privacy masking.</em></p>
+</div>
+
 * **Dual-Plane Traffic Monitor**: Real-time packet throughput, active flow count, and bandwidth velocity across `en0`, `lo0`, and `vir-sim`.
 * **Acoustic Defense Beacons**: Native Web Audio API synthesizer generates real-time audio telemetry without external audio files:
   * 🟢 **Safe Chime** ($523.25\text{ Hz} \to 659.25\text{ Hz}$): Benign flow clearance.
@@ -311,6 +321,9 @@ Ddos/
 │   │   ├── autonomous_mitigation_controller.drawio
 │   │   ├── sota_comparative_benchmark.svg            # SOTA Literature Benchmark Comparison
 │   │   └── sota_comparative_benchmark.drawio
+│   ├── screenshots/                                  # High-resolution real-time Cyber SOC dashboard captures
+│   │   ├── cyber_soc_dashboard.png                  # Executive command center & threat index view
+│   │   └── cyber_soc_dashboard_full.png             # Full dual-plane telemetry & packet DPI stream
 │   └── sounds/                                       # High-definition audio alert telemetry
 ├── checkpoints/
 │   ├── best/
@@ -334,6 +347,7 @@ Ddos/
 ├── reports/                                          # Quality audits, evaluation benchmarks, and model cards
 ├── scripts/
 │   ├── benchmark_ashfaq_najar_model.py               # Empirical SOTA benchmark replication script
+│   ├── capture_dashboard_screenshot.py               # Headless browser UI screenshot automation
 │   ├── generate_top_notch_diagrams.py                # 6 SVG & Draw.io architectural generator
 │   ├── run_dashboard.py                              # Cyber SOC dashboard launcher (port 8080)
 │   ├── run_unified_pipeline.py                       # Connected multi-dataset defense pipeline
