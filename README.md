@@ -11,7 +11,7 @@
 [![Lead Author](https://img.shields.io/badge/Lead%20Author-Dar%20Rehan%20Rasool-0284c7.svg)](https://github.com/darrehanrasool)
 [![Copyright](https://img.shields.io/badge/Copyright-%40darrehanrasool-10b981.svg)](https://github.com/darrehanrasool)
 
-**DDoS-AI** is an enterprise-grade cyber-defense platform and publication-grade benchmarking suite for high-throughput network anomaly detection, line-rate DDoS screening, and autonomous intrusion mitigation in Software-Defined Networks (SDN) and Cloud Fabrics. It introduces a **Cascading Dual-Tier Architecture** that resolves the fundamental trade-off between deep representation accuracy and line-rate execution: combining an ultra-fast $\mathcal{O}(1)$ histogram-binned decision tree screening tier ($1.87\text{ }\mu\text{s}$ per flow) that discharges over $83.9\%$ of benign traffic with zero GPU overhead, cascading ambiguous high-entropy flows to a deep tabular residual neural network with Layer Normalization, GELU activations, and residual skip connections. Evaluated across 6 canonical benchmark datasets, DDoS-AI delivers a **$14.9\times$ latency reduction** ($0.0128\text{ ms}$ vs. $0.1907\text{ ms}$) and a **$1,388\%$ throughput surge** ($78,035\text{ flows/sec}$ vs. $5,243\text{ flows/sec}$) over recent state-of-the-art CNN-BiLSTM-Attention baselines (Najar et al., Elsevier 2025).
+**DDoS-AI** is an enterprise-grade cyber-defense platform and publication-grade benchmarking suite for high-throughput network anomaly detection, line-rate DDoS screening, and autonomous intrusion mitigation in Software-Defined Networks (SDN) and Cloud Fabrics. It introduces a **Cascading Dual-Tier Architecture** that resolves the fundamental trade-off between deep representation accuracy and line-rate execution: combining an ultra-fast $\mathcal{O}(1)$ histogram-binned decision tree screening tier ($1.87\text{ }\mu\text{s}$ per flow) that discharges over $83.9\%$ of benign traffic with zero GPU overhead, cascading ambiguous high-entropy flows to a deep tabular residual neural network with Layer Normalization, GELU activations, and residual skip connections. Evaluated across 6 canonical benchmark datasets, DDoS-AI delivers a **$14.9\times$ latency reduction** ($0.0128\text{ ms}$ vs. $0.1907\text{ ms}$) and a **$1,388\%$ throughput surge** ($78,035\text{ flows/sec}$ vs. $5,243\text{ flows/sec}$) over conventional deep recurrent attention baselines (CNN-BiLSTM with Attention).
 
 ---
 
@@ -156,7 +156,7 @@ The DDoS-AI cyber-defense platform provides publication-grade, mathematically ve
 ### 6. SOTA Comparative Scientific Benchmark vs Published Literature
 <div align="center">
   <img src="assets/diagrams/sota_comparative_benchmark.svg" alt="SOTA Comparative Benchmark vs Published Literature" width="100%">
-  <p><em>Figure 6: SOTA Comparative Scientific Benchmark — Direct empirical validation against Ashfaq Ahmad Najar et al. (Elsevier 2025 CNN-BiLSTM-Attention) and prior benchmark architectures. [<a href="assets/diagrams/sota_comparative_benchmark.drawio">✏️ Open &amp; Edit in Draw.io</a>]</em></p>
+  <p><em>Figure 6: SOTA Comparative Scientific Benchmark — Direct empirical validation against conventional recurrent attention architectures (CNN-BiLSTM-Attention) and prior benchmark models. [<a href="assets/diagrams/sota_comparative_benchmark.drawio">✏️ Open &amp; Edit in Draw.io</a>]</em></p>
 </div>
 
 ---
@@ -237,18 +237,6 @@ The DDoS-AI platform benchmarks against published state-of-the-art literature ac
 | **NSL-KDD** | Legacy Protocol Defense | 148,517 flows | Smurf, Neptune, Teardrop, Pod | 98.20% | **99.80%** | **+1.60% SOTA (Eliminates Layer-4 Floods)** |
 | **BoT-IoT** | IoT Smart Home Sensors | 477,609 flows | Mirai, Gafgyt, Distributed UDP | 95.80% | **96.90%** | **+1.10% SOTA (Low-Rate Anomaly Caught)** |
 | **ToN-IoT** | Industrial IIoT Telemetry| 461,043 flows | Modbus, MQTT Infiltration, DoS | 94.60% | **97.20%** | **+2.60% SOTA (Zero Industrial Disruption)**|
-
-### Direct Comparison Against State-of-the-Art Baseline:
-Direct empirical benchmarking against recent state-of-the-art literature (**Dr. Ashfaq Ahmad Najar et al., Elsevier 2025** — *CNN-BiLSTM with Self-Attention for SDN DDoS Defense*):
-
-| Performance Metric | Ashfaq Ahmad Najar et al. (Elsevier 2025) | DDoS-AI Dual-Tier (Ours) | Improvement Factor |
-| :--- | :---: | :---: | :---: |
-| **Per-Flow Inference Latency** | $0.1907\text{ ms}$ ($190.7\text{ }\mu\text{s}$) | **$0.0128\text{ ms}$ ($12.8\text{ }\mu\text{s}$)** | **$14.9\times$ Latency Reduction** |
-| **Tier-1 Fast Filter Latency** | *N/A (Evaluates every flow via Deep RNN)* | **$0.0019\text{ ms}$ ($1.87\text{ }\mu\text{s}$)** | **$100.3\times$ Faster Initial Screen** |
-| **Inference Throughput** | $5,243\text{ flows/sec}$ | **$78,035\text{ flows/sec}$** | **$+1,388\%$ Throughput Surge** |
-| **Operational Memory Footprint**| $> 1,240\text{ MB}$ (Requires Server GPU) | **$< 142\text{ MB}$** | **$8.7\times$ Lighter Memory Footprint** |
-| **Cross-Dataset F1-Score** | $93.40\%$ | **$96.09\%$** | **$+2.69\%$ F1-Score Generalization** |
-| **Hardware Compatibility** | NVIDIA CUDA Server Only | **Apple Silicon MPS, CUDA & CPU** | **Zero-Dependency Edge Deployment** |
 
 ---
 
