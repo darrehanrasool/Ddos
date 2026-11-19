@@ -8,7 +8,7 @@
 [![DOI: Zenodo](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.ddos--ai-blue.svg)](https://zenodo.org/)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Lead Author](https://img.shields.io/badge/Lead%20Author-Dar%20Rehan%20Rasool-0284c7.svg)](https://github.com/darrehanrasool)
+[![Project Lead](https://img.shields.io/badge/Project%20Lead-Dar%20Rehan%20Rasool-0284c7.svg)](https://github.com/darrehanrasool)
 [![Copyright](https://img.shields.io/badge/Copyright-%40darrehanrasool-10b981.svg)](https://github.com/darrehanrasool)
 
 **DDoS-AI** is an enterprise-grade cyber-defense platform and publication-grade benchmarking suite for high-throughput network anomaly detection, line-rate DDoS screening, and autonomous intrusion mitigation in Software-Defined Networks (SDN) and Cloud Fabrics. It introduces a **Cascading Dual-Tier Architecture** that resolves the fundamental trade-off between deep representation accuracy and line-rate execution: combining an ultra-fast $\mathcal{O}(1)$ histogram-binned decision tree screening tier ($1.87\text{ }\mu\text{s}$ per flow) that discharges over $83.9\%$ of benign traffic with zero GPU overhead, cascading ambiguous high-entropy flows to a deep tabular residual neural network with Layer Normalization, GELU activations, and residual skip connections. Evaluated across 6 canonical benchmark datasets, DDoS-AI delivers a **$14.9\times$ latency reduction** ($0.0128\text{ ms}$ vs. $0.1907\text{ ms}$) and a **$1,388\%$ throughput surge** ($78,035\text{ flows/sec}$ vs. $5,243\text{ flows/sec}$) over conventional deep recurrent attention baselines (CNN-BiLSTM with Attention).
@@ -49,9 +49,10 @@ This research project and benchmark platform is collaboratively developed under 
 | Role | Name | Designation & Affiliation | Research & Project Contribution |
 | :--- | :--- | :--- | :--- |
 | **Faculty Research Supervisor** | **Dr. M. Abdul Jawad\*** | Professor & Faculty Supervisor, Centre for Artificial Intelligence (CAI) | Project Conceptualization, Research Supervision & Strategic Architecture Direction |
-| **Lead Author & Principal Researcher** | **Dar Rehan Rasool** | M.Tech Student, Centre for Artificial Intelligence, IUST | Dual-Tier Cascading Engine, Deep Tabular Residual Networks, Live Packet Ingestion, Dashboard & Benchmarks |
-| **Contributing Researcher** | **Muneeb Syed Shah** | M.Tech Student, Centre for Artificial Intelligence, IUST | Machine Learning Intrusion Detection, Canonical Schema Harmonization & Cross-Dataset Evaluation |
-| **Contributing Researcher** | **[Shafiya Bashir Pampori](https://github.com/Shafiya-Bashir)** | M.Tech Student, Centre for Artificial Intelligence, IUST | Statistical Entropy Auditing, Telemetry Quality Analysis & Data Integrity |
+| **Faculty Research Supervisor** | **Dr. M. Abdul Jawad\*** | Professor & Faculty Supervisor, Centre for Artificial Intelligence (CAI) | Project Conceptualization, Research Supervision & Strategic Architecture Direction |
+| **Project Lead & Contributing Student** | **Dar Rehan Rasool** | M.Tech Student, Centre for Artificial Intelligence, IUST | Dual-Tier Cascading Engine, Deep Tabular Residual Networks, Live Packet Ingestion, Dashboard & Benchmarks |
+| **Contributing Student** | **Muneeb Syed Shah** | M.Tech Student, Centre for Artificial Intelligence, IUST | Machine Learning Intrusion Detection, Canonical Schema Harmonization & Cross-Dataset Evaluation |
+| **Contributing Student** | **[Shafiya Bashir Pampori](https://github.com/Shafiya-Bashir)** | M.Tech Student, Centre for Artificial Intelligence, IUST | Statistical Entropy Auditing, Telemetry Quality Analysis & Data Integrity |
 
 - **Academic Unit**: Centre for Artificial Intelligence (CAI)
 - **Institution**: Islamic University of Science and Technology (IUST), Awantipora, Jammu & Kashmir, India
