@@ -5,7 +5,7 @@
 [![Tests: 22 Passed](https://img.shields.io/badge/tests-22%20passed-brightgreen.svg?logo=pytest)](tests/)
 [![CI Workflow](https://img.shields.io/badge/CI%20Workflow-passing-brightgreen.svg?logo=github-actions)](https://github.com/darrehanrasool/Ddos/actions/workflows/tests.yml)
 [![License: Strict Academic](https://img.shields.io/badge/License-Strict%20Academic-red.svg)](LICENSE)
-[![DOI: Zenodo](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.ddos--ai-blue.svg)](https://zenodo.org/)
+[![DOI](https://zenodo.org/badge/1421954318.svg)](https://zenodo.org/badge/latestdoi/1421954318)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Project Lead](https://img.shields.io/badge/Project%20Lead-Dar%20Rehan%20Rasool-0284c7.svg)](https://github.com/darrehanrasool)
