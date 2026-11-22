@@ -424,15 +424,15 @@ See the full terms in [LICENSE](LICENSE).
 ## 📖 Citation & Intellectual Property
 
 ```bibtex
-@article{rasool2026ddosai,
-  title={DDoS-AI: Cascading Dual-Tier Architecture for Line-Rate DDoS Prevention and Autonomous Mitigation in Software-Defined Networks},
-  author={Rasool, Dar Rehan and Jawad, Dr. M. Abdul* and Shah, Muneeb Syed and Pampori, Shafiya Bashir},
-  affiliation={Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Kashmir, India},
-  journal={IEEE Transactions on Network and Service Management / Zenodo},
-  year={2026},
-  doi={10.5281/zenodo.ddos-ai},
-  url={https://github.com/darrehanrasool/Ddos},
-  note={Copyright \copyright 2026 Dar Rehan Rasool (@darrehanrasool). All Rights Reserved.}
+@software{rasool2026ddosai,
+  title = {DDoS-AI: Cascading Dual-Tier Architecture for Line-Rate DDoS Prevention and Autonomous Mitigation in Software-Defined Networks},
+  author = {Rasool, Dar Rehan and Jawad, Dr. M. Abdul and Shah, Muneeb Syed and Pampori, Shafiya Bashir},
+  affiliation = {Centre for Artificial Intelligence (CAI), Islamic University of Science and Technology (IUST), Kashmir, India},
+  publisher = {Zenodo / GitHub},
+  year = {2026},
+  version = {1.0.0},
+  url = {https://github.com/darrehanrasool/Ddos},
+  note = {Open-source cyber-defense architecture and benchmark. ORCID: 0009-0004-6426-5195}
 }
 ```
 
