@@ -225,3 +225,7 @@ docs/paper/
 docs/paper.zip
 *.pdf
 
+# Research novelty taxonomy & diagram generator (kept local, unpushed)
+assets/diagrams/prior_art_vs_our_novel_architecture.*
+scripts/generate_novelty_diagram.py
+
