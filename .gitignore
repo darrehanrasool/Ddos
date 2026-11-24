@@ -1,3 +1,12 @@
+# Operating System / Environment files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
